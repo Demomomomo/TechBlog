@@ -5,24 +5,24 @@ import HomePage from "@theme-hope/components/HomePage.js";
 import NormalPage from "@theme-hope/components/NormalPage.js";
 import Navbar from "@theme-hope/modules/navbar/components/Navbar.js";
 import Sidebar from "@theme-hope/modules/sidebar/components/Sidebar.js";
-import Layout from "/Users/snopzyz/Documents/GitHub/TechBlog/node_modules/vuepress-theme-hope/lib/client/layouts/Layout.js";
-import NotFound from "/Users/snopzyz/Documents/GitHub/TechBlog/node_modules/vuepress-theme-hope/lib/client/layouts/NotFound.js";
+import Layout from "E:/TechBlog/node_modules/vuepress-theme-hope/lib/client/layouts/Layout.js";
+import NotFound from "E:/TechBlog/node_modules/vuepress-theme-hope/lib/client/layouts/NotFound.js";
 
 import { useScrollPromise } from "@theme-hope/composables/index.js";
 import { injectDarkMode, setupDarkMode } from "@theme-hope/modules/outlook/composables/index.js";
 import { setupSidebarItems } from "@theme-hope/modules/sidebar/composables/index.js";
 
-import "/Users/snopzyz/Documents/GitHub/TechBlog/node_modules/vuepress-theme-hope/lib/client/styles/index.scss";
+import "E:/TechBlog/node_modules/vuepress-theme-hope/lib/client/styles/index.scss";
 
 import BloggerInfo from "@theme-hope/modules/blog/components/BloggerInfo.js";
 import BlogHome from "@theme-hope/modules/blog/components/BlogHome.js";
 import BlogPage from "@theme-hope/modules/blog/components/BlogPage.js";
 import { setupBlog } from "@theme-hope/modules/blog/composables/index.js";
-import "/Users/snopzyz/Documents/GitHub/TechBlog/node_modules/vuepress-theme-hope/lib/client/modules/blog/styles/layout.scss";
+import "E:/TechBlog/node_modules/vuepress-theme-hope/lib/client/modules/blog/styles/layout.scss";
 import GlobalEncrypt from "@theme-hope/modules/encrypt/components/GlobalEncrypt.js";
 import LocalEncrypt from "@theme-hope/modules/encrypt/components/LocalEncrypt.js";
-import Slide from "/Users/snopzyz/Documents/GitHub/TechBlog/node_modules/vuepress-theme-hope/lib/client/layouts/Slide.js";
-import Blog from "/Users/snopzyz/Documents/GitHub/TechBlog/node_modules/vuepress-theme-hope/lib/client/modules/blog/layouts/Blog.js";
+import Slide from "E:/TechBlog/node_modules/vuepress-theme-hope/lib/client/layouts/Slide.js";
+import Blog from "E:/TechBlog/node_modules/vuepress-theme-hope/lib/client/modules/blog/layouts/Blog.js";
 
 
 export default defineClientConfig({
