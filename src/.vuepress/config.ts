@@ -5,6 +5,7 @@ import { hopeTheme } from "vuepress-theme-hope";
 
 export default defineUserConfig({
 
+    dest: './public',
     lang: "zh-CN",
 
   base: "/",
