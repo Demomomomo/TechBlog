@@ -25,39 +25,38 @@
 1
 2</pre>
 <p>思路：根据题意模拟，当n不是0的时候进入循环，判断是否为奇数，如果是奇数的话说明最后一位是1判断一下奇数是否是1，如果不是进行一次1的左移操作，n除以2删掉最后一位，当是偶数的时候最后一位是0，直接删掉最右一位0。最后到1的时候多做了一个操作，所以要输出操作数减一</p>
-<pre>
-<code>#include&lt;algorithm&gt;
-#include&lt;cstdio&gt;
-using namespace std;
-void sove(){
-	int n;
-	scanf("%d",&amp;n);
-	if(n==0){
-		printf("0\n");
-	}else if(n==1||n==2){
-		printf("0\n");
-	}else{
-		int con=0;
-		while(n){
-			if(n&amp;1){
-				con++;
-				if(n!=1)n+=2;
-			}
-			n&gt;&gt;=1;
-		}
-		printf("%d\n",con-1);
-	}
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstdio></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">sove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"0\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">==</span><span class="token number">1</span><span class="token operator">||</span>n<span class="token operator">==</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"0\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> con<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">while</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				con<span class="token operator">++</span><span class="token punctuation">;</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">!=</span><span class="token number">1</span><span class="token punctuation">)</span>n<span class="token operator">+=</span><span class="token number">2</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			n<span class="token operator">>>=</span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>con<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
 	
-}
-int main(){
-	int t;
-	scanf("%d",&amp;t);
-	while(t--){
-		sove();
-	}
-	return 0;
-}</code></pre>
-<p></p>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> t<span class="token punctuation">;</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>t<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token function">sove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <h2 id="关于字符串函数" tabindex="-1"><a class="header-anchor" href="#关于字符串函数" aria-hidden="true">#</a> 关于字符串函数</h2>
 <p>前置条件：#include&lt;string&gt;</p>
 <p>substr函数：截取字符串</p>
@@ -90,75 +89,65 @@ int main(){
 <p>用法1：用于数据转化</p>
 <p>         如整型转<a data-link-icon="https://csdnimg.cn/release/blog_editor_html/release2.0.8/ckeditor/plugins/CsdnLink/icons/icon-default.png?t=M276" data-link-title="字符串" href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&amp;spm=1001.2101.3001.7020" title="字符串">字符串</a>型</p>
 <p>        先定义个整型，再定义一个stringstream型，然后把整型传入stringstream型的参数里，然后再定义一个字符串型，把stringstream里的传入字符串型里</p>
-<pre>
-<code>int x;
-cin&gt;&gt;x;
-stringstream a;
-a&lt;&lt;x;
-string s;
-a&gt;&gt;s;</code></pre>
-<p>用法2：用于读入多字符串</p>
-<pre>
-<code>stringstream s;//定义一个stringstream变量 
-	s&lt;&lt;"first string "&lt;&lt;" "&lt;&lt;"is: ";
-	s&lt;&lt;"you "&lt;&lt;"are a idiot!";
-	cout&lt;&lt;s.str()&lt;&lt;endl;//输出的答案为first string  is: you are a idiot! 
-</code></pre>
-<p> 用法3：分隔读入的一行字符串（比如一个字符串里有许多空格，可以通过这个方法去消除空格）</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">int</span> x<span class="token punctuation">;</span>
+cin<span class="token operator">>></span>x<span class="token punctuation">;</span>
+stringstream a<span class="token punctuation">;</span>
+a<span class="token operator">&lt;&lt;</span>x<span class="token punctuation">;</span>
+string s<span class="token punctuation">;</span>
+a<span class="token operator">>></span>s<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>用法2：用于读入多字符串</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>stringstream s<span class="token punctuation">;</span><span class="token comment">//定义一个stringstream变量 </span>
+	s<span class="token operator">&lt;&lt;</span><span class="token string">"first string "</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span><span class="token string">"is: "</span><span class="token punctuation">;</span>
+	s<span class="token operator">&lt;&lt;</span><span class="token string">"you "</span><span class="token operator">&lt;&lt;</span><span class="token string">"are a idiot!"</span><span class="token punctuation">;</span>
+	cout<span class="token operator">&lt;&lt;</span>s<span class="token punctuation">.</span><span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//输出的答案为first string  is: you are a idiot! </span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p> 用法3：分隔读入的一行字符串（比如一个字符串里有许多空格，可以通过这个方法去消除空格）</p>
 <p>先把需要转化的字符串读入，然后定义stringstream，把字符串传入这个里面，然后再定义一个字符串，将stringstream里的数循环传入这个字符串并输出。</p>
-<pre>
-<code>string s,t;
-getline(cin,s);
-stringstream q;
-q&lt;&lt;s;
-while(q&gt;&gt;t){
-	cout&lt;&lt;t&lt;&lt;' ';
-}</code></pre>
-<p>find函数：在头文件string里</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>string s<span class="token punctuation">,</span>t<span class="token punctuation">;</span>
+<span class="token function">getline</span><span class="token punctuation">(</span>cin<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+stringstream q<span class="token punctuation">;</span>
+q<span class="token operator">&lt;&lt;</span>s<span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>q<span class="token operator">>></span>t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	cout<span class="token operator">&lt;&lt;</span>t<span class="token operator">&lt;&lt;</span><span class="token char">' '</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>find函数：在头文件string里</p>
 <p>使用方法：如在string1中查找string2，string1.find(string2)；返回值为string2第一次在string1中出现的位置。<br />
 若希望在特定位置开始查找，可使用 string1.find(string2，location);<br />
 如果找不到，则返回值为string::npos ，即对于string，通过a.find(val)==string::npos来做判断是否查找成功</p>
 <p>还有第二种用法是在algorithm里，find用来查找数组中的数，返回的是第一次出现的地址，如果没找到返回end（）</p>
-<pre>
-<code>vector &lt;int&gt; a;
-int i=find(a.begin() ,a.end() ,4)-a.begin() ;
-if(i!=a.end() )printf("yes");</code></pre>
-<p><br />
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>vector <span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> a<span class="token punctuation">;</span>
+<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token function">find</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">,</span>a<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token operator">-</span>a<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">!=</span>a<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"yes"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><br />
 判断是不是大写字母：</p>
-<pre>
-<code>char op;
-if(isupper(op))cout&lt;&lt;"YES"&lt;&lt;endl;</code></pre>
-<p> 判断是不是小写字母：</p>
-<pre>
-<code>char op;
-if(islower(op))cout&lt;&lt;"YES"&lt;&lt;endl;</code></pre>
-<p> 变成大写字母：</p>
-<pre>
-<code>char op;
-op=toupper(op);</code></pre>
-<p>变成小写字母：</p>
-<pre>
-<code>char op;
-op=tolower(op);</code></pre>
-<p>insert函数：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">char</span> op<span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isupper</span><span class="token punctuation">(</span>op<span class="token punctuation">)</span><span class="token punctuation">)</span>cout<span class="token operator">&lt;&lt;</span><span class="token string">"YES"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p> 判断是不是小写字母：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">char</span> op<span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">islower</span><span class="token punctuation">(</span>op<span class="token punctuation">)</span><span class="token punctuation">)</span>cout<span class="token operator">&lt;&lt;</span><span class="token string">"YES"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p> 变成大写字母：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">char</span> op<span class="token punctuation">;</span>
+op<span class="token operator">=</span><span class="token function">toupper</span><span class="token punctuation">(</span>op<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>变成小写字母：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">char</span> op<span class="token punctuation">;</span>
+op<span class="token operator">=</span><span class="token function">tolower</span><span class="token punctuation">(</span>op<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>insert函数：</p>
 <p>string s,f;</p>
 <p>s.insert(i,f)</p>
 <p>在下标为i的地方插入一个字符串f</p>
 <p>append函数：</p>
 <p>在字符串的后面加上一个字符串</p>
-<pre>
-<code>string s1="12";
-string s2="34";
-s1.append(s2);
-cout&lt;&lt;s1&lt;&lt;endl;</code></pre>
-<p>那么输出的s1就是1234 </p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>string s1<span class="token operator">=</span><span class="token string">"12"</span><span class="token punctuation">;</span>
+string s2<span class="token operator">=</span><span class="token string">"34"</span><span class="token punctuation">;</span>
+s1<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>s2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cout<span class="token operator">&lt;&lt;</span>s1<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>那么输出的s1就是1234 </p>
 <p></p>
 <p>pop_back()函数：</p>
 <p>删除字符串的最后一个字符</p>
-<pre>
-<code class="hljs">string s="123";
-s.pop_back();</code></pre>
-<p>输出的就是12</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>string s<span class="token operator">=</span><span class="token string">"123"</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>输出的就是12</p>
 <h2 id="_7-8-单词倒置" tabindex="-1"><a class="header-anchor" href="#_7-8-单词倒置" aria-hidden="true">#</a> 7-8 单词倒置</h2>
 <p>小明终于等来了好朋友的来信，但打开来信就傻眼了，居然看不懂，原来好朋友把信中的每个单词都翻转了顺序，例如“Happy”在朋友的信里变成了“yppaH”。请你编写程序帮助小明还原来信内容吧。</p>
 <h3 id="输入格式">输入格式:</h3>
@@ -166,64 +155,59 @@ s.pop_back();</code></pre>
 <h3 id="输出格式">输出格式:</h3>
 <p>输出一行，即单词翻转后的字符串，注意每对单词之间的空格数量保持不变。</p>
 <h3 id="输入样例">输入样例:</h3>
-<pre>
-<code>yppaH   wen raey
-</code></pre>
-<h3 id="输出样例">输出样例:</h3>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>yppaH   wen raey
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="输出样例">输出样例:</h3>
 <p>在这里给出相应的输出。例如：</p>
-<pre>
-<code>Happy   new year</code></pre>
-<p>思路：遍历字符串，从下标为0的字符开始记住第一个不是空格的位置下标然后往下遍历到最后一个不是空格的字符下标，然后直接从最后一个不是字符的下标到第一个不是空格的下标输出，注意可能最后不是以空格结尾所以还要判断一下下一位是不是‘\0’;</p>
-<pre>
-<code>#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main(){
-	char a[105];
-	gets(a);
-	int len=strlen(a);
-	for(int i=0;i&lt;len;i++){
-		int first,last,j;
-		if(a[i]!=' '){
-			first=i;
-			for(j=i;a[j]!=' '&amp;&amp;a[j]!='\0';j++){
-				last=j;
-			}
-			for(int q=last;q&gt;=first;q--)printf("%c",a[q]);
-			i=last;
-		}else{
-			printf(" ");
-		}
-	}
-	return 0;
-}</code></pre>
-<p></p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>Happy   <span class="token keyword">new</span> year
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>思路：遍历字符串，从下标为0的字符开始记住第一个不是空格的位置下标然后往下遍历到最后一个不是空格的字符下标，然后直接从最后一个不是字符的下标到第一个不是空格的下标输出，注意可能最后不是以空格结尾所以还要判断一下下一位是不是‘\0’;</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;string.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">char</span> a<span class="token punctuation">[</span><span class="token number">105</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token function">gets</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> len<span class="token operator">=</span><span class="token function">strlen</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> first<span class="token punctuation">,</span>last<span class="token punctuation">,</span>j<span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token char">' '</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			first<span class="token operator">=</span>i<span class="token punctuation">;</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span>i<span class="token punctuation">;</span>a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token char">' '</span><span class="token operator">&amp;&amp;</span>a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token char">'\0'</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				last<span class="token operator">=</span>j<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> q<span class="token operator">=</span>last<span class="token punctuation">;</span>q<span class="token operator">>=</span>first<span class="token punctuation">;</span>q<span class="token operator">--</span><span class="token punctuation">)</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%c"</span><span class="token punctuation">,</span>a<span class="token punctuation">[</span>q<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			i<span class="token operator">=</span>last<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <h2 id="mex函数" tabindex="-1"><a class="header-anchor" href="#mex函数" aria-hidden="true">#</a> MEX函数</h2>
 <p>mex(l,r)指的是从l~r这一段里的数中没有出现过的最小非负整数</p>
 <p>那我们要算的话用一个map来标记他在不在数组里</p>
 <p>从l到r，mp【i】++，标记一下</p>
 <p>然后我们令j=0</p>
 <p>当j被标记过的时候j++，否则j就是最小mex值</p>
-<pre>
-<code>for(int i=l;i&lt;=r;i++){
-    mp[a[i]]++;
-}
-int j=0;
-while(mp[j])j++;</code></pre>
-<p>然后如果我们想算一个数组，从a[i]开始到哪个下标他的mex是op的话</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>l<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>r<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    mp<span class="token punctuation">[</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>mp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>j<span class="token operator">++</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>然后如果我们想算一个数组，从a[i]开始到哪个下标他的mex是op的话</p>
 <p>我们令id从i下标开始，令j=0,当j!=op的话我们就mp[a[++id]]++;</p>
 <p>最后算出来的id就是从下标为i开始长度最短的mex值是op的区间</p>
-<pre>
-<code>for(int i=l;i&lt;=n;i++){
-	int id=i;
-	int j=0;
-	mp[a[id]]++;
-	while(mp[j])j++;
-	while(j!=op){
-		mp[a[++id]]++;
-		while(m[j])j++;
-	}
-}</code></pre>
-<p></p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>l<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> id<span class="token operator">=</span>i<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	mp<span class="token punctuation">[</span>a<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>mp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>j<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>j<span class="token operator">!=</span>op<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		mp<span class="token punctuation">[</span>a<span class="token punctuation">[</span><span class="token operator">++</span>id<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token keyword">while</span><span class="token punctuation">(</span>m<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>j<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <h2 id="位运算-lowbit" tabindex="-1"><a class="header-anchor" href="#位运算-lowbit" aria-hidden="true">#</a> 位运算（lowbit）</h2>
 <p>&amp; 与 两个位都为1时，结果为1<br />
 | 或 两个位都为0时，结果为0<br />
@@ -234,17 +218,15 @@ while(mp[j])j++;</code></pre>
 <p>1.找到一个数x的2进制表示的第k位是几，最低位为第0位</p>
 <p>右移运算符：&gt;&gt;，将x的二进制表示数右移，&gt;&gt;k就是右移了k位</p>
 <p>那么求一个数的2进制表示的第k位是几就先将他右移k位再&amp;1</p>
-<pre>
-<code>x&gt;&gt;k&amp;1</code></pre>
-<p>2.lowbit运算</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>x<span class="token operator">>></span>k<span class="token operator">&amp;</span><span class="token number">1</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>2.lowbit运算</p>
 <p>作用：返回从左往右数最后一位1，（最右边一位）如10100，变为100,1010110变为10（返回的是十进制数）</p>
 <p>可以用来计算一个数x中1的个数，先con=0；然后当x不为0时循环，x=x-lowbit（x），意思是x减去了他最右边一位二进制1所代表的十进制数</p>
-<pre>
-<code>int lowbit(int x){
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">lowbit</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-        return x&amp;(-x);
-}</code></pre>
-<p></p>
+        <span class="token keyword">return</span> x<span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 </div></template>
 
 

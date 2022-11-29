@@ -10,8 +10,7 @@
 <p>题意：刚开始a集合里有一个数0，那么我们有q个操作：1.+x，将x加到集合a中，2.-x，将x从集合中减掉，3.？x，输出集合a中的数与x的最大异或值</p>
 <p>思路：异或的话存二进制字典树，对插入操作就是平常的操作，因为还有一个删除和询问所以我们需要用个num数组记录一下一个数的二进制每个位的数的个数，删除的时候遍历一下num--，因为有询问操作所以我们要用一个数组v来记录一下到一个编号的数是多少</p>
 <p></p>
-<pre>
-<code>/*
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token comment">/*
 
  .----------------.  .----------------.  .----------------.  .----------------. 
 | .--------------. || .--------------. || .--------------. || .--------------. |
@@ -25,187 +24,182 @@
 | '--------------' || '--------------' || '--------------' || '--------------' |
  '----------------'  '----------------'  '----------------'  '----------------'
 
-*/
-#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#include&lt;cstring&gt;
-#include&lt;vector&gt;
-#include&lt;set&gt;
-#include&lt;map&gt;
-#include&lt;queue&gt;
-#include&lt;deque&gt;
-#include&lt;cmath&gt;
-#include&lt;stack&gt;
-#define int long long
-#define lowbit(x) x&amp;(-x)
-#define PI 3.1415926535
-#define endl "\n"
-using namespace std;
-typedef long long ll;
-typedef pair&lt;int,int&gt; pii;
-int gcd(int a,int b){
-	return b&gt;0 ? gcd(b,a%b):a;
-}
-/*
+*/</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstring></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;set></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;map></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;queue></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;deque></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cmath></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stack></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">int</span> <span class="token expression"><span class="token keyword">long</span> <span class="token keyword">long</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">lowbit</span><span class="token expression"><span class="token punctuation">(</span>x<span class="token punctuation">)</span> x<span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PI</span> <span class="token expression"><span class="token number">3.1415926535</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">endl</span> <span class="token string">"\n"</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span> pii<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">gcd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">return</span> b<span class="token operator">></span><span class="token number">0</span> <span class="token operator">?</span> <span class="token function">gcd</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span>a<span class="token operator">%</span>b<span class="token punctuation">)</span><span class="token operator">:</span>a<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">/*
 int dx[8]={-2,-2,-1,1,2,2,-1,1};
 int dy[8]={-1,1,2,2,1,-1,-2,-2};
 int dx[4]={0,-1,0,1};
 int dy[4]={-1,0,1,0};
 int dx[8]={-1,1,0,0,-1,-1,1,1};
 int dy[8]={0,0,-1,1,-1,1,-1,1};
-*/
-//int e[N],ne[N],h[N],idx,w[N];
-/*void add(int a,int b,int c){
+*/</span>
+<span class="token comment">//int e[N],ne[N],h[N],idx,w[N];</span>
+<span class="token comment">/*void add(int a,int b,int c){
 	e[idx]=b;
 	w[idx]=c;
 	ne[idx]=h[a];
 	h[a]=idx++;
 }
-*/
-const int N=2e5+10;
-int n;
-int cnt;
-int tr[N*17][2],num[N*27],v[N*27];//v是记录每个编号所表示的数字
-void insert(int x){
-	int p=0;
-	for(int i=32;i&gt;=0;i--){
-		int op=x&gt;&gt;i&amp;1;
-		if(!tr[p][op]){
-			tr[p][op]=++cnt;
-		}
-		p=tr[p][op];
-		num[p]++;//对于每个位上的二进制数的编号，个数++
-	}
-	v[p]=x;//到最后的时候记录一下到达这个编号所表示的值
-}
-void declear(int x){//删除的是x的每一位二进制的数的编号的个数
-	int p=0;
-	for(int i=32;i&gt;=0;i--){
-		int op=x&gt;&gt;i&amp;1;
-		p=tr[p][op];
-		num[p]--;
-	}
-}
-int query(int x){
-	int p=0;
-	for(int i=32;i&gt;=0;i--){
-		int op=x&gt;&gt;i&amp;1;
-		if(tr[p][op^1]&amp;&amp;num[tr[p][op^1]]){//如果^1的数存在的话我们就让编号等于^1之后的数，否则还等于原数
-			p=tr[p][op^1];
-		}else p=tr[p][op];
-	}
-	return x^v[p];//返回异或值，v[p]表示我们最终找到的数的编号p所表示的数值
-}
-void sove(){
-	char op;
-	int x;
-	cin&gt;&gt;op&gt;&gt;x;
-	if(op=='+'){
-		insert(x);
-	}else if(op=='-'){
-		declear(x);
-	}else cout&lt;&lt;query(x)&lt;&lt;endl;
-}
+*/</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token operator">=</span><span class="token number">2e5</span><span class="token operator">+</span><span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+<span class="token keyword">int</span> cnt<span class="token punctuation">;</span>
+<span class="token keyword">int</span> tr<span class="token punctuation">[</span>N<span class="token operator">*</span><span class="token number">17</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>num<span class="token punctuation">[</span>N<span class="token operator">*</span><span class="token number">27</span><span class="token punctuation">]</span><span class="token punctuation">,</span>v<span class="token punctuation">[</span>N<span class="token operator">*</span><span class="token number">27</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//v是记录每个编号所表示的数字</span>
+<span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> p<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> op<span class="token operator">=</span>x<span class="token operator">>></span>i<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">++</span>cnt<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		p<span class="token operator">=</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		num<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span><span class="token comment">//对于每个位上的二进制数的编号，个数++</span>
+	<span class="token punctuation">}</span>
+	v<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token operator">=</span>x<span class="token punctuation">;</span><span class="token comment">//到最后的时候记录一下到达这个编号所表示的值</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">declear</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//删除的是x的每一位二进制的数的编号的个数</span>
+	<span class="token keyword">int</span> p<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> op<span class="token operator">=</span>x<span class="token operator">>></span>i<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">;</span>
+		p<span class="token operator">=</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		num<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">query</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> p<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> op<span class="token operator">=</span>x<span class="token operator">>></span>i<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token operator">^</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>num<span class="token punctuation">[</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token operator">^</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//如果^1的数存在的话我们就让编号等于^1之后的数，否则还等于原数</span>
+			p<span class="token operator">=</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token operator">^</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> p<span class="token operator">=</span>tr<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">[</span>op<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> x<span class="token operator">^</span>v<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//返回异或值，v[p]表示我们最终找到的数的编号p所表示的数值</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">sove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">char</span> op<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> x<span class="token punctuation">;</span>
+	cin<span class="token operator">>></span>op<span class="token operator">>></span>x<span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>op<span class="token operator">==</span><span class="token char">'+'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token function">insert</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>op<span class="token operator">==</span><span class="token char">'-'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token function">declear</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> cout<span class="token operator">&lt;&lt;</span><span class="token function">query</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-signed main(){
-	ios::sync_with_stdio(false);
-	cin.tie() ,cout.tie() ;
-	int t=1;
-	insert(0);
-	cin&gt;&gt;t;
-	while(t--){
-		sove();
-	}
-	return 0;
-}</code></pre>
-<p></p>
+<span class="token keyword">signed</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	ios<span class="token double-colon punctuation">::</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">,</span>cout<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+	<span class="token keyword">int</span> t<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cin<span class="token operator">>></span>t<span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>t<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token function">sove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <h2 id="二叉树详解" tabindex="-1"><a class="header-anchor" href="#二叉树详解" aria-hidden="true">#</a> 二叉树详解</h2>
 <p>二叉树：他的子节点的个数小于等于2</p>
 <p>用结构体表示一个树：</p>
-<pre>
-<code>struct treenode{
-	int val;//根节点编号
-	struct treenode* l;//左子树
-	struct treenode* r;//右子树
-};</code></pre>
-<p>为了方便表示，优化版：</p>
-<pre>
-<code>typedef struct treenode{
-	int val;//根节点编号
-	struct treenode* l;
-	struct treenode* r;
-}tree,*lptree;//其实就是命名了一下结构体。。。</code></pre>
-<p>然后我们来种一个只有根节点的树</p>
-<pre>
-<code>lptree creat(int t){
-	lptree newtree=(lptree)malloc(sizeof newtree);
-	newtree-&gt;val =t;
-	newtree-&gt;l =NULL;
-	newtree-&gt;r =NULL;
-	return newtree;
-}</code></pre>
-<p></p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">struct</span> <span class="token class-name">treenode</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span><span class="token comment">//根节点编号</span>
+	<span class="token keyword">struct</span> <span class="token class-name">treenode</span><span class="token operator">*</span> l<span class="token punctuation">;</span><span class="token comment">//左子树</span>
+	<span class="token keyword">struct</span> <span class="token class-name">treenode</span><span class="token operator">*</span> r<span class="token punctuation">;</span><span class="token comment">//右子树</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>为了方便表示，优化版：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">treenode</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span><span class="token comment">//根节点编号</span>
+	<span class="token keyword">struct</span> <span class="token class-name">treenode</span><span class="token operator">*</span> l<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">treenode</span><span class="token operator">*</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>tree<span class="token punctuation">,</span><span class="token operator">*</span>lptree<span class="token punctuation">;</span><span class="token comment">//其实就是命名了一下结构体。。。</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>然后我们来种一个只有根节点的树</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>lptree <span class="token function">creat</span><span class="token punctuation">(</span><span class="token keyword">int</span> t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	lptree newtree<span class="token operator">=</span><span class="token punctuation">(</span>lptree<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span> newtree<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>val <span class="token operator">=</span>t<span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>l <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>r <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> newtree<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <p> 接下来就是插入操作啦</p>
-<pre>
-<code>void in(lptree p,lptree lc,lptree rc){//p是父节点，lc是左子树，rc是右子树
-	p-&gt;l =lc;
-	p-&gt;r =rc;
-}</code></pre>
-<p> 然后我们演示一下代码实现建立下图的树：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">in</span><span class="token punctuation">(</span>lptree p<span class="token punctuation">,</span>lptree lc<span class="token punctuation">,</span>lptree rc<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//p是父节点，lc是左子树，rc是右子树</span>
+	p<span class="token operator">-></span>l <span class="token operator">=</span>lc<span class="token punctuation">;</span>
+	p<span class="token operator">-></span>r <span class="token operator">=</span>rc<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p> 然后我们演示一下代码实现建立下图的树：</p>
 <p style="text-align:center;"><img alt="" src="https://img-blog.csdnimg.cn/abdfdf9b20154e97bcba9fda5043d53f.png" /></p>
-<pre>
-<code>#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#include&lt;cstring&gt;
-#include&lt;cstdlib&gt;
-using namespace std;
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstring></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstdlib></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-typedef struct tree{
-	int val;
-	struct tree* l;
-	struct tree* r;
-}tree,*lptree;
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">tree</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">tree</span><span class="token operator">*</span> l<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">tree</span><span class="token operator">*</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>tree<span class="token punctuation">,</span><span class="token operator">*</span>lptree<span class="token punctuation">;</span>
 	
-lptree creat(int t){
-	lptree newtree=(lptree)malloc(sizeof newtree);
-	newtree-&gt;val =t;
-	newtree-&gt;l =NULL;
-	newtree-&gt;r =NULL;
-	return newtree;
-}
-void xianxu(lptree root){
-	if(root==NULL)return ;
-	printf("%d ",root-&gt;val );
-	xianxu(root-&gt;l );
-	xianxu(root-&gt;r );
-}
-void zhongxu(lptree root){
-	if(root==NULL)return ;
-	zhongxu(root-&gt;l );
-	printf("%d ",root-&gt;val );
-	zhongxu(root-&gt;r );
-}
-void houxu(lptree root){
-	if(root==NULL)return ;
-	houxu(root-&gt;l );
-	houxu(root-&gt;r );
-	printf("%d ",root-&gt;val );
-}
-void in(lptree p,lptree lc,lptree rc){
-	p-&gt;l =lc;
-	p-&gt;r =rc;
-}
-int main(){
-	lptree t1=creat(1);
-	lptree t2=creat(2);
-	lptree t3=creat(3);
-	lptree t4=creat(4);
-	lptree t5=creat(5);
-	lptree t6=creat(6);
-	lptree t7=creat(7);
-	return 0;
-}</code></pre>
-<p> 最简单的建树，只是为了熟悉一下用法，无实际用途</p>
+lptree <span class="token function">creat</span><span class="token punctuation">(</span><span class="token keyword">int</span> t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	lptree newtree<span class="token operator">=</span><span class="token punctuation">(</span>lptree<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span> newtree<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>val <span class="token operator">=</span>t<span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>l <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>r <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> newtree<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">xianxu</span><span class="token punctuation">(</span>lptree root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>root<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">zhongxu</span><span class="token punctuation">(</span>lptree root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>root<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">houxu</span><span class="token punctuation">(</span>lptree root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>root<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">in</span><span class="token punctuation">(</span>lptree p<span class="token punctuation">,</span>lptree lc<span class="token punctuation">,</span>lptree rc<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	p<span class="token operator">-></span>l <span class="token operator">=</span>lc<span class="token punctuation">;</span>
+	p<span class="token operator">-></span>r <span class="token operator">=</span>rc<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	lptree t1<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t2<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t3<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t4<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t5<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t6<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t7<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p> 最简单的建树，只是为了熟悉一下用法，无实际用途</p>
 <p></p>
 <p></p>
 <p>完全二叉树：</p>
@@ -221,150 +215,143 @@ int main(){
 <p>按后序遍历的话就是：4 5 2 6 7 3 1</p>
 <p>代码实现（先用递归）是：</p>
 <p>先序：</p>
-<pre>
-<code>void xianxu(lptree t){
-	if(t==NULL)return ;
-	printf("%d",t-&gt;val );
-	xianxu(t-&gt;l );
-	xianxu(t-&gt;r );
-}</code></pre>
-<p>中序：</p>
-<pre>
-<code>void zhongxu(lptree t){
-	if(t==NULL)return ;
-	zhongxu(t-&gt;l );
-	printf("%d",t-&gt;val );
-	zhongxu(t-&gt;r );
-}</code></pre>
-<p>后序:</p>
-<pre>
-<code>void houxu(lptree t){
-	if(t==NULL)return ;
-	houxu(t-&gt;l );
-	houxu(t-&gt;r );
-	printf("%d",t-&gt;val );
-}</code></pre>
-<p>聪明的小朋友很快就能看出来先中后其实是输出头节点的顺序在第一个第二个第三个啦~</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">xianxu</span><span class="token punctuation">(</span>lptree t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>t<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>t<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>t<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>中序：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">zhongxu</span><span class="token punctuation">(</span>lptree t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>t<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>t<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>t<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>后序:</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">houxu</span><span class="token punctuation">(</span>lptree t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>t<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>t<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>t<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>聪明的小朋友很快就能看出来先中后其实是输出头节点的顺序在第一个第二个第三个啦~</p>
 <p> 然后我们要看看刚才那个图我们先序中序和后序遍历的顺序是什么，我们可以这么写：</p>
-<pre>
-<code>#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#include&lt;cstring&gt;
-#include&lt;cstdlib&gt;
-using namespace std;
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstring></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstdlib></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-typedef struct tree{
-	int val;
-	struct tree* l;
-	struct tree* r;
-}tree,*lptree;
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">tree</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">tree</span><span class="token operator">*</span> l<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">tree</span><span class="token operator">*</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>tree<span class="token punctuation">,</span><span class="token operator">*</span>lptree<span class="token punctuation">;</span>
 	
-lptree creat(int t){
-	lptree newtree=(lptree)malloc(sizeof newtree);
-	newtree-&gt;val =t;
-	newtree-&gt;l =NULL;
-	newtree-&gt;r =NULL;
-	return newtree;
-}
-void xianxu(lptree root){
-	if(root==NULL)return ;
-	printf("%d ",root-&gt;val );
-	xianxu(root-&gt;l );
-	xianxu(root-&gt;r );
-}
-void zhongxu(lptree root){
-	if(root==NULL)return ;
-	zhongxu(root-&gt;l );
-	printf("%d ",root-&gt;val );
-	zhongxu(root-&gt;r );
-}
-void houxu(lptree root){
-	if(root==NULL)return ;
-	houxu(root-&gt;l );
-	houxu(root-&gt;r );
-	printf("%d ",root-&gt;val );
-}
-void in(lptree p,lptree lc,lptree rc){
-	p-&gt;l =lc;
-	p-&gt;r =rc;
-}
-int main(){
-	lptree t1=creat(1);
-	lptree t2=creat(2);
-	lptree t3=creat(3);
-	lptree t4=creat(4);
-	lptree t5=creat(5);
-	lptree t6=creat(6);
-	lptree t7=creat(7);
-	in(t1,t2,t3);
-	in(t2,t4,t5);
-	in(t3,t6,t7);
-	printf("first:");
-	xianxu(t1);
-	printf("\nsecond:");
-	zhongxu(t1);
-	printf("\nthird:");
-	houxu(t1);
-	return 0;
-}</code></pre>
-<p>最后出来的结果是：</p>
+lptree <span class="token function">creat</span><span class="token punctuation">(</span><span class="token keyword">int</span> t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	lptree newtree<span class="token operator">=</span><span class="token punctuation">(</span>lptree<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span> newtree<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>val <span class="token operator">=</span>t<span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>l <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	newtree<span class="token operator">-></span>r <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> newtree<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">xianxu</span><span class="token punctuation">(</span>lptree root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>root<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">zhongxu</span><span class="token punctuation">(</span>lptree root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>root<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">houxu</span><span class="token punctuation">(</span>lptree root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>root<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>root<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">in</span><span class="token punctuation">(</span>lptree p<span class="token punctuation">,</span>lptree lc<span class="token punctuation">,</span>lptree rc<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	p<span class="token operator">-></span>l <span class="token operator">=</span>lc<span class="token punctuation">;</span>
+	p<span class="token operator">-></span>r <span class="token operator">=</span>rc<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	lptree t1<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t2<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t3<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t4<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t5<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t6<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	lptree t7<span class="token operator">=</span><span class="token function">creat</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">in</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">in</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t4<span class="token punctuation">,</span>t5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">in</span><span class="token punctuation">(</span>t3<span class="token punctuation">,</span>t6<span class="token punctuation">,</span>t7<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"first:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">xianxu</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\nsecond:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">zhongxu</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\nthird:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">houxu</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>最后出来的结果是：</p>
 <p style="text-align:center;"><img alt="" src="https://img-blog.csdnimg.cn/718faf597d47463a96aee410eedbf23e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARGVtby5v,size_20,color_FFFFFF,t_70,g_se,x_16" /></p>
 <p>跟我们刚刚分析的一样哈，没有骗人！</p>
 <p>任何递归函数都可以写成非递归，所以我们可以把这三个递归函数写成非递归函数，用压栈的方法。</p>
 <p>先序：因为顺序是头左右，所以我们先把头放进去，弹出就打印，然后看他的右子树是不是空，如果不空的话就把右孩子加到栈里面，再看左孩子空不空，如果不空再把左孩子放进去。这样我们打印的顺序就是头左右啦~</p>
 <p>代码实现：</p>
-<pre>
-<code>stack&lt;lptree&gt; q;//首先定义一个栈
-	q.push(t1);//把根节点放进去
-	while(q.size() ){//当栈不空的时候
-		lptree tt;
-		tt=q.top() ;//取队头
-		printf("%d ",tt-&gt;val  );//打印队头
-		q.pop() ;//弹出即打印
-		if(tt-&gt;r !=NULL){//如果右子树不空
-			q.push(tt-&gt;r ); //压入栈中
-		}
-		if(tt-&gt;l!=NULL){//如果左子树不空
-			q.push(tt-&gt;l ); //压
-		}
-	} </code></pre>
-<p>后序是左右头，我们倒过来看就是头右左，跟先序的区别就是左右换了一下，所以我们可以按照先序的做法，但是把左右换了一下，就是构造出头右左，先把头放进去，然后先压左后压右，这样出来的顺序就是头右左，但是我们想要的是他的逆序左右头，所以我们可以再建立一个栈，当他弹出原本的栈时候我们就把他存到那个新建的栈里，最后把栈输出就可以啦。</p>
-<pre>
-<code>stack&lt;lptree&gt; q,d;
-	q.push(t1);
-	while(q.size() ){
-		lptree tt=q.top() ;
-		d.push(tt);
-		q.pop() ;
-		if(tt-&gt;l !=NULL){
-			q.push(tt-&gt;l ); 
-		} 
-		if(tt-&gt;r !=NULL){
-			q.push(tt-&gt;r ); 
-		}
-	} 
-	while(d.size() ){
-		lptree t=d.top() ;
-		printf("%d ",t-&gt;val );
-		d.pop() ;
-	}</code></pre>
-<p>中序遍历的话：我们先建立一个栈，判断如果头节点不空或者栈不空我们就进行循环，如果头节点不空我们就把他放进去，把头节点更新为他的左子树，（一直存他的左子树）如果头结点空了我们就取栈顶元素弹出打印之后把头结点更新为栈顶元素的右节点。</p>
-<pre>
-<code>stack&lt;lptree&gt; o;
-	lptree head=t1;
-	while(o.size() ||head!=NULL){
-		if(head!=NULL){
-			o.push(head);
-			head=head-&gt;l ; 
-		}else{
-			lptree t=o.top() ;
-			head=t;
-			o.pop() ;
-			printf("%d ",t-&gt;val  );
-			head=head-&gt;r ;
-		}
-	}</code></pre>
-<p></p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>stack<span class="token operator">&lt;</span>lptree<span class="token operator">></span> q<span class="token punctuation">;</span><span class="token comment">//首先定义一个栈</span>
+	q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//把根节点放进去</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//当栈不空的时候</span>
+		lptree tt<span class="token punctuation">;</span>
+		tt<span class="token operator">=</span>q<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span><span class="token comment">//取队头</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>tt<span class="token operator">-></span>val  <span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//打印队头</span>
+		q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span><span class="token comment">//弹出即打印</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>r <span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//如果右子树不空</span>
+			q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//压入栈中</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>l<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//如果左子树不空</span>
+			q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//压</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span> 
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>后序是左右头，我们倒过来看就是头右左，跟先序的区别就是左右换了一下，所以我们可以按照先序的做法，但是把左右换了一下，就是构造出头右左，先把头放进去，然后先压左后压右，这样出来的顺序就是头右左，但是我们想要的是他的逆序左右头，所以我们可以再建立一个栈，当他弹出原本的栈时候我们就把他存到那个新建的栈里，最后把栈输出就可以啦。</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>stack<span class="token operator">&lt;</span>lptree<span class="token operator">></span> q<span class="token punctuation">,</span>d<span class="token punctuation">;</span>
+	q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
+		lptree tt<span class="token operator">=</span>q<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+		d<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>l <span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>l <span class="token punctuation">)</span><span class="token punctuation">;</span> 
+		<span class="token punctuation">}</span> 
+		<span class="token keyword">if</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>r <span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tt<span class="token operator">-></span>r <span class="token punctuation">)</span><span class="token punctuation">;</span> 
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span> 
+	<span class="token keyword">while</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
+		lptree t<span class="token operator">=</span>d<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>t<span class="token operator">-></span>val <span class="token punctuation">)</span><span class="token punctuation">;</span>
+		d<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>中序遍历的话：我们先建立一个栈，判断如果头节点不空或者栈不空我们就进行循环，如果头节点不空我们就把他放进去，把头节点更新为他的左子树，（一直存他的左子树）如果头结点空了我们就取栈顶元素弹出打印之后把头结点更新为栈顶元素的右节点。</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>stack<span class="token operator">&lt;</span>lptree<span class="token operator">></span> o<span class="token punctuation">;</span>
+	lptree head<span class="token operator">=</span>t1<span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span>head<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			o<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			head<span class="token operator">=</span>head<span class="token operator">-></span>l <span class="token punctuation">;</span> 
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			lptree t<span class="token operator">=</span>o<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+			head<span class="token operator">=</span>t<span class="token punctuation">;</span>
+			o<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>t<span class="token operator">-></span>val  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+			head<span class="token operator">=</span>head<span class="token operator">-></span>r <span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <p></p>
 <p></p>
 <p></p>
@@ -390,38 +377,37 @@ ABCD
 <p>后序遍历：左右根</p>
 <p>先序遍历：根左右</p>
 <p>因为后序遍历的每次遍历都是根结点，所以我们先把后序遍历的根结点输出，然后在中序遍历中找到根结点所在的位置，在中序遍历中根结点的前面就是左子树右边就是右子树，在后序中前面是左子树，中间是右子树，最后一个是根结点，所以我们每次就根据这些下标来分别遍历左子树和右子树（因为题目要求先序遍历是根左右）。</p>
-<pre>
-<code>#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#include&lt;cstring&gt;
-using namespace std;
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstring></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-string zhong,hou;//中：左根右 后：左右根
+string zhong<span class="token punctuation">,</span>hou<span class="token punctuation">;</span><span class="token comment">//中：左根右 后：左右根</span>
 
-void deal(int l1,int r1,int l2,int r2){
-	if(l1&gt;r1||l2&gt;r2)return ;//当中序或后序遍历完的时候退出
-	cout&lt;&lt;hou[r2];//没有遍历完就输出后序的最后一个（根结点
-	int pos=-1;
-	for(int i=0;i&lt;=r1;i++){//找到中序里的根结点的位置
-		if(zhong[i]==hou[r2]){
-			pos=i;
-			break;
-		}
-	}
-	//在中序遍历中根结点的前面是左子树，根结点的后面是右子树
-	//在后序遍历中我们只能知道最后一个是根结点，但是我们可以根据中序求出来左子树的长度来确定在后序中左子树和右子树的长度，最终确定位置关系
-	deal(l1,pos-1,l2,l2+pos-1-l1);//左子树
-	deal(pos+1,r1,l2+pos-l1,r2-1);
+<span class="token keyword">void</span> <span class="token function">deal</span><span class="token punctuation">(</span><span class="token keyword">int</span> l1<span class="token punctuation">,</span><span class="token keyword">int</span> r1<span class="token punctuation">,</span><span class="token keyword">int</span> l2<span class="token punctuation">,</span><span class="token keyword">int</span> r2<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>l1<span class="token operator">></span>r1<span class="token operator">||</span>l2<span class="token operator">></span>r2<span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span><span class="token comment">//当中序或后序遍历完的时候退出</span>
+	cout<span class="token operator">&lt;&lt;</span>hou<span class="token punctuation">[</span>r2<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//没有遍历完就输出后序的最后一个（根结点</span>
+	<span class="token keyword">int</span> pos<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>r1<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//找到中序里的根结点的位置</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>zhong<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>hou<span class="token punctuation">[</span>r2<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			pos<span class="token operator">=</span>i<span class="token punctuation">;</span>
+			<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//在中序遍历中根结点的前面是左子树，根结点的后面是右子树</span>
+	<span class="token comment">//在后序遍历中我们只能知道最后一个是根结点，但是我们可以根据中序求出来左子树的长度来确定在后序中左子树和右子树的长度，最终确定位置关系</span>
+	<span class="token function">deal</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>l2<span class="token punctuation">,</span>l2<span class="token operator">+</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//左子树</span>
+	<span class="token function">deal</span><span class="token punctuation">(</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>r1<span class="token punctuation">,</span>l2<span class="token operator">+</span>pos<span class="token operator">-</span>l1<span class="token punctuation">,</span>r2<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	
-}
-int main(){
-	cin&gt;&gt;zhong&gt;&gt;hou;
-	int len=zhong.size();
-	deal(0,len-1,0,len-1);
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	cin<span class="token operator">>></span>zhong<span class="token operator">>></span>hou<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> len<span class="token operator">=</span>zhong<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">deal</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	
-	return 0;
-}</code></pre>
-<p></p>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 <p></p>
 </div></template>
 

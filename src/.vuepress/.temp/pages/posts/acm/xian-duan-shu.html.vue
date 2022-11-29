@@ -46,71 +46,70 @@ L_QLQ​ R_QRQ​ D_QDQ​
 <p>sum表示l~r这段的总数，s表示l~r这段的数应该乘的数位，lazy表示懒标记</p>
 <p>建树的时候sum和s随着更新</p>
 <p>但是修改的时候只有sum在更新，因为l~r这段应该乘的位数是不变的</p>
-<pre>
-<code>#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int N=2e5+10;
-const long long mod=998244353;
-typedef long long ll;
-struct name{
-	int l,r;
-	ll sum,lazy,s;
-}tr[N*4];
-int n,m;
-ll a[N];
-void pushup(int u){
-	tr[u].sum =(tr[u&lt;&lt;1].sum+tr[u&lt;&lt;1|1].sum  )%mod;
-	tr[u].s =(tr[u&lt;&lt;1].s +tr[u&lt;&lt;1|1].s)%mod;
-}
-void build(int u,int l,int r){
-	if(l==r){
-		tr[u]={l,r,a[l],0,a[l]};
-	}else{
-		int mid=l+r&gt;&gt;1;
-		tr[u]={l,r,0,0,0};
-		build(u&lt;&lt;1,l,mid);
-		build(u&lt;&lt;1|1,mid+1,r);
-		pushup(u);
-	}
-}
-void pushdown(int u){
-	if(tr[u].lazy ){
-		tr[u&lt;&lt;1].lazy =tr[u].lazy ;
-		tr[u&lt;&lt;1].sum =tr[u&lt;&lt;1].s *tr[u].lazy %mod;
-		tr[u&lt;&lt;1|1].lazy =tr[u].lazy ;
-		tr[u&lt;&lt;1|1].sum =tr[u&lt;&lt;1|1].s *tr[u].lazy %mod;
-		tr[u].lazy =0;		
-	}
-}
-void modify(int u,int l,int r,ll x){
-	if(l&lt;=tr[u].l &amp;&amp;r&gt;=tr[u].r ){
-		tr[u].lazy =x;
-		tr[u].sum =tr[u].s *x%mod;
-	}else{
-		pushdown(u);
-		int mid=tr[u].l +tr[u].r &gt;&gt;1;
-		if(l&lt;=mid)modify(u&lt;&lt;1,l,r,x);
-		if(r&gt;mid)modify(u&lt;&lt;1|1,l,r,x);
-		tr[u].sum =(tr[u&lt;&lt;1].sum +tr[u&lt;&lt;1|1].sum)%mod; 
-	}
-}
-int main(){
-	scanf("%d%d",&amp;n,&amp;m);
-	a[n]=1;
-	for(int i=n-1;i&gt;=1;i--){
-		a[i]=a[i+1]*10%mod;
-	}
-	build(1,1,n);
-	while(m--){
-		int l,r;
-		ll x;
-		scanf("%d%d%lld",&amp;l,&amp;r,&amp;x);
-		modify(1,l,r,x);
-		printf("%lld\n",tr[1].sum );
-	}
-	return 0;
-}</code></pre>
-<p></p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token operator">=</span><span class="token number">2e5</span><span class="token operator">+</span><span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">long</span> <span class="token keyword">long</span> mod<span class="token operator">=</span><span class="token number">998244353</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">name</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> l<span class="token punctuation">,</span>r<span class="token punctuation">;</span>
+	ll sum<span class="token punctuation">,</span>lazy<span class="token punctuation">,</span>s<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>tr<span class="token punctuation">[</span>N<span class="token operator">*</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+ll a<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">pushup</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token operator">=</span><span class="token punctuation">(</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum<span class="token operator">+</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum  <span class="token punctuation">)</span><span class="token operator">%</span>mod<span class="token punctuation">;</span>
+	tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>s <span class="token operator">=</span><span class="token punctuation">(</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>s <span class="token operator">+</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>s<span class="token punctuation">)</span><span class="token operator">%</span>mod<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">,</span><span class="token keyword">int</span> l<span class="token punctuation">,</span><span class="token keyword">int</span> r<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>l<span class="token operator">==</span>r<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span>l<span class="token punctuation">,</span>r<span class="token punctuation">,</span>a<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>a<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> mid<span class="token operator">=</span>l<span class="token operator">+</span>r<span class="token operator">>></span><span class="token number">1</span><span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span>l<span class="token punctuation">,</span>r<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+		<span class="token function">build</span><span class="token punctuation">(</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">,</span>l<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">build</span><span class="token punctuation">(</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">,</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">pushup</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">pushdown</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token punctuation">)</span><span class="token punctuation">{</span>
+		tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token operator">=</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token operator">=</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>s <span class="token operator">*</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token operator">%</span>mod<span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token operator">=</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token operator">=</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>s <span class="token operator">*</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token operator">%</span>mod<span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">modify</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">,</span><span class="token keyword">int</span> l<span class="token punctuation">,</span><span class="token keyword">int</span> r<span class="token punctuation">,</span>ll x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>l<span class="token operator">&lt;=</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>l <span class="token operator">&amp;&amp;</span>r<span class="token operator">>=</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>r <span class="token punctuation">)</span><span class="token punctuation">{</span>
+		tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>lazy <span class="token operator">=</span>x<span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token operator">=</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>s <span class="token operator">*</span>x<span class="token operator">%</span>mod<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+		<span class="token function">pushdown</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> mid<span class="token operator">=</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>l <span class="token operator">+</span>tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>r <span class="token operator">>></span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>l<span class="token operator">&lt;=</span>mid<span class="token punctuation">)</span><span class="token function">modify</span><span class="token punctuation">(</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">,</span>l<span class="token punctuation">,</span>r<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>r<span class="token operator">></span>mid<span class="token punctuation">)</span><span class="token function">modify</span><span class="token punctuation">(</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">,</span>l<span class="token punctuation">,</span>r<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		tr<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token operator">=</span><span class="token punctuation">(</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token operator">+</span>tr<span class="token punctuation">[</span>u<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum<span class="token punctuation">)</span><span class="token operator">%</span>mod<span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>n<span class="token punctuation">,</span><span class="token operator">&amp;</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	a<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>a<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">10</span><span class="token operator">%</span>mod<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">build</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>m<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> l<span class="token punctuation">,</span>r<span class="token punctuation">;</span>
+		ll x<span class="token punctuation">;</span>
+		<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d%lld"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>l<span class="token punctuation">,</span><span class="token operator">&amp;</span>r<span class="token punctuation">,</span><span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">modify</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>l<span class="token punctuation">,</span>r<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%lld\n"</span><span class="token punctuation">,</span>tr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sum <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p></p>
 </div></template>
 
 
