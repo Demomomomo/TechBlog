@@ -1,10 +1,10 @@
 import { defineClientConfig } from "@vuepress/client";
 import { h } from "vue";
 
-import { useStyleTag } from "C:/Users/Demo/Desktop/temptmpDemoBlog-main/DemoBlog/blog/node_modules/vuepress-plugin-components/lib/client/vueuse.js";
-import Badge from "C:/Users/Demo/Desktop/temptmpDemoBlog-main/DemoBlog/blog/node_modules/vuepress-plugin-components/lib/client/components/Badge.js";
-import FontIcon from "C:/Users/Demo/Desktop/temptmpDemoBlog-main/DemoBlog/blog/node_modules/vuepress-plugin-components/lib/client/components/FontIcon.js";
-import BackToTop from "C:/Users/Demo/Desktop/temptmpDemoBlog-main/DemoBlog/blog/node_modules/vuepress-plugin-components/lib/client/components/BackToTop.js";
+import { useStyleTag } from "E:/TechBlog/node_modules/vuepress-plugin-components/lib/client/vueuse.js";
+import Badge from "E:/TechBlog/node_modules/vuepress-plugin-components/lib/client/components/Badge.js";
+import FontIcon from "E:/TechBlog/node_modules/vuepress-plugin-components/lib/client/components/FontIcon.js";
+import BackToTop from "E:/TechBlog/node_modules/vuepress-plugin-components/lib/client/components/BackToTop.js";
 
 
 export default defineClientConfig({
