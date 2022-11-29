@@ -21,7 +21,7 @@ export default defineUserConfig({
       description: "Demo 的技术栈",
     },
   },
-
+dest: './public',
   shouldPrefetch: false,
   plugins: [
     searchProPlugin({
