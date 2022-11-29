@@ -12,11 +12,6 @@ export const zhNavbar = navbar([
         icon: "edit",
         link: "acm/bei-bao.html"
       },
-      {
-        text: "love",
-        icon: "edit",
-        link: "love/main.html"
-      }
     ],
   },
 ]);

@@ -1,13 +1,13 @@
 {
   "name": "demo-blog",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A project of vuepress-theme-hope",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "vuepress build .",
+    "build": "vuepress build src",
     "clean-dev": "vuepress dev src --clean-cache",
-    "dev": "vuepress dev . --open --host \"localhost\""
+    "dev": "vuepress dev src"
   },
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.53",

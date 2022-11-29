@@ -1,1 +1,0 @@
-const t=JSON.parse('{"key":"v-2abe9c7a","path":"/src/zh/posts/acm/map.html","title":"map","lang":"en-US","frontmatter":{"title":"map","category":["algorithm"],"tag":["STL"]},"excerpt":"","headers":[{"level":2,"title":"帅到没朋友","slug":"帅到没朋友","link":"#帅到没朋友","children":[]}],"git":{},"filePathRelative":"src/zh/posts/acm/map.md"}');export{t as data};
