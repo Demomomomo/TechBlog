@@ -1,0 +1,14 @@
+export const data = JSON.parse("{\"key\":\"v-5def1cd4\",\"path\":\"/posts/blog/qian-zhui-he-he-cha-fen.html\",\"title\":\"前缀和和差分\",\"lang\":\"en-US\",\"frontmatter\":{\"title\":\"前缀和和差分\",\"description\":\"前缀和（c++） 用于计算已知数组的任意一段区域的和。 例题： 输入一个长度为 n的整数序列。 接下来再输入 m 个询问，每个询问输入一对 l,r。 对于每个询问，输出原序列中从第 l 个数到第 r 个数的和。 注意：输入a数组时下标从1开始，输入的时候就开始算s数组 #include&lt;iostream&gt; using namespace s...\",\"head\":[[\"meta\",{\"property\":\"og:url\",\"content\":\"https://mister-hope.github.io/posts/blog/qian-zhui-he-he-cha-fen.html\"}],[\"meta\",{\"property\":\"og:site_name\",\"content\":\"Blog Demo\"}],[\"meta\",{\"property\":\"og:title\",\"content\":\"前缀和和差分\"}],[\"meta\",{\"property\":\"og:description\",\"content\":\"前缀和（c++） 用于计算已知数组的任意一段区域的和。 例题： 输入一个长度为 n的整数序列。 接下来再输入 m 个询问，每个询问输入一对 l,r。 对于每个询问，输出原序列中从第 l 个数到第 r 个数的和。 注意：输入a数组时下标从1开始，输入的时候就开始算s数组 #include&lt;iostream&gt; using namespace s...\"}],[\"meta\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"meta\",{\"property\":\"og:locale\",\"content\":\"en-US\"}],[\"meta\",{\"property\":\"og:locale:alternate\",\"content\":\"zh-CN\"}],[\"link\",{\"rel\":\"alternate\",\"hreflang\":\"zh-cn\",\"href\":\"https://mister-hope.github.io/zh/posts/blog/qian-zhui-he-he-cha-fen.html\"}]]},\"excerpt\":\"\",\"headers\":[{\"level\":2,\"title\":\"前缀和（c++）\",\"slug\":\"前缀和-c\",\"link\":\"#前缀和-c\",\"children\":[]},{\"level\":2,\"title\":\"前缀和（一维，二维）\",\"slug\":\"前缀和-一维-二维\",\"link\":\"#前缀和-一维-二维\",\"children\":[]},{\"level\":2,\"title\":\"2781: 小A的魔法\",\"slug\":\"_2781-小a的魔法\",\"link\":\"#_2781-小a的魔法\",\"children\":[]},{\"level\":2,\"title\":\"D - Circular Addition\",\"slug\":\"d-circular-addition\",\"link\":\"#d-circular-addition\",\"children\":[]},{\"level\":2,\"title\":\"CF1648B Integral Array\",\"slug\":\"cf1648b-integral-array\",\"link\":\"#cf1648b-integral-array\",\"children\":[]},{\"level\":2,\"title\":\"IncDec Sequence\",\"slug\":\"incdec-sequence\",\"link\":\"#incdec-sequence\",\"children\":[]},{\"level\":2,\"title\":\"差分总结（c++）（例子：Color the ball ）\",\"slug\":\"差分总结-c-例子-color-the-ball\",\"link\":\"#差分总结-c-例子-color-the-ball\",\"children\":[]}],\"readingTime\":{\"minutes\":17.41,\"words\":5224},\"filePathRelative\":\"posts/blog/qian-zhui-he-he-cha-fen.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}
