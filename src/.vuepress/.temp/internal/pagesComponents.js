@@ -37,6 +37,8 @@ export const pagesComponents = {
   "v-49923d5a": defineAsyncComponent(() => import(/* webpackChunkName: "v-49923d5a" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/lian-biao.html.vue")),
   // path: /posts/acm/map.html
   "v-b3199514": defineAsyncComponent(() => import(/* webpackChunkName: "v-b3199514" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/map.html.vue")),
+  // path: /posts/acm/new-algorithm.html
+  "v-19e5a6d0": defineAsyncComponent(() => import(/* webpackChunkName: "v-19e5a6d0" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/new-algorithm.html.vue")),
   // path: /posts/acm/pai-lie-shu-xue.html
   "v-7279c41e": defineAsyncComponent(() => import(/* webpackChunkName: "v-7279c41e" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/pai-lie-shu-xue.html.vue")),
   // path: /posts/acm/pai-xu.html

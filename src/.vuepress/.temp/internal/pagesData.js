@@ -35,6 +35,8 @@ export const pagesData = {
   "v-49923d5a": () => import(/* webpackChunkName: "v-49923d5a" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/lian-biao.html.js").then(({ data }) => data),
   // path: /posts/acm/map.html
   "v-b3199514": () => import(/* webpackChunkName: "v-b3199514" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/map.html.js").then(({ data }) => data),
+  // path: /posts/acm/new-algorithm.html
+  "v-19e5a6d0": () => import(/* webpackChunkName: "v-19e5a6d0" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/new-algorithm.html.js").then(({ data }) => data),
   // path: /posts/acm/pai-lie-shu-xue.html
   "v-7279c41e": () => import(/* webpackChunkName: "v-7279c41e" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/pai-lie-shu-xue.html.js").then(({ data }) => data),
   // path: /posts/acm/pai-xu.html
