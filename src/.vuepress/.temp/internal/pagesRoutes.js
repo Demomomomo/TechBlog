@@ -29,7 +29,6 @@ export const pagesRoutes = [
   ["v-7f12c912","/posts/acm/xian-duan-shu.html",{"t":"线段树","y":"a","e":"E - Replace Digits（线段树） Problem Statement E - Replace Digits You have a string SS of length NN. Initially, all characters in SS are 1s. You will perform queries QQ times. In the...","c":["algorithm"],"g":["数据结构"],"r":{"minutes":2.46,"words":738}},["/posts/acm/xian-duan-shu","/posts/acm/xian-duan-shu.md"]],
   ["v-4dd2d996","/posts/acm/zi-fu-chuan.html",{"t":"字符串","y":"a","e":"A-花非花 第十八届西南科技大学ACM程序设计竞赛（同步赛） 柳庭风静人眠昼，昼眠人静风庭柳。香汗薄衫凉，凉衫薄汗香。手红冰碗藕，藕碗冰红手。郎笑藕丝长，长丝藕笑郎。 给出一个序列 ana_nan​，对于 iii，求有几个数 jjj 满足： 111 、i≤ji \\le ji≤j 222 、子串 ai∼ja_{i\\sim j}ai∼j​ 是一个回文串 回...","c":["algorithm"],"g":["字符串"],"r":{"minutes":16.91,"words":5073}},["/posts/acm/zi-fu-chuan","/posts/acm/zi-fu-chuan.md"]],
   ["v-49e74e91","/posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu.html",{"t":"最短路+最小生成树","y":"a","e":"畅通工程之最低成本建设问题 某地区经过对城镇交通状况的调查，得到现有城镇间快速道路的统计数据，并提出“畅通工程”的目标：使整个地区任何两个城镇间都可以实现快速交通（但不一定有直接的快速道路相连，只要互相间接通过快速路可达即可）。现得到城镇道路统计表，表中列出了有可能建设成快速路的若干条道路的成本，求畅通工程需要的最低成本。 输入格式: 输入的第一行给出...","c":["algorithm"],"g":["图"],"r":{"minutes":11.45,"words":3436}},["/posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu","/posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu.md"]],
-  ["v-0f721fac","/posts/python/base.html",{"t":"基础","y":"a","e":"这是 python 基础","r":{"minutes":0.03,"words":8}},["/posts/python/base","/posts/python/base.md"]],
   ["v-3706649a","/404.html",{"t":"","y":"p"},["/404"]],
   ["v-5bc93818","/category/",{"t":"分类","y":"p"},["/category/index.html"]],
   ["v-744d024e","/tag/",{"t":"标签","y":"p"},["/tag/index.html"]],
@@ -50,4 +49,5 @@ export const pagesRoutes = [
   ["v-93cb9d6e","/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/",{"t":"字符串 标签","y":"p"},["/tag/字符串/","/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html"]],
   ["v-b3059a9c","/tag/stl/",{"t":"STL 标签","y":"p"},["/tag/stl/index.html"]],
   ["v-300d34ce","/tag/%E5%9B%BE/",{"t":"图 标签","y":"p"},["/tag/图/","/tag/%E5%9B%BE/index.html"]],
+  ["v-f5085882","/posts/acm/12.html",{"t":"","y":"a"},["/posts/acm/12","/posts/acm/12.md"]],
 ]

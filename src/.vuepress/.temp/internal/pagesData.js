@@ -59,8 +59,6 @@ export const pagesData = {
   "v-4dd2d996": () => import(/* webpackChunkName: "v-4dd2d996" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/zi-fu-chuan.html.js").then(({ data }) => data),
   // path: /posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu.html
   "v-49e74e91": () => import(/* webpackChunkName: "v-49e74e91" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu.html.js").then(({ data }) => data),
-  // path: /posts/python/base.html
-  "v-0f721fac": () => import(/* webpackChunkName: "v-0f721fac" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/python/base.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"E:/TechBlog/src/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
   // path: /category/
@@ -101,4 +99,6 @@ export const pagesData = {
   "v-b3059a9c": () => import(/* webpackChunkName: "v-b3059a9c" */"E:/TechBlog/src/.vuepress/.temp/pages/tag/stl/index.html.js").then(({ data }) => data),
   // path: /tag/%E5%9B%BE/
   "v-300d34ce": () => import(/* webpackChunkName: "v-300d34ce" */"E:/TechBlog/src/.vuepress/.temp/pages/tag/图/index.html.js").then(({ data }) => data),
+  // path: /posts/acm/12.html
+  "v-f5085882": () => import(/* webpackChunkName: "v-f5085882" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/12.html.js").then(({ data }) => data),
 }
