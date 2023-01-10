@@ -3,21 +3,19 @@ import { navbar } from "vuepress-theme-hope";
 export const zhNavbar = navbar([
   "/",
   {
-    text: "博文",
+    text: "ACM",
     icon: "edit",
-    prefix: "/posts/",
     children: [
       {
-        text: "ACM",
+        text: "题解",
         icon: "edit",
-        link: "acm/bei-bao.html"
+        link: "/posts/acm/bei-bao.html"
       },
-      // {
-      //   text: "在上方导航栏的名字1",
-      //   icon: "图标代号",
-      //   link: "本文件夹默认文件的路径"
-        
-      // },
+      {
+        text: "算法",
+        icon: "edit",
+        link: "/algorithm/图论/qiang-lian-tong-fen-liang.html"
+      },
       // {
       //   text: "在上方导航栏的名字2",
       //   icon: "图标代号",
@@ -27,4 +25,8 @@ export const zhNavbar = navbar([
       // 再新建文件夹了默认路径改为这个文件夹的默认文件，格式如上
     ],
   },
+  // {
+  //   text: ""
+  // }
+  
 ]);
