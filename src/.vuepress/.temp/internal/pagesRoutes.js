@@ -49,5 +49,4 @@ export const pagesRoutes = [
   ["v-93cb9d6e","/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/",{"t":"字符串 标签","y":"p"},["/tag/字符串/","/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html"]],
   ["v-b3059a9c","/tag/stl/",{"t":"STL 标签","y":"p"},["/tag/stl/index.html"]],
   ["v-300d34ce","/tag/%E5%9B%BE/",{"t":"图 标签","y":"p"},["/tag/图/","/tag/%E5%9B%BE/index.html"]],
-  ["v-f5085882","/posts/acm/12.html",{"t":"","y":"a"},["/posts/acm/12","/posts/acm/12.md"]],
 ]

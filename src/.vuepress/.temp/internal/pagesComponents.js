@@ -101,6 +101,4 @@ export const pagesComponents = {
   "v-b3059a9c": defineAsyncComponent(() => import(/* webpackChunkName: "v-b3059a9c" */"E:/TechBlog/src/.vuepress/.temp/pages/tag/stl/index.html.vue")),
   // path: /tag/%E5%9B%BE/
   "v-300d34ce": defineAsyncComponent(() => import(/* webpackChunkName: "v-300d34ce" */"E:/TechBlog/src/.vuepress/.temp/pages/tag/图/index.html.vue")),
-  // path: /posts/acm/12.html
-  "v-f5085882": defineAsyncComponent(() => import(/* webpackChunkName: "v-f5085882" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/12.html.vue")),
 }
