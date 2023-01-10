@@ -61,6 +61,8 @@ export const pagesData = {
   "v-4dd2d996": () => import(/* webpackChunkName: "v-4dd2d996" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/zi-fu-chuan.html.js").then(({ data }) => data),
   // path: /posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu.html
   "v-49e74e91": () => import(/* webpackChunkName: "v-49e74e91" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/acm/zui-duan-lu-+-zui-xiao-sheng-cheng-shu.html.js").then(({ data }) => data),
+  // path: /posts/suan-fa/qiang-lian-tong-fen-liang.html
+  "v-5834f7c6": () => import(/* webpackChunkName: "v-5834f7c6" */"E:/TechBlog/src/.vuepress/.temp/pages/posts/suan-fa/qiang-lian-tong-fen-liang.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"E:/TechBlog/src/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
   // path: /category/
