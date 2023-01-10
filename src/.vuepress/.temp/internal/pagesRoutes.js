@@ -49,4 +49,5 @@ export const pagesRoutes = [
   ["v-93cb9d6e","/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/",{"t":"字符串 标签","y":"p"},["/tag/字符串/","/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html"]],
   ["v-b3059a9c","/tag/stl/",{"t":"STL 标签","y":"p"},["/tag/stl/index.html"]],
   ["v-300d34ce","/tag/%E5%9B%BE/",{"t":"图 标签","y":"p"},["/tag/图/","/tag/%E5%9B%BE/index.html"]],
+  ["v-49b4af53","/posts/acm/er-fen-tu.html",{"t":"","y":"a","e":"二分图 概念","r":{"minutes":0.02,"words":5}},["/posts/acm/er-fen-tu","/posts/acm/er-fen-tu.md"]],
 ]
