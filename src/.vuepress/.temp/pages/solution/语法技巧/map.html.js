@@ -1,0 +1,14 @@
+export const data = JSON.parse("{\"key\":\"v-187be613\",\"path\":\"/solution/%E8%AF%AD%E6%B3%95%E6%8A%80%E5%B7%A7/map.html\",\"title\":\"map\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"map\",\"category\":[\"algorithm\"],\"tag\":[\"STL\"],\"description\":\"帅到没朋友 当芸芸众生忙着在朋友圈中发照片的时候，总有一些人因为太帅而没有朋友。本题就要求你找出那些帅到没有朋友的人。 输入格式： 输入第一行给出一个正整数N（≤100），是已知朋友圈的个数；随后N行，每行首先给出一个正整数K（≤1000），为朋友圈中的人数，然后列出一个朋友圈内的所有人——为方便起见，每人对应一个ID号，为5位数字（从00000到99...\",\"head\":[[\"meta\",{\"property\":\"og:url\",\"content\":\"https://mister-hope.github.io/solution/%E8%AF%AD%E6%B3%95%E6%8A%80%E5%B7%A7/map.html\"}],[\"meta\",{\"property\":\"og:site_name\",\"content\":\"Demo\"}],[\"meta\",{\"property\":\"og:title\",\"content\":\"map\"}],[\"meta\",{\"property\":\"og:description\",\"content\":\"帅到没朋友 当芸芸众生忙着在朋友圈中发照片的时候，总有一些人因为太帅而没有朋友。本题就要求你找出那些帅到没有朋友的人。 输入格式： 输入第一行给出一个正整数N（≤100），是已知朋友圈的个数；随后N行，每行首先给出一个正整数K（≤1000），为朋友圈中的人数，然后列出一个朋友圈内的所有人——为方便起见，每人对应一个ID号，为5位数字（从00000到99...\"}],[\"meta\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"meta\",{\"property\":\"og:locale\",\"content\":\"zh-CN\"}],[\"meta\",{\"property\":\"article:tag\",\"content\":\"STL\"}]]},\"excerpt\":\"\",\"headers\":[{\"level\":2,\"title\":\"帅到没朋友\",\"slug\":\"帅到没朋友\",\"link\":\"#帅到没朋友\",\"children\":[]}],\"readingTime\":{\"minutes\":2.52,\"words\":757},\"filePathRelative\":\"solution/语法技巧/map.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}

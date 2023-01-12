@@ -9,12 +9,12 @@ export const zhNavbar = navbar([
       {
         text: "题解",
         icon: "edit",
-        link: "/posts/acm/bei-bao.html"
+        link: "/solution"
       },
       {
         text: "算法",
         icon: "edit",
-        link: "/algorithm/图论/qiang-lian-tong-fen-liang.html"
+        link: "/algorithm"
       },
       // {
       //   text: "在上方导航栏的名字2",
