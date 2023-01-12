@@ -417,15 +417,135 @@ void build(){
 
 ```
 
-<!-- ## 例三：求最大的半联通子图
+## 例3：求最大的半联通子图
 半联通子图：对于图中的任意两点u，v，都存在一条边（可以是u->v，也可以是v->u)
 
 强联通图中的所有点都满足这个条件
 
 那么如果选择了强连通图其中的一个点的话，我们可以贪心的把这个强连通子图里的所有点都选择。那么我们可以进行缩点建一个拓扑图，每个强连通分量点集的大小是他的点权
 
-如果我们选择的路径在中间有分支的话，各个分支上的点是跟其他分支上的点之间是没有边的，不满足题意，那么就只有一条链上的点满足题意，即找到最长的一条链
+如果我们选择的路径在中间有分支的话，各个分支上的点是跟其他分支上的点之间是没有边的，不满足题意，那么就只有一条链上的点满足题意，即找到节点最多的一条链
 
+si[x]是强连通分量x上的结点数
 f[x]表示以x为结尾的最长链的节点数
 g[x]表示让f[x]取到最大值的方案数
-由于缩点之后的强连通点的编号就是拓扑图的逆序，那么我们可以直接逆序遍历编号 -->
+由于缩点之后的强连通点的编号就是拓扑图的逆序，那么我们可以直接逆序遍历编号
+
+设j是i的所有入边
+当f[j]+si[i]>f[i]的时候
+f[i]=f[j]+si[i],g[i]=g[j];
+当f[j]+si[i]==f[i]的时候
+g[i]+=g[j];
+f[x]的状态转移方程是：
+
+```cpp
+			if(f[i]+si[k]>f[k]){
+				f[k]=f[i]+si[k];
+				g[k]=g[i];
+			}else if(f[i]+si[k]==f[k]){
+				g[k]=(g[i]+g[k])%x;
+			}
+```
+
+完整代码：
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e5+10,M=2e6+10;
+int n,m;
+int e[M],ne[M],h1[N],h2[N],idx,ti,si[N];//注意内存，开两个表头和一个ne数组和e数组
+bool isin[N];
+typedef long long ll;
+int st[N],dfn[N],low[N],id[N],top,sccnt;
+ll x;
+int f[N],g[N];
+void add1(int a,int b){
+	e[idx]=b;
+	ne[idx]=h1[a];
+	h1[a]=idx++;
+}
+void add2(int a,int b){
+	e[idx]=b;
+	ne[idx]=h2[a];
+	h2[a]=idx++;
+}
+void tarjan(int u){
+	dfn[u]=low[u]=++ti;
+	st[++top]=u;
+	isin[u]=true;
+	for(int i=h1[u];i!=-1;i=ne[i]){
+		int j=e[i];
+		if(dfn[j]==0){
+			tarjan(j);
+			low[u]=min(low[u],low[j]);
+		}else if(isin[j]){
+			low[u]=min(low[u],dfn[j]);
+		}
+	}
+	if(low[u]==dfn[u]){
+		int y;
+		sccnt++;
+		do{
+			y=st[top--];
+			isin[y]=false;
+			si[sccnt]++;
+			id[y]=sccnt;
+		}while(y!=u);
+	}
+}
+void build(){
+	unordered_map<ll,int> mp;
+	for(int i=1;i<=n;i++){
+		for(int j=h1[i];j!=-1;j=ne[j]){
+			int k=e[j];
+			ll op=id[i]*1000000ll+id[k];
+			if(id[i]!=id[k]&&mp[op]==0){
+				add2(id[i],id[k]);
+			}
+			mp[op]=1;
+		}
+	}
+}
+int main(){
+	memset(h1,-1,sizeof h1);
+	memset(h2,-1,sizeof h2);
+	cin>>n>>m>>x;
+	while(m--){
+		int a,b;
+		cin>>a>>b;
+		add1(a,b);
+	}
+	for(int i=1;i<=n;i++){
+		if(!dfn[i]) tarjan(i);
+	}
+	build();
+	for(int i=sccnt;i>=1;i--){
+		if(!f[i]){
+			f[i]=si[i];
+			g[i]=1;
+		}
+		for(int j=h2[i];j!=-1;j=ne[j]){
+			int k=e[j];
+			if(f[i]+si[k]>f[k]){
+				f[k]=f[i]+si[k];
+				g[k]=g[i];
+			}else if(f[i]+si[k]==f[k]){
+				g[k]=(g[i]+g[k])%x;
+			}
+		}
+	}
+	ll mx=0,sum=0;
+	for(int i=1;i<=sccnt;i++){
+		if(mx<f[i]){
+			mx=(ll)f[i];
+			sum=(ll)g[i];
+		}else if(mx==f[i]){
+			sum=(ll)(g[i]+sum)%x;
+		}
+	}
+	cout<<mx<<endl;
+	cout<<sum<<endl;
+	return 0;
+}
+```
+
