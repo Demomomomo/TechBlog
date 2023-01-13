@@ -1,11 +1,11 @@
 <template><div><h2 id="概念" tabindex="-1"><a class="header-anchor" href="#概念" aria-hidden="true">#</a> 概念</h2>
-<p>对无向图来说才有双联通分量
+<p>对无向图来说才有双联通分量<br>
 双联通分量有两种：</p>
 <p>1.边双联通分量（e-dcc）：
 桥：对于一个联通图来说，如果删掉一条边使图不能联通，那么这条边就称为桥
 极大的不含有桥的联通区域就称为边双联通分量</p>
-<p>性质：
-在边双联通分量里，不管删掉哪条边，图还是联通的
+<p>性质：<br>
+在边双联通分量里，不管删掉哪条边，图还是联通的<br>
 在边双联通分量里，任意两点之间一定包含两条不相交的路径（存在两条没有公共边的路径）</p>
 <p>2.点双联通分量（v-dcc）：
 割点：在一个联通图中，如果把一个点及他连接的所有边删掉之后图不联通，那么这个点就叫做割点
@@ -23,8 +23,8 @@ low[x]表示从x开始走，能走到的点的最小时间<br>
 <p>方法2代码：</p>
 <h2 id="例题1-冗余路径" tabindex="-1"><a class="header-anchor" href="#例题1-冗余路径" aria-hidden="true">#</a> 例题1：冗余路径</h2>
 <p>给定一个无向联通图，问至少加几条边使他变成一个边双联通分量</p>
-<p>思路：
-对于所有的边双联通分量，如果我们在里面加任意一条边都是多余的，因为加不加去掉任何一个边都联通，所以我们先对于一个图中所有的边双联通分量进行缩点，缩点之后的每条边都是一个桥。
+<p>思路：<br>
+对于所有的边双联通分量，如果我们在里面加任意一条边都是多余的，因为加不加去掉任何一个边都联通，所以我们先对于一个图中所有的边双联通分量进行缩点，缩点之后的每条边都是一个桥。<br>
 那么缩点度数为1的点（叶子节点）至少要加一条边，否则如果删掉与度数为1的点相连的边的话，这个点就与原来的图不联通。那么我们可以把叶子节点：最左边的点连最右边的点，第二个连第二个...如果剩一个的话随便向之前的点连一条边，然后我们就能发现无论删哪条边，整个图都联通。所以答案是（入度为1的点数+1）/2</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>

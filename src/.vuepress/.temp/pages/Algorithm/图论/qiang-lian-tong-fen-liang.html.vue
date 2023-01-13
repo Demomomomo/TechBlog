@@ -231,9 +231,9 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>输出样例：</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token number">1</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>思路：对于一个有向无环图来说，要受所有的牛的欢迎，那么他是最后一个遍历的点，出度为0，而且如果有两个及以上的点的出度为0的话就不能保证所有的点都最后到这个点（因为会有一个分支走向其他出度为0的点）。
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>思路：对于一个有向无环图来说，要受所有的牛的欢迎，那么他是最后一个遍历的点，出度为0，而且如果有两个及以上的点的出度为0的话就不能保证所有的点都最后到这个点（因为会有一个分支走向其他出度为0的点）。<br>
 所以我们要先缩点把这个图变成有向无环图，对缩点之后的新图判断有几个点的出度是0：
-如果&gt;=2那么没有点能让所有点都走到他
+如果&gt;=2那么没有点能让所有点都走到他<br>
 如果==1，我们就看这个缩之后的点的强连通分量的编号，找到所有跟这个编号相等的点的个数</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector></span></span>
@@ -321,8 +321,8 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
 用low[u]来表示从u点开始走能遍历的到的最小时间戳是什么
 如果u是其所在的强连通分量的最高点，等价于dfn[u]==low[u]
 那么一个强连通分量就可以缩点到他的最高点</p>
-<p>思路：当第一次遍历到这个点时我们把他的时间戳dfn和最小能到达的点的时间戳都改为遍历到这个点的时间戳，然后把他放入一个栈中，标记他在栈中。
-然后遍历与他相连的点j。如果没走过，那么我们就再遍历j，当j被遍历完之后的low[j]和low[u]取最小值赋给low[u]；如果j走过且在栈里的话，我们就拿dfn[j]和low[u]取最小值赋给low[u]。
+<p>思路：当第一次遍历到这个点时我们把他的时间戳dfn和最小能到达的点的时间戳都改为遍历到这个点的时间戳，然后把他放入一个栈中，标记他在栈中。<br>
+然后遍历与他相连的点j。如果没走过，那么我们就再遍历j，当j被遍历完之后的low[j]和low[u]取最小值赋给low[u]；如果j走过且在栈里的话，我们就拿dfn[j]和low[u]取最小值赋给low[u]。<br>
 遍历完u的所有边之后，如果dfn[u]==low[u]，说明u是他所在的强联通分量的最高点，那么强连通分量的个数编号++，而且栈里存的数从栈顶到u所在的位置全都是u所在的强联通分量，那么我们就一个一个取出每个数把他们所在的强连通分量的编号赋值成编号，把他们的在栈中的状态改为false</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token operator">=</span><span class="token number">2e5</span><span class="token operator">+</span><span class="token number">10</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> e<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span>ne<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span>idx<span class="token punctuation">,</span>h<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
