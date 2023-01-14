@@ -100,5 +100,71 @@ int main(){
 }
 
 ```
+
+## 例题1：新的开始
+有 n 口矿井，考虑矿井供电问题。为了保证电力的供应有两种方法：  
+1.在矿井 i 上建立一个发电站，费用为 vi（发电站的输出功率可以供给任意多个矿井）。  
+2.将这口矿井 i 与另外的已经有电力供应的矿井 j 之间建立电网，费用为 pi,j。  
+小 FF 希望你帮他想出一个保证所有矿井电力供应的最小花费方案。  
+
+思路：  
+求若干个连通块发电所需要的最小电力，联通块所用的最小电力可以用Kruskal解决。  
+还有一个问题就是让每个连通块发电，那么我们可以建立一个虚拟原点，让一个井发电就相当于向虚拟原点连一条长为vi的边，那么让多个连通块都发点的意思实际上就是求n个点与虚拟原点组成的最小生成树。  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+const int N=310,M=1e5+10;
+int n,m;
+int a[N];
+int g[N][N];
+struct name{
+	int a,b,c;
+}q[M];
+bool f[N],st[N];
+
+int p[N];
+int find(int x){
+	if(p[x]!=x) p[x]=find(p[x]);
+	return p[x];
+	
+}
+bool cmp(name a,name b){
+	return a.c <b.c ;
+}
+signed main(){
+	cin>>n;
+	int con=0;
+	for(int i=1;i<=n;i++){
+		con++;
+		cin>>a[i];
+		q[con]={0,i,a[i]};
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=n;j++){
+			cin>>g[i][j];
+			if(i!=j){
+				con++;
+				q[con]={i,j,g[i][j]};
+			}
+		}
+	}
+	
+	for(int i=1;i<=n;i++)p[i]=i;
+	sort(q+1,q+1+con,cmp);
+	int ans=0;
+	for(int i=1;i<=con;i++){
+		int a=q[i].a ,b=q[i].b ,c=q[i].c ;
+		a=find(a),b=find(b);
+		if(a!=b){
+			ans+=c;
+			p[a]=b;
+		}
+	}
+	cout<<ans<<endl;
+	return 0;
+}
+```
+
 ## 次小生成树
 对于一张无向图，如果存在最小生成树和次小生成树，那么对于任何一颗最小生成树，都有一颗次小生成树，使得这两颗树只有一条边不同
