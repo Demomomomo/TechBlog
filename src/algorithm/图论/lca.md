@@ -33,7 +33,6 @@ depth[x]表示x所在的深度（规定根节点是1，所有点的深度是到�
 
 输出格式  
 对于每一个询问，若 x 是 y 的祖先则输出 1，若 y 是 x 的祖先则输出 2，否则输出 0。  
-
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
