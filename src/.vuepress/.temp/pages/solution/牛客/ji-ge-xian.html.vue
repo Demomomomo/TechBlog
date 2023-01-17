@@ -18,7 +18,7 @@ M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 数据范围a[i]&lt;=1e9，因为开根号很少次就可以得到一个固定的值，那么我们找一个数试试一直按照上面的函数改变几次会变成一个固定的值<br>
 那么对于1e9来说，他操作9次之后就变成了100，而且100进行上述的操作时候还是100，那么说明对于数组a，我们最多操作n*10次操作每个数就可以变成一个固定的值。<br>
 那么我们用set来存储还没有变成100的值的下标，每次需要操作的时候我们就从一个大于等于l的下标开始，大于r结束的set里存的每个下标id，对a[id]进行k次操作就行了<br>
-为了方便计算sum，我们每次对一个数进行完k次操作的时候，减去原来他的值再加上他变化后的值就可以了</p>
+为了方便计算sum，我们每次对一个数进行完k次操作的时候，减去原来他的值再加上他变化后的值就可以了E:</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;set></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector></span></span>
