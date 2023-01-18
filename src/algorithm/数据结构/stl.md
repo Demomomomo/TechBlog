@@ -120,7 +120,8 @@ for(int i=0;i<yy.size();i++) st.erase(yy[i]);
 ```
 ## map
 定义：映射数组//前面的映射出后面的，就是输出后面的  
-如果存数组那么按字典序递增的方式储存  
+如果存数组那么按字典序递增的方式储存 
+map查找一个数的时间复杂度是logn，unordered_map是O（1） 
 ```cpp
 map<int,int> a;
 a[1]=2;`
