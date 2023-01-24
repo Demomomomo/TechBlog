@@ -36,9 +36,27 @@ y1-y0 &y2-y0
 ## 三个问题
 1.给定具有共同端点的两个有向线段 $\overrightarrow{p_0p_1}$ 和 $\overrightarrow{p_1p_2}$，请问 $\overrightarrow{p_0p_1}$ 是否在 $\overrightarrow{p_0p_2}$ 的瞬时针方向上？  
 2.给定两个有向线段 $\overrightarrow{p_0p_1}$ 和 $\overrightarrow{p_1p_2}$，如果我们首先沿着p0p1的方向走，然后沿着p1p2走，请问在p1点，是左转还是右转？  
-3.给定两个向量p1p2和p3p4，如何判断他们是否相交？  
+3.给定两个向量 $\overrightarrow{p_1p_2}$ 和 $\overrightarrow{p_3p_4}$ ，如何判断他们是否相交？  
 
 (1)用向量p0p1×p0p2，如果>0就在顺时针方向上  
 (2)构造p0p2这个向量，如果p0p1×p0p2>0说明是向左，否则向右  
+(3)分情况讨论：  
+若是普通相交的情况，比如下图：  
+<img src="https://img-blog.csdnimg.cn/4bb843e4d2dd492f9e28251116dbd44f.jpeg#pic_center" alt="Pulpit rock" width="304" height="228">
+
+<!-- ![在这里插入图片描述](https://img-blog.csdnimg.cn/4bb843e4d2dd492f9e28251116dbd44f.jpeg#pic_center) -->
+
+先判断 $\overrightarrow{p_1p_2}$ 和 $\overrightarrow{p_1p_3}$ 的叉积，以及 $\overrightarrow{p_1p_2}$ 和 $\overrightarrow{p_1p_4}$ 的叉积是否异号  
+<img src="https://img-blog.csdnimg.cn/8f0e1a55d9ac43ac8b8dab63922f5d4e.jpeg#pic_center" alt="Pulpit rock" width="304" height="228">
+<!-- ![在这里插入图片描述](https://img-blog.csdnimg.cn/8f0e1a55d9ac43ac8b8dab63922f5d4e.jpeg#pic_center) -->
+
+再判断 $\overrightarrow{p_3p_4}$ 和 $\overrightarrow{p_3p_1}$的叉积，以及 $\overrightarrow{p_3p_4}$ 和  $\overrightarrow{p_3p_2}$ 的叉积是否异号  
+<img src="https://img-blog.csdnimg.cn/a2e3fb70fca5465281532f174bc0b5d1.jpeg#pic_center" alt="Pulpit rock" width="304" height="228">
+
+如果都异号的话，那么说明相交  
+
+
+
+
 ## 物理意义
 用这两个向量为两个边作一个平行四边形，平行四边形的有向面积就是叉积的结果
