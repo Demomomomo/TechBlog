@@ -7,8 +7,31 @@ title: 凸包
 <img src="https://img-blog.csdnimg.cn/84f3db1b78a44eb1869f46bfe178cfc3.png#pic_center" alt="Pulpit rock" width="400" height="228"> 
 
 ## graham scan算法
-找一个y值最小的点 $p_{0}$，按照每个点 $p_{i}$ 和 $p_{0}$ 连成的直线和x轴正半轴的夹角大小，从小到大排序
-<img src="https://img-blog.csdnimg.cn/2243e20bd7cc44238b831a763b971417.png#pic_center" alt="Pulpit rock" width="400" height="228">  
+找一个y值最小的点 $p_{0}$，按照每个点 $p_{i}$ 和 $p_{0}$ 连成的直线和x轴正半轴的夹角大小，从小到大排序  
+极角排序：  
+用叉乘判断方向： $\overrightarrow{a}$ × $\overrightarrow{b}$ = $\left | a \right |$ $\left | b \right |$  $\sin \theta$ ,$\theta$ 是a逆时针旋转到b的角度，那么叉积是正的就是逆时针旋转过去。  
+
+```cpp
+struct name{
+	int x,y;
+}p[N];
+long long cj(int x1,int y1,int x2,int y2){
+	return x1*y2-x2*y1;
+}
+int js(name p0,name p1,name p0,name p2){
+	int x1=p1.x -p0.x ;
+	int y1=p1.y -p0.y ;
+	int x2=p2.x -p0.x ;
+	int y2=p2.y -p0.y ;
+	return cj(x1,y1,x2,y2);
+}
+bool cmp(name a,name b){
+	int ans=js(p[0],a,p[0],b);
+	if(ans==0)return a.x <b.x ;
+	return ans>0;
+}
+```
+
 排完序之后，用一个栈来储存凸包含有的点，先放一个0进栈，然后将前三个点放入栈中，每次取栈中第二个元素与栈顶的点组成的向量和栈中第二个元素与最新点组成的向量，计算他们的叉积，当叉积< 0的时候说明向右转，但是向右转的话组成的图形是凹进去的，那么我们就把栈顶元素去掉，循环这个操作直至栈顶元素和第二个元素以及新加入的点组成的向量满足向右转，那么加入新的点  
 比如下图：  
 栈中先加入0，$p_{0}$ ,$p_{1}$ ,$p_{2}$ ,然后从i=3开始  
