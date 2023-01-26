@@ -34,7 +34,7 @@ y1-y0 &y2-y0
 如果p1×p2<0，p1在p2的逆时针方向  
 
 ## 用叉积判断两个向量的位置关系
-1.给定具有共同端点的两个有向线段 $\overrightarrow{p_0p_1}$ 和 $\overrightarrow{p_1p_2}$，请问 $\overrightarrow{p_0p_1}$ 是否在 $\overrightarrow{p_0p_2}$ 的瞬时针方向上？  
+1.给定具有共同端点的两个有向线段 $\overrightarrow{p_0p_1}$ 和 $\overrightarrow{p_1p_2}$，请问 $\overrightarrow{p_0p_1}$ 是否在 $\overrightarrow{p_0p_2}$ 的顺时针方向上？  
 2.给定两个有向线段 $\overrightarrow{p_0p_1}$ 和 $\overrightarrow{p_1p_2}$，如果我们首先沿着p0p1的方向走，然后沿着p1p2走，请问在p1点，是左转还是右转？  
 3.给定两个向量 $\overrightarrow{p_1p_2}$ 和 $\overrightarrow{p_3p_4}$ ，如何判断他们是否相交？  
 

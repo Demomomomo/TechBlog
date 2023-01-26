@@ -205,7 +205,7 @@ s可以加一个字符串：`s+="abf";`
 `stoi(s,0,2)` ：将二进制的字符串s转化为十进制；  
 `int x=stoi(s);`把s转化为十进制的x  
 `memcpy`函数：把字符串b复制到字符串a中  
-`memcpy（a,b,sizeof(a)); `sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  
+`memcpy（a,b,sizeof(b)); `sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
 关于memcpy函数：`memcpy(目标数组，被复制的数组，被复制的数组的大小)`  
 `isalnum函数`：判断是否为字母或数字，是的话返回true。  
 头文件是`#include <cctype>`  

@@ -1,0 +1,288 @@
+---
+title: 单源最短路
+---
+从一个点到其他所有点的最短路
+（n是点数，m是边数）
+## 所有边权都是正数
+
+
+### 朴素版dijkstra算法（稠密图
+
+时间复杂度O（n*n）  
+g[i][j]表示第i个点到第j个点的最短边，先初始化g数组为极大值，每次输入取最小  
+然后进行dijk算法：  
+d[i]表示i点到1的最小距离，初始化为极大值，先设d[1]=0  
+进行n次循环，每次找到一个没有被确定的最短距离d[t]  
+再用d[t]来更新每个点到1的最小距离（d[j]=min(d[j],d[t]+g[t][j]))  
+如果求n到1的最短距离，如果最后算出的d[n]>=0x3f3f3f3f,那么说明没有路能从1到达n，否则的话输出d[n]就可以了
+
+
+```cpp
+#include<bits/stdc++.h>
+const int N=500+10;
+int n,m;
+int g[N][N];
+int d[N];
+bool st[N];
+
+int dijk(){
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	for(int i=0;i<n;i++){
+		int t=-1;
+		for(int j=1;j<=n;j++){
+			if(!st[j]&&(t==-1||d[t]>d[j]))t=j;
+		}
+		st[t]=true;
+		for(int j=1;j<=n;j++){
+			d[j]=min(d[j],d[t]+g[t][j]);
+		}
+	}
+	if(d[n]>=0x3f3f3f3f)return -1;
+	return d[n];
+}
+void sove(){
+	cin>>n>>m;
+	memset(g,0x3f,sizeof g);
+	while(m--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		g[a][b]=min(g[a][b],c);
+	}
+	int t=dijk();
+	cout<<t<<endl;
+}
+
+```
+
+
+### 堆优化版dijkstra算法（稀疏图
+时间复杂度O(mlogn）  
+堆优化版实际上就是用一个小根堆来存已经确定距离的点的距离和编号  
+最开始将1加入堆  
+当堆不空的时候每次取已经确定距离的最小的点，将与它相连的点的距离更新，如果能够更新的话那么更新的点的距离就已经是最短的了，那么把他加入堆中  
+如果最后的值>=0x3f3f3f3f说明没有路能从1到这个点，否则输出d值
+```cpp
+#include<bits/stdc++.h>
+const int N=150000+10;
+int n,m;
+int d[N];
+bool st[N];
+int e[N],ne[N],idx,h[N],w[N];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+int dijk(){
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	priority_queue<pii,vector<pii>,greater<pii> > q;
+	q.push({0,1});
+	while(q.size() ){
+		pii t=q.top() ;
+		q.pop() ;
+		int ver=t.second ;
+		int dis=t.first ;
+		if(st[ver])continue;
+		st[ver]=true;
+		for(int i=h[ver];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(d[j]>dis+w[i]){
+				d[j]=dis+w[i];
+				q.push({d[j],j}); 
+			}
+		}
+	} 
+	if(d[n]>=0x3f3f3f3f)return -1;
+	return d[n];
+}
+void sove(){
+	cin>>n>>m;
+	memset(h,-1,sizeof h);
+	while(m--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+	}
+	int t=dijk();
+	cout<<t<<endl;
+}
+```
+
+
+
+
+## 存在负权边
+
+### bellman-ford算法（有边数限制可用
+时间复杂度O（nm）  
+存在负权回路的时候不一定存在最短路  
+用结构体存m条边，分别存起点，终点和权值  
+先循环n次，每次遍历所有边（遍历结构体）(循环第k次的意思是，从1号点经过不超过k条边走到每个点的最短距离)    
+注意每次遍历的时候，因为每次d数组在跟着变化，所以我们额外用一个ba数组来存d原来的值，每次用ba数组的值更新d数组就不会使d受影响
+如果有第n次迭代有更新的话就说明有n条边，不重复走的走了n+1个点，但是我们只有n个点，所以可以判断出有负环  
+（这个算法限制了次数，所以最后不会正无穷，那么最后和正无穷的一半进行比较，如果大于这个值就返回负无穷（因为有负权边），否则的话返回值）  
+
+
+求从1开始走向n的不超过k条边的最短路  
+```cpp
+#include<bits/stdc++.h>
+const int N=10000+10;
+int n,m,k;
+struct name{
+	int a,b,w;
+}q[N];
+int d[N],ba[N];
+int bellman(){
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	for(int i=0;i<k;i++){
+		memcpy(ba,d,sizeof d);
+		for(int j=0;j<m;j++){
+			int a=q[j].a ,b=q[j].b ,w=q[j].w ;
+			d[b]=min(d[b],ba[a]+w);
+		}
+	}
+	if(d[n]>0x3f3f3f3f)return -0x3f3f3f3f;
+	else return d[n];
+}
+void sove(){
+	cin>>n>>m>>k;
+	for(int i=0;i<m;i++){
+		int a,b,w;
+		cin>>a>>b>>w;
+		q[i]={a,b,w};
+	}
+	int t=bellman();
+	if(t==-0x3f3f3f3f)cout<<"impossible"<<endl;
+	else cout<<t<<endl;
+}
+```
+
+
+### spfa算法(可判断负环)
+时间复杂度：一般O（m），最坏O（nm）  
+spfa是对bellman的优化，先把
+
+#### 求最短路
+spfa是对bell的优化，先把1放入队列里，只要一个点被更新变小了就加入队里，当队列不空的时候取队头，用队头来更新每条出边  
+用st数组来记录是否在队列里，然后先将1入队，将1的状态改为true，然后当队列不空，取队头，pop出队头之后把队头的状态改为false，然后拿队头来更新出边  
+每次更新判断一下是否能更新，如果能更新的话我们更新之后再判断一下这个出边是否在队列里，如果不在的话加入队列并且把这个出边的状态改变  
+（注意st数组标记是优化，如果不加的话会t，这个不限制次数的话一般都取最大，所以能到最大值正无穷，最后和正无穷比）  
+(卡spfa一般都是网格形状的）  
+
+```cpp
+#include<bits/stdc++.h>
+const int N=100000+10;
+int n,m;
+int e[N],ne[N],idx,w[N],h[N];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+bool st[N];
+int d[N];
+int spfa(){
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	queue<int> q;
+	q.push(1);
+	st[1]=true;//st记录的是在队列中的元素
+	while(q.size() ){
+		int t=q.front() ;
+		q.pop() ;
+		st[t]=false;
+		for(int i=h[t];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(d[j]>d[t]+w[i]){
+				d[j]=d[t]+w[i];
+				if(!st[j]){
+					q.push(j);
+					st[j]=true;
+				}
+				
+			}
+		}
+	}
+	if(d[n]>=0x3f3f3f3f/2)return -0x3f3f3f3f;
+	return d[n];
+}
+void sove(){
+	cin>>n>>m;
+	memset(h,-1,sizeof h);
+	while(m--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+	}
+	int t=spfa();
+	if(t==-0x3f3f3f3f)cout<<"impossible"<<endl;
+	else cout<<t<<endl;
+}
+```
+
+
+#### 判断负环
+
+d【x】记录1->x的最短距离，cnt【x】来记录这条最短距离的边数，更新：d[x]=d[t]+w[i];cnt[x]=cnt[t]+1;  
+当某个cnt[x]>=n的时候，就说明存在了负环  
+判断负环的话我们要把所有的点都加入队列，不能只把1加入，因为只把1加入只能保证从1出发的点的路径上有没有负环  
+所有点都放入的话枚举所有点加入然后改变状态  
+
+
+```cpp
+#include<bits/stdc++.h>
+const int N=100000+10;
+int n,m;
+int e[N],ne[N],idx,w[N],h[N],cnt[N];
+bool st[N];
+int d[N];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+bool spfa(){
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	queue<int> q;
+	for(int i=1;i<=n;i++){
+		q.push(i);
+		st[i]=true; 
+	}
+	while(q.size() ){
+		int t=q.front() ;
+		q.pop() ;
+		st[t]=false;
+		for(int i=h[t];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(d[j]>d[t]+w[i]){
+				d[j]=d[t]+w[i];
+				cnt[j]=cnt[t]+1;
+				if(cnt[j]>=n)return true;
+				if(!st[j]){
+					q.push(j);
+					st[j]=true; 
+				}
+			}
+		}
+	}
+	return false;
+}
+void sove(){
+	cin>>n>>m;
+	memset(h,-1,sizeof h);
+	while(m--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+	}
+	if(spfa())cout<<"Yes"<<endl;
+	else cout<<"No"<<endl;
+}
+```

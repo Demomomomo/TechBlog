@@ -179,7 +179,7 @@ s可以加一个字符串：<code v-pre>s+=&quot;abf&quot;;</code><br>
 <code v-pre>stoi(s,0,2)</code> ：将二进制的字符串s转化为十进制；<br>
 <code v-pre>int x=stoi(s);</code>把s转化为十进制的x<br>
 <code v-pre>memcpy</code>函数：把字符串b复制到字符串a中<br>
-<code v-pre>memcpy（a,b,sizeof(a)); </code>sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出<br>
+<code v-pre>memcpy（a,b,sizeof(b)); </code>sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
 关于memcpy函数：<code v-pre>memcpy(目标数组，被复制的数组，被复制的数组的大小)</code><br>
 <code v-pre>isalnum函数</code>：判断是否为字母或数字，是的话返回true。<br>
 头文件是<code v-pre>#include &lt;cctype&gt;</code><br>

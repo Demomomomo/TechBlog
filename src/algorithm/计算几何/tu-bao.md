@@ -57,49 +57,54 @@ bool cmp(name a,name b){
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
-const int N=10005;
 int n;
+const int N=10006;
 typedef pair<double,double> pdd;
 pdd p[N];
-int q[N];
-int v[N];
+int st[N];
+bool v[N];
 double cj(double x1,double y1,double x2,double y2){
 	return x1*y2-x2*y1;
 }
-double js(int s0,int s1,int s2){
-	double x1=p[s1].first-p[s0].first;
-	double y1=p[s1].second-p[s0].second;
-	double x2=p[s2].first-p[s0].first;
-	double y2=p[s2].second-p[s0].second;
-	return cj(x1,y1,x2,y2);	
+double js(pdd p0,pdd p1,pdd p2){
+	double x1=p1.first-p0.first;
+	double y1=p1.second-p0.second;
+	double x2=p2.first-p0.first;
+	double y2=p2.second-p0.second;
+	return cj(x1,y1,x2,y2);
 }
-double dist(double x1,double y1,double x2,double y2){
+double dist(int a,int b){
+	double x1=p[a].first;
+	double y1=p[a].second;
+	double x2=p[b].first;
+	double y2=p[b].second;
 	return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 }
-signed main(){
+int main(){
 	cin>>n;
 	for(int i=1;i<=n;i++)cin>>p[i].first>>p[i].second;
 	sort(p+1,p+1+n);
 	int tot=0;
 	for(int i=1;i<=n;i++){
-		while(tot>=2&&js(q[tot-1],q[tot],i)<=0){
-			v[q[tot--]]=0;
+		while(tot>=2&&js(p[st[tot-1]],p[st[tot]],p[i])>=0){
+			if(js(p[st[tot-1]],p[st[tot]],p[i])>0) v[st[tot]]=0; //当这个点在凸包不在凸包的边上的时候我们把他记做不在凸包中，在边上记作在凸包中
+			tot--;
 		}
-		q[++tot]=i;
-		v[i]=true;
+		st[++tot]=i;
+		v[i]=1;
 	}
 	v[1]=0;
 	for(int i=n;i>=1;i--){
 		if(v[i])continue;
-		while(tot>=2&&js(q[tot-1],q[tot],i)<=0){
+		while(tot>=2&&js(p[st[tot-1]],p[st[tot]],p[i])>=0){
+			v[tot]=0;
 			tot--;
 		}
-		q[++tot]=i;
-				
+		st[++tot]=i;		
 	}
 	double ans=0;
 	for(int i=2;i<=tot;i++){
-		ans+=dist(p[q[i]].first,p[q[i]].second,p[q[i-1]].first,p[q[i-1]].second);
+		ans+=dist(st[i-1],st[i]);
 	}
 	printf("%.2f",ans);
 	return 0;
