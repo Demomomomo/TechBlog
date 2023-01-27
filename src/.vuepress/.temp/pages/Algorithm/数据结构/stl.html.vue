@@ -211,6 +211,27 @@ cout<span class="token operator">&lt;&lt;</span>s1<span class="token operator">&
 <p><code v-pre>memcpy</code>函数：把b复制到a中<br>
 <code v-pre>memcpy（a,b,sizeof(b)); </code>sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
 关于memcpy函数：<code v-pre>memcpy(目标数组，被复制的数组，被复制的数组的大小)</code></p>
-</div></template>
+<h2 id="stringstream" tabindex="-1"><a class="header-anchor" href="#stringstream" aria-hidden="true">#</a> stringstream</h2>
+<p>用于输入一个含有空格和数字的字符串，将里面间隔的数字提取出来的函数</p>
+<p>比如一个字符串是 <code v-pre>123 45 67 890</code></p>
+<p>我们先用string类型读入，再用stringstream传出</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>string s<span class="token punctuation">;</span>
+<span class="token function">getline</span><span class="token punctuation">(</span>cin<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+stringstream <span class="token function">ss</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> op<span class="token punctuation">,</span>con<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>ss<span class="token operator">>></span>op<span class="token punctuation">)</span> a<span class="token punctuation">[</span><span class="token operator">++</span>con<span class="token punctuation">]</span><span class="token operator">=</span>op<span class="token punctuation">;</span><span class="token comment">//相当于把字符中的每个数字传到op里，再把op存到a数组里去  </span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="全排列函数" tabindex="-1"><a class="header-anchor" href="#全排列函数" aria-hidden="true">#</a> 全排列函数</h2>
+<p>next_permutation实现升序，那么刚开始的数组需要是升序排列</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">do</span><span class="token punctuation">{</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	cout<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token function">next_permutation</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
 
 

@@ -111,7 +111,70 @@ void sove(){
 }
 ```
 
+### 例题：昂贵的聘礼
+原题链接：https://www.acwing.com/problem/content/description/905/
 
+题意：每个点有一个直接购买的价格，也有相应的替代品id，对于每个id拿到之后，那么拿到他的价格就会降低到一个数cost，每个物品还有等级，如果我们选的物品的等级最大等级差超过m就不能交易，而且每次交易只能与他等级低的人交易，等级差小于等于m，求买到1花费的最小价格  
+
+思路：因为每个物品都可以直接买，那么我们可以加一个虚拟原点直接连到每个点上，边权是对应物品的价格，表示可以直接买这件物品，那么从虚拟原点出发找到1的最短路就行了。  
+对于等级的问题，我们可以枚举每个包含1的等级的区间，然后对这个区间进行dijk算法，每次判断更新的物品在不在这个区间就行了。  
+
+```cpp
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+const int N=110;
+typedef long long ll;
+typedef pair<long,long> pii;
+int n,m;
+ll w[N][N];
+bool st[N];
+ll ans;
+ll d[N];
+ll v;
+int p[N];
+void dijk(int down,int up){
+	memset(d,0x3f,sizeof d);
+	memset(st,false,sizeof st);
+	d[0]=0;
+	for(int i=0;i<=n;i++){//因为加了一个虚拟原点，所以要循环n+1次
+		int t=-1;
+		for(int j=0;j<=n;j++){
+			if(!st[j]&&(t==-1||d[j]<d[t])){
+				t=j;
+			}
+		}
+		st[t]=1;
+		for(int j=1;j<=n;j++){
+			if(p[j]>=down&&p[j]<=up){//如果在这个区间
+				d[j]=min(d[t]+w[t][j],d[j]);//那么可以更新
+			}
+		}
+	}
+	ans=min(ans,d[1]);
+}
+int main(){
+	cin>>m>>n;
+	memset(w,0x3f,sizeof w);
+	for(int i=0;i<=n;i++)w[i][i]=0;
+	for(int i=1;i<=n;i++){
+		int con;
+		cin>>v>>p[i]>>con;
+		w[0][i]=v;
+		for(int j=1;j<=con;j++){
+			ll c;
+			int b;
+			cin>>b>>c;
+			w[b][i]=min(w[b][i],c);
+		
+		}
+	}
+	ans=0x3f3f3f3f;
+	for(int i=p[1]-m;i<=p[1];i++) dijk(i,i+m);
+	cout<<ans<<endl;
+	return 0;
+}
+```
 
 
 ## 存在负权边
@@ -286,3 +349,18 @@ void sove(){
 	else cout<<"No"<<endl;
 }
 ```
+
+## 单源最短路的综合应用
+
+### 与dfs结合
+例题：新年好  
+
+题意：一个人从车站1出发要去abcde五个人家拜年（顺序随意），有n个车站，m条双向道路，每条路有花费的时间，请问选择怎样的一条路径使他在路上花费的时间最少？
+
+思路：我们可以先确定拜访五个亲戚的顺序，那么有5！种顺序  
+那么对于一种顺序，比如：1 2 3 4 5  
+那么结果实际上就是从1到2的最短路+2到3的最短路+3到4的最短路+4到5的最短路（对每个车站做一遍spfa  
+但这样做的话时间复杂度是5！* 5 *m，很容易超时  
+那么我们可以换一下顺序，预处理一下以1和五个点为起点的最短路，然后再看5！种顺序的最短路  
+
+

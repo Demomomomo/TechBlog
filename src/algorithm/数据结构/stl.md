@@ -250,3 +250,34 @@ cout<<s1<<endl;
 `memcpy`函数：把b复制到a中  
 `memcpy（a,b,sizeof(b)); `sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
 关于memcpy函数：`memcpy(目标数组，被复制的数组，被复制的数组的大小)`  
+
+## stringstream
+
+用于输入一个含有空格和数字的字符串，将里面间隔的数字提取出来的函数  
+
+比如一个字符串是 `123 45 67 890`  
+
+我们先用string类型读入，再用stringstream传出
+```cpp
+string s;
+getline(cin,s);
+stringstream ss(s);
+int op,con=0;
+while(ss>>op) a[++con]=op;//相当于把字符中的每个数字传到op里，再把op存到a数组里去  
+
+```
+
+## 全排列函数
+next_permutation实现升序，那么刚开始的数组需要是升序排列  
+
+```cpp
+int a[4]={1,2,3,4};
+sort(a,a+4);
+do{
+	for(int i=0;i<4;i++){
+		cout<<a[i]<<" ";
+	}
+	cout<<endl;
+}while(next_permutation(a,a+4));
+
+```
