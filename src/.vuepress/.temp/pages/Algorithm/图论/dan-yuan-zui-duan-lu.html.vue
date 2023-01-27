@@ -309,15 +309,19 @@ spfa是对bellman的优化，先把</p>
 	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">spfa</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>cout<span class="token operator">&lt;&lt;</span><span class="token string">"Yes"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
 	<span class="token keyword">else</span> cout<span class="token operator">&lt;&lt;</span><span class="token string">"No"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="单源最短路的综合应用" tabindex="-1"><a class="header-anchor" href="#单源最短路的综合应用" aria-hidden="true">#</a> 单源最短路的综合应用</h2>
-<h3 id="与dfs结合" tabindex="-1"><a class="header-anchor" href="#与dfs结合" aria-hidden="true">#</a> 与dfs结合</h3>
-<p>例题：新年好</p>
-<p>题意：一个人从车站1出发要去abcde五个人家拜年（顺序随意），有n个车站，m条双向道路，每条路有花费的时间，请问选择怎样的一条路径使他在路上花费的时间最少？</p>
-<p>思路：我们可以先确定拜访五个亲戚的顺序，那么有5！种顺序<br>
-那么对于一种顺序，比如：1 2 3 4 5<br>
-那么结果实际上就是从1到2的最短路+2到3的最短路+3到4的最短路+4到5的最短路（对每个车站做一遍spfa<br>
-但这样做的话时间复杂度是5！* 5 *m，很容易超时<br>
-那么我们可以换一下顺序，预处理一下以1和五个点为起点的最短路，然后再看5！种顺序的最短路</p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><!-- 
+## 单源最短路的综合应用
+
+### 与dfs结合
+例题：新年好  
+原题链接：https://www.acwing.com/problem/content/1137/
+题意：一个人从车站1出发要去abcde五个人家拜年（顺序随意），有n个车站，m条双向道路，每条路有花费的时间，请问选择怎样的一条路径使他在路上花费的时间最少？
+
+思路：我们可以先确定拜访五个亲戚的顺序，那么有5！种顺序  
+那么对于一种顺序，比如：1 2 3 4 5  
+那么结果实际上就是从1到2的最短路+2到3的最短路+3到4的最短路+4到5的最短路（对每个车站做一遍spfa  
+但这样做的话时间复杂度是5！* 5 *m，很容易超时  
+那么我们可以换一下顺序，预处理一下以1和五个点为起点的最短路，然后再看5！种顺序的最短路   -->
 </div></template>
 
 
