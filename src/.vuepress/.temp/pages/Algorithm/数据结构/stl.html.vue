@@ -177,11 +177,8 @@ s可以加一个字符串：<code v-pre>s+=&quot;abf&quot;;</code><br>
 将字符串转化为10进制的数<br>
 <code v-pre>stoi（字符串，起始位置（下标），n进制（默认10进制））</code>，将 n 进制的字符串转化为十进制<br>
 <code v-pre>stoi(s,0,2)</code> ：将二进制的字符串s转化为十进制；<br>
-<code v-pre>int x=stoi(s);</code>把s转化为十进制的x<br>
-<code v-pre>memcpy</code>函数：把字符串b复制到字符串a中<br>
-<code v-pre>memcpy（a,b,sizeof(b)); </code>sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
-关于memcpy函数：<code v-pre>memcpy(目标数组，被复制的数组，被复制的数组的大小)</code><br>
-<code v-pre>isalnum函数</code>：判断是否为字母或数字，是的话返回true。<br>
+<code v-pre>int x=stoi(s);</code>把s转化为十进制的x</p>
+<p><code v-pre>isalnum函数</code>：判断是否为字母或数字，是的话返回true。<br>
 头文件是<code v-pre>#include &lt;cctype&gt;</code><br>
 <code v-pre>tolower</code>函数：把大写字符转化为小写字符，如果不是大写字符就不转化
 用法：<code v-pre>tolower(s[i]);</code><br>
@@ -207,6 +204,13 @@ string s2<span class="token operator">=</span><span class="token string">"34"</s
 s1<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>s2<span class="token punctuation">)</span><span class="token punctuation">;</span>
 cout<span class="token operator">&lt;&lt;</span>s1<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><code v-pre>pop_back()</code>函数：删除字符串的最后一个字符</p>
+<h2 id="memset" tabindex="-1"><a class="header-anchor" href="#memset" aria-hidden="true">#</a> memset</h2>
+<p>对整数类型的数组一般取极大值为 <code v-pre>memset(a,0x3f,sizeof a)</code><br>
+对浮点数类型的数组一般取最大值为 <code v-pre>memset(a,0x7f,sizeof a</code></p>
+<h2 id="memcpy" tabindex="-1"><a class="header-anchor" href="#memcpy" aria-hidden="true">#</a> memcpy</h2>
+<p><code v-pre>memcpy</code>函数：把b复制到a中<br>
+<code v-pre>memcpy（a,b,sizeof(b)); </code>sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
+关于memcpy函数：<code v-pre>memcpy(目标数组，被复制的数组，被复制的数组的大小)</code></p>
 </div></template>
 
 

@@ -204,9 +204,7 @@ s可以加一个字符串：`s+="abf";`
 `stoi（字符串，起始位置（下标），n进制（默认10进制））`，将 n 进制的字符串转化为十进制  
 `stoi(s,0,2)` ：将二进制的字符串s转化为十进制；  
 `int x=stoi(s);`把s转化为十进制的x  
-`memcpy`函数：把字符串b复制到字符串a中  
-`memcpy（a,b,sizeof(b)); `sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
-关于memcpy函数：`memcpy(目标数组，被复制的数组，被复制的数组的大小)`  
+
 `isalnum函数`：判断是否为字母或数字，是的话返回true。  
 头文件是`#include <cctype>`  
 `tolower`函数：把大写字符转化为小写字符，如果不是大写字符就不转化
@@ -241,3 +239,14 @@ s1.append(s2);
 cout<<s1<<endl;
 ```
 `pop_back()`函数：删除字符串的最后一个字符  
+
+## memset
+
+对整数类型的数组一般取极大值为 `memset(a,0x3f,sizeof a)`  
+对浮点数类型的数组一般取最大值为 `memset(a,0x7f,sizeof a`  
+
+## memcpy
+
+`memcpy`函数：把b复制到a中  
+`memcpy（a,b,sizeof(b)); `sizeof()必须使用在拷贝到的字符串身上，不然会造成溢出  ,将b拷贝到a上
+关于memcpy函数：`memcpy(目标数组，被复制的数组，被复制的数组的大小)`  
