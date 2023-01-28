@@ -502,3 +502,139 @@ int main(){
 
 
 ```
+
+
+### 与拓扑排序结合
+
+例题：道路与航线  
+原题链接：https://www.acwing.com/problem/content/344/  
+题意：n个城市，两种路线，一种是路线：双向边，全是正权边，一种是航线：单向边，有负权边，无环。并且道路和航线能到达的地点肯定不同，现在想求出其中一个城市S到其他所有城市的距离的最小值  
+
+思路：存在负权边，那么bellman时间复杂度O（nm）肯定不行，spfa会被卡，那么我们继续分析。  
+对于双向全是正权边的道路，我们可以把他们看成是一个连通块，里面全是正权边，那么我们可以做dijk算法。  
+对于全是单项边有负权的航线，我们可以把他看做上面连通块的单向边，并且无环，我们可以找到一个关于上面的连通块的拓扑序，按照连通块的拓扑序依次算每个连通块的最短路就可以了。  
+
+处理连通块：  
+用dfs来找联通块。
+对路线中的每个点需要用一个id数组来记录他的连通块的编号，还需要用一个vector数组来存一下每个联通块中的点。  
+处理拓扑序：  
+对于每条航线，记录每个点的入度  
+将入度为0的连通块的编号加入拓扑队列中  
+每次取队列的队头的连通块编号bid  
+将bid里的所有点加入堆中，然后对堆做dijk：  
+每次取堆中距离最小的点ver  
+遍历与id相连的所有邻点j：  
+如果id[j]==id[ver],说明是一个连通块里的，可以更新他的最短路然后加入堆中。  
+如果id[j]!=id[ver]，说明这个是拓扑图中的航线，是连向下一个连通块的，那么就需要把j所在的连通块的编号的入度--，如果入度=0就加入队列中  
+
+```cpp
+#include<bits/stdc++.h>
+#include<vector>
+#include<queue>
+using namespace std;
+typedef pair<int,int> pii;
+const int N=25000+10,M=150000+10,INF=0x3f3f3f3f;//单向边+双向边
+int n,m1,m2,s;
+int h[N],e[M],ne[M],w[M],idx;
+bool st[N];
+int dist[N];
+int con;
+int id[N];
+int d[N];
+bool v[N];
+vector<int> block[N];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+void dfs(int u,int x){
+	id[u]=x;
+	block[x].push_back(u); 
+	for(int i=h[u];i!=-1;i=ne[i]){
+		int j=e[i];
+		if(!id[j]) dfs(j,x);
+	}
+}
+queue<int> tp;
+
+void dijk(int bid){
+	priority_queue<pii,vector<pii>,greater<pii> > q;
+	for(int i=0;i<block[bid].size() ;i++){
+		int j=block[bid][i];
+		q.push({dist[j],j});  
+	}
+	while(q.size() ){
+		pii t=q.top() ;
+		q.pop() ;
+		int idt=t.second ;
+		int dis=t.first ;
+		if(st[idt])continue;
+		st[idt]=true;
+		for(int i=h[idt];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(id[j]!=id[idt]){
+				d[id[j]]--;
+				if(d[id[j]]==0) tp.push(id[j]); 
+			}
+			if(dist[j]>dis+w[i]){
+				dist[j]=dis+w[i];
+				if(id[j]==id[idt])q.push({dist[j],j});
+			}
+		}
+	}
+}
+void torp(){
+	memset(dist,0x3f,sizeof dist);//dist是全局变量，要在做拓扑排序的时候初始化好，不能每次dijk一遍初始化一遍
+	dist[s]=0;
+	for(int i=1;i<=con;i++){
+		if(d[i]==0) tp.push(i); 
+	}
+	while(tp.size() ){
+		int bid=tp.front() ; 
+		tp.pop() ;		
+		dijk(bid);
+	}
+}
+int main(){
+	cin>>n>>m1>>m2>>s;
+	memset(h,-1,sizeof h);
+	for(int i=1;i<=m1;i++){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+		add(b,a,c);
+	}
+	con=0;
+	for(int i=1;i<=n;i++){
+		if(id[i]==0) dfs(i,++con);
+	}
+	for(int i=1;i<=m2;i++){
+		int a,b,c;
+		cin>>a>>b>>c;
+		d[id[b]]++;
+		add(a,b,c);
+	}	
+	torp();
+	for(int i=1;i<=n;i++){
+		if(dist[i]>=INF/2){
+			cout<<"NO PATH"<<endl;
+		}else cout<<dist[i]<<endl;
+	}
+	
+	
+	return 0;
+}
+
+
+
+
+
+```
+
+
+
+
+
+
