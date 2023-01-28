@@ -349,18 +349,156 @@ void sove(){
 	else cout<<"No"<<endl;
 }
 ```
-<!-- 
+
 ## 单源最短路的综合应用
 
 ### 与dfs结合
 例题：新年好  
-原题链接：https://www.acwing.com/problem/content/1137/
-题意：一个人从车站1出发要去abcde五个人家拜年（顺序随意），有n个车站，m条双向道路，每条路有花费的时间，请问选择怎样的一条路径使他在路上花费的时间最少？
+原题链接：https://www.acwing.com/problem/content/1137/  
+题意：一个人从车站1出发要去abcde五个人家拜年（顺序随意），有n个车站，m条双向道路，每条路有花费的时间，请问选择怎样的一条路径使他在路上花费的时间最少？  
 
 思路：我们可以先确定拜访五个亲戚的顺序，那么有5！种顺序  
 那么对于一种顺序，比如：1 2 3 4 5  
-那么结果实际上就是从1到2的最短路+2到3的最短路+3到4的最短路+4到5的最短路（对每个车站做一遍spfa  
+那么结果实际上就是从1到2的最短路+2到3的最短路+3到4的最短路+4到5的最短路（对每个车站做一遍dijk  
 但这样做的话时间复杂度是5！* 5 *m，很容易超时  
-那么我们可以换一下顺序，预处理一下以1和五个点为起点的最短路，然后再看5！种顺序的最短路   -->
+那么我们可以换一下顺序，预处理一下以1和五个点为起点的最短路，再深搜一下所有路径的最短路  
+
+```cpp
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+const int N=50005,M=2e5+10;
+int n,m;
+int h[N],e[M],ne[M],w[M],idx;
+int d[6][N];
+int a[N];
+bool v[N];
+typedef pair<int,int> pii;
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+void dijk(int st,int d[]){
+	memset(d,0x3f,N*4);//因为传入的是d[i]，所以是从原二维数组的第i行开始做的运算，这里不能sizeof
+	d[st]=0;
+	priority_queue<pii,vector<pii>,greater<pii> > q;
+	q.push({d[st],st});
+	while(q.size() ){
+		pii t=q.top() ;
+		q.pop() ;
+		int id=t.second ;
+		int dist=t.first ;
+		for(int i=h[id];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(d[j]>dist+w[i]){
+				d[j]=dist+w[i];
+				q.push({d[j],j}); 
+			}
+		}
+	} 
+}
+int dfs(int u,int st,int dist){//该拜访哪个位置的亲戚，起点亲戚的下标，到这的距离
+	if(u==6) return dist;
+	int ans=0x3f3f3f3f;//以st为起点找到最短的路径
+	for(int i=1;i<=5;i++){
+		if(!v[i]){
+			v[i]=true;
+			ans=min(ans,dfs(u+1,i,dist+d[st][a[i]]));
+			v[i]=false;
+		}
+	}
+	return ans;
+}
+int main(){
+	cin>>n>>m;
+	a[0]=1;
+	memset(h,-1,sizeof h);
+	for(int i=1;i<=5;i++){
+		cin>>a[i];
+	}
+	for(int i=1;i<=m;i++){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+		add(b,a,c);
+	}
+	for(int i=0;i<=5;i++) dijk(a[i],d[i]);
+	printf("%d",dfs(1,0,0));
+}
+
+```
+### 与二分结合
+
+例题：通信线路  
+原题链接：https://www.acwing.com/problem/content/342/  
+
+题意：有n个点，m条双向边，找一条从1到n的路径，使这条路上的第k+1大的边权最小  
+
+思路：最大最小问题可以用二分来解决，可以设每次第k+1大的值是mid，对于每个边，大于mid的边权设为1，小于等于mid的边权设为0，再从1做一遍最短路，如果到n的值<=k符合题意，否则不符合题意。  
+（当一个图边权全为0或1的时候，我们也可以用双端队列来做  
+注意一个处理：边权大小在1~1e6之间，结果可能是0，也可能到不了n点，那么二分的左边界设为0，右边界设为1e6+1，当最后二分出来的答案是1e6+1时说明不能到达输出-1
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+typedef pair<int,int> pii;
+const int N=1010,M=20010;
+int n,m,k;
+int d[N];
+int h[N],e[M],ne[M],idx,w[M];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+bool cheek(int x){
+//	cout<<"mid=="<<x<<endl;
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	priority_queue<pii,vector<pii>,greater<pii> > q;
+	q.push({d[1],1});
+	while(q.size() ) {
+		pii t=q.top() ;
+		q.pop() ;
+		int id=t.second ;
+		int dist=t.first ;
+		for(int i=h[id];i!=-1;i=ne[i]){
+			int j=e[i];
+			int ww;
+			if(w[i]<=x)ww=0;
+			else ww=1;
+			if(d[j]>dist+ww){
+				d[j]=dist+ww;
+				
+				q.push({d[j],j}); 
+			}
+		}
+	}
+//	cout<<"d=="<<d[n]<<endl;
+	return d[n]<=k;
+}
+int main(){
+	cin>>n>>m>>k;
+	memset(h,-1,sizeof h);
+	while(m--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+		add(b,a,c);
+	}
+	int l=0,r=1000001;
+	while(l<r){
+		int mid=l+r>>1;
+		if(cheek(mid)) r=mid;
+		else l=mid+1;
+	}
+	if(l==1000001) cout<<-1<<endl;
+	else cout<<l<<endl;
+	return 0;
+}
 
 
+```
