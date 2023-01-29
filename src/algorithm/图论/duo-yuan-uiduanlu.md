@@ -23,11 +23,11 @@ for(int i=1;i<=n;i++)d[i][i]=0;
 ```
 
 
-应用：  
-1.最短路
-2.传递闭包 
-3.找最小环
-4.恰好经过k条边的最短路
+应用:  
+1.最短路  
+2.传递闭包   
+3.找最小环  
+4.恰好经过k条边的最短路  
 
 对状态的分析：
 d[k][i][j]所以从i出发，最终走到j，且中间只经过节点编号不超过k的点的所有路径的最短路径
@@ -126,17 +126,118 @@ int main(){
 	for(int k=1;k<=n;k++){
 		for(int i=1;i<=n;i++){
 			for(int j=1;j<=n;j++){
-				d[i][j]|=d[i][k]&&d[k][j];
+				if(d[i][k]&&d[k][j]) d[i][j]=1;
 			}
 		}
 	}
 
 ```
 
+例题：排序  
+
+原题链接：https://www.acwing.com/problem/content/345/  
+给n个字母和m个不等式关系，n<=26，变量用大写英文字母表示，从前往后遍历每个关系，判断：  
+1.输出第几条使关系矛盾  
+2.输出第几条使这n个关系全都确定了  
+3.如果循环结束没有发生上面的情况，那么输出没有解  
 
 
+思路：  
+d[i][j]=1表示i < j
+对于矛盾的情况是A < B,B < A,那么推出来A < A,矛盾  
+对于确定的情况是：所有的字母与其他字母都有一个确定的关系  
+如果上面的关系都没有推出来，就是无解  
+
+d[i][i]=1对应第一种情况  
+对于每个i j：当i！=j的时候，d[i][j]==1||d[j][i]==1对应第二种情况  
 
 
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+typedef pair<int,char> pii;
+const int N=30;
+int n,m;
+int d[N][N];
+string jk[200010];
+void sove(){
+	memset(d,0,sizeof d);
+	int id;
+	for(int i=1;i<=m;i++){
+		cin>>jk[i];
+	}
+	for(int t=1;t<=m;t++){
+		int a=jk[t][0]-'A'+1;
+		int b=jk[t][2]-'A'+1;
+		d[a][b]=1;
+		for(int k=1;k<=n;k++){
+			for(int i=1;i<=n;i++){
+				for(int j=1;j<=n;j++){
+					if(d[i][k]&&d[k][j]) d[i][j]=1;
+				}
+			}
+		}
+		int ans=0;
+		for(int i=1;i<=n;i++){
+			if(d[i][i]==1){
+				printf("Inconsistency found after %d relations.\n",t);
+				return ;
+			}
+		}
+		bool f=true;
+		for(int i=1;i<=n;i++){
+			for(int j=1;j<=n;j++){
+				if(i!=j){
+					if(d[i][j]==0&&d[j][i]==0){
+						f=false;
+						break;
+					}
+				}
+			}
+			if(!f)break;
+		}
+		if(f){
+			printf("Sorted sequence determined after %d relations: ",t);
+			priority_queue<pii> q;
+			for(int i=1;i<=n;i++){
+				int con=0;
+				for(int j=1;j<=n;j++){
+					if(d[i][j]) con++;
+				}
+				char op=i-1+'A';
+				q.push({con,op});
+			}
+			while(q.size()){
+				pii tt=q.top();
+				q.pop();
+				 printf("%c",tt.second);
+			}
+			printf(".\n");
+			return ;
+		}
+		
+	}
+	printf("Sorted sequence cannot be determined.\n");
+}
+int main(){
+	while(cin>>n>>m){
+		if(n==0&&m==0)break;
+		sove();
+	}
+	return 0;
+}
 
+```
+
+<!-- ## 最小环
+
+一个图中长度最小的环  
+
+例题：观光之旅  
+原题链接：https://www.acwing.com/problem/content/346/  
+
+题意：找一个无向图里，点数>=3且长度最小的环  
+
+把所有环按环上编号最大的点的编号来分类   -->
 
 
