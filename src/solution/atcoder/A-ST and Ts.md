@@ -11,19 +11,19 @@ title: A - ST and TS Palindrome
 思路：  
 假设s=ab，k=9，那么我们构造t的话首先要满足s+t是回文，那么就将t的最后两个字符填上ba：  
 
-<img src="https://img-blog.csdnimg.cn/669030932e634713b7dd53484c3397b0.jpeg#pic_center)" alt="Pulpit rock" width="304" height="228">  
+<img src="https://img-blog.csdnimg.cn/669030932e634713b7dd53484c3397b0.jpeg#pic_center)" alt="Pulpit rock" width="4500" height="228">  
 
 也要满足t+s是回文，那么再将t的前两个字符填上ba：  
-<img src="https://img-blog.csdnimg.cn/28499064a7dd4854ac3f9c4d5db25ec3.jpeg#pic_center)" alt="Pulpit rock" width="304" height="228">  
+<img src="https://img-blog.csdnimg.cn/28499064a7dd4854ac3f9c4d5db25ec3.jpeg#pic_center)" alt="Pulpit rock" width="450" height="228">  
 
 然后一直构造下去最终得到：  
 <img src="https://img-blog.csdnimg.cn/71fcf60ecca348f69e6daab36dcd57e6.jpeg#pic_center)" alt="Pulpit rock" width="304" height="228">  
 
 然后把t+s能构成回文的部分去掉，变成：  
-<img src="https://img-blog.csdnimg.cn/3585b4f0303941ee97f021cc3e66e451.jpeg#pic_center)" alt="Pulpit rock" width="304" height="228">  
+<img src="https://img-blog.csdnimg.cn/3585b4f0303941ee97f021cc3e66e451.jpeg#pic_center)" alt="Pulpit rock" width="500" height="228">  
 
 再把s+t能构成回文部分的去掉，变成：  
-<img src="https://img-blog.csdnimg.cn/3995c9e3ccf247409d71a80e01f77041.jpeg#pic_center)" alt="Pulpit rock" width="304" height="228">  
+<img src="https://img-blog.csdnimg.cn/3995c9e3ccf247409d71a80e01f77041.jpeg#pic_center)" alt="Pulpit rock" width="504" height="228">  
 
 那么实际上就是构造一个长度为k%(2*n)的t字符串，使得t+s和s+t是回文串  
 因为满足条件的t字符串是确定的，那么我们只需要按照要求构造t，把t的空隙填满：  
