@@ -189,7 +189,7 @@ int main(){
 （这个算法限制了次数，所以最后不会正无穷，那么最后和正无穷的一半进行比较，如果大于这个值就返回负无穷（因为有负权边），否则的话返回值）  
 
 
-求从1开始走向n的不超过k条边的最短路  
+求从1开始走向n的不超过k条边的最短路（如果没有边数限制那么k=n-1）  
 ```cpp
 #include<bits/stdc++.h>
 const int N=10000+10;
@@ -223,6 +223,36 @@ void sove(){
 	else cout<<t<<endl;
 }
 ```
+
+#### 判断负环
+
+本来是循环n-1次遍历所有边,那么我们再遍历一遍左右边，如果还能更新d数组的话，说明有负环存在
+
+```cpp
+bool bellman(){
+	memset(d,0x3f,sizeof d);
+	d[1]=0;
+	for(int i=0;i<n-1;i++){
+		memcpy(ba,d,sizeof d);
+		for(int j=0;j<m;j++){
+			int a=q[j].a ,b=q[j].b ,w=q[j].w ;
+			d[b]=min(d[b],ba[a]+w);
+		}
+	}
+	bool f=false;
+	memcpy(ba,d,sizeof d);
+	for(int i=0;i<m;i++){
+		int a=q[i].a,b=q[i].b,w=q[i].w;
+		if(d[b]>ba[a]+w){
+			f=true;
+			break;
+		}
+	}
+	return f;
+}
+```
+
+
 
 
 ### spfa算法(可判断负环)
