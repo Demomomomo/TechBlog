@@ -219,6 +219,7 @@ void sove(){
 		q[i]={a,b,w};
 	}
 	int t=bellman();
+
 	if(t==-0x3f3f3f3f)cout<<"impossible"<<endl;
 	else cout<<t<<endl;
 }
