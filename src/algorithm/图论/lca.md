@@ -261,7 +261,7 @@ int main(){
 		cout<<res[i]<<endl;
 	}
 	return 0;
-}
+};
 ```
 
 
