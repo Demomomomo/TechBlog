@@ -234,21 +234,117 @@ int main(){
 
 
 
-## 应用：线性约束
+## 应用1：线性约束
 
 线性约束一般是在一维空间中给出的一些变量（一般定义位置），然后告诉你某两个变量的约束关系，求两个变量a和b的差值的最大值或最小值。  
-(有一个差不多的洛谷题：https://www.luogu.com.cn/problem/P4878 )  
-题意：n个人的编号是1~n，并且按照编号顺序排成一条直线，任何两个人的位置不重合，然后给定一些约束条件：  
-x组约束Ax Bx Cx ，表示Ax和Bx的距离不能大于Cx  
-y组约束Ax By Cy ，表示Ay和By的距离不能小于Cy  
-如果这样的排列组合存在，输出这两个人的最高可能距离，如果不存在，输出-1，如果无限长输出-2.  
+原题链接：https://www.luogu.com.cn/problem/P4878   
+
+题意：有n个奶牛按照1~n的顺序站成一排，有ml对之间的距离小于等于一个数，md对之间的距离大于等于一个数，求1号牛和n号牛的最远距离。  
+
+距离小于等于一个数：B-A<=D  
+距离大于等于一个数：B-A>=D -> A-B<=-D  
+排成一排：i-(i-1)>=0 -> (i-1)-i<=0  
+
+因为可能会有某些部分是负环，所以创建一个虚拟原点，向每个点都连一条边权为0的边，从原点来走一遍spfa判断一下负环，如果有负环就说明没有解输出-1，然后再从原点1开始spfa得到d[n]的值即可。
+
+```cpp
+
+#include<bits/stdc++.h>
+using namespace std;
+#include<queue>
+#define int long long
+const int N=2e4+10,M=1e5+10;
+int n,ml,md;
+int h[N],e[M],ne[M],w[N],idx;
+int d[N];
+bool st[N];
+int con[N];
+
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+bool spfa1(int s){
+	memset(d,0x3f,sizeof d);
+	memset(con,0,sizeof con);
+	d[s]=0;
+	st[s]=true;
+	queue<int> q;
+	q.push(s);
+	while(q.size() ){
+		int t=q.front() ;
+		q.pop() ;
+		st[t]=false;
+		for(int i=h[t];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(d[j]>d[t]+w[i]){
+				d[j]=d[t]+w[i];
+				con[j]=con[t]+1;
+				if(con[j]>=n+1){
+					return true;
+				}
+				if(!st[j]){
+					q.push(j); 
+				}
+			}
+		}
+	}
+	return false; 
+}
+
+signed main(){
+	int ml,md;
+	cin>>n>>ml>>md;
+	memset(h,-1,sizeof h);
+	while(ml--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(a,b,c);
+	}
+	while(md--){
+		int a,b,c;
+		cin>>a>>b>>c;
+		add(b,a,-c);
+	}
+	for(int i=1;i<=n;i++){
+		add(0,i,0);
+	}
+	for(int i=2;i<=n;i++){
+		add(i,i-1,0);
+	}
+	bool f=spfa1(0);
+	if(f){
+		cout<<-1<<endl;
+	}else{
+		bool ff=spfa1(1);
+		if(f){
+			cout<<-1<<endl;
+			return 0;
+		}
+		if(d[n]>=0x3f3f3f3f){
+			cout<<-2<<endl;
+		}else cout<<d[n]<<endl;
+	}
+	return 0;
+}
+```
+
+## 应用2：区间约束
+
+给定n(n<=50000)个整点闭区间和这个区间中至少有多少个整点需要被选中，这个区间的范围为[ai,bi]，并且至少有ci个点要被选中，其中0<=ai<=bi<=50000  
+求：[0,50000]至少需要有多少个点被选中。  
 
 思路：  
-因为要求最长可能距离，就找最短路，所有等式转换为<=的格式  
-x组表示：Bx-Ax<=Cx  
-y组表示:By-Ax>=Cx  ->  Ay-by<=-Cx  
-不存在的情况说明有负环，无限长说明没有路径能到达  
+用d[i]表示[0,i]这个区间至少有多少个点能被选中  
+利用前缀和的知识：  
+对于每个区间[ai,bi],可以表示成d[bi]-d[ai-1]>=ci  
 
+最后求d[50000]-d[-1]的最长路。  
+
+注意隐含条件： 0<=d[i]-d[i-1]<=1  
+因为在i这个点我们要么只有一个点，要么没有点  
 
 
 
@@ -257,11 +353,16 @@ y组表示:By-Ax>=Cx  ->  Ay-by<=-Cx
 
 ## 求最长路径（x[i]-x[j]>=a[k])
 
+求一个问题最小的值，就是求最长路。  
 当符号变成>=的时候，那么本质就是求最长路  
  
 1.Floyd算法：将d初始化为-INF,d[i][i]=0,然后跑一般Floyd（这时候d[i][j]就是取max了  
 
-2.bellman算法：将所有的边全取符号，然后对新的图求最短路  
+2.bellman算法：将所有的边全取负号，然后对新的图求最短路  
+
+### 解的存在性
+如果存在正环，那么就没有解。  
+
 
 
 
