@@ -346,10 +346,78 @@ signed main(){
 注意隐含条件： 0<=d[i]-d[i-1]<=1  
 因为在i这个点我们要么只有一个点，要么没有点  
 
+因为需要使用前缀和，所以我们尽量不要让区间在0，那么我们就把区间整体右移一位，算[1,50001]的结果就可以。  
+```cpp
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+const int N=5e4+10, M =2e6;
+int n;
+int dist[N];
+int h[N],e[M],ne[M],idx,w[M];
+bool st[N];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
 
+void spfa()
+{
+    memset(dist, -0x3f, sizeof dist);
+    dist[0] = 0;
+    st[0] = true;
+    queue<int> q;
+	q.push(0); 
+    while (q.size() )
+    {
+        int t = q.front() ;
+        q.pop() ;
+        st[t] = false;
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                if (!st[j])
+                {
+                    q.push(j); 
+                    st[j] = true;
+                }
+            }
+        }
+    }
+}
 
+int main()
+{
+    scanf("%d", &n);
 
+    memset(h, -1, sizeof h);
+    for (int i = 1; i < N; i ++ )//范围是N
+    {
+        add(i - 1, i, 0);
+        add(i, i - 1, -1);
+    }
 
+    for (int i = 0; i < n; i ++ )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        a ++, b ++ ;
+        add(a - 1, b, c);
+    }
+
+    spfa();
+
+    printf("%d\n", dist[50001]);
+
+    return 0;
+}
+
+```
 
 ## 求最长路径（x[i]-x[j]>=a[k])
 
@@ -360,9 +428,130 @@ signed main(){
 
 2.bellman算法：将所有的边全取负号，然后对新的图求最短路  
 
-### 解的存在性
-如果存在正环，那么就没有解。  
+3.spfa算法：将d初始化为负无穷，然后每次更新的判断条件是如果与队头取出的点t相连的点j的d[j]< d[t]+w[i]的话就更新。注意spfa判断负环的时候用栈比较快些，但在一般条件下还是队列比较快。
 
 
+### 例题：糖果
+原题链接：https://www.acwing.com/problem/content/description/1171/  
+题意：  
+一个老师给n个小朋友分糖果，保证每个小朋友都能分到糖果的情况下，有m个要求： x a b  
+如果X=1表示第 A个小朋友分到的糖果必须和第B个小朋友分到的糖果一样多。  
+如果X=2，表示第A个小朋友分到的糖果必须少于第B个小朋友分到的糖果。  
+如果X=3，表示第A个小朋友分到的糖果必须不少于第B个小朋友分到的糖果。  
+如果X=4，表示第A个小朋友分到的糖果必须多于第B个小朋友分到的糖果。  
+如果 X=5，表示第A个小朋友分到的糖果必须不多于第B个小朋友分到的糖果。  
+
+问满足以上条件前提下，老师需要准备多少个糖果？  
+
+思路：  
+每个小朋友都能分到糖果=每个小朋友至少有一个糖果  
+那么设一个超级原点为0，那么对于每个小朋友i，d[i]-d[0]>=1  
+x=1：a=b -> a-b>=0 b-a>=0  
+x=2: a< b -> b-a>=1  
+x=3: a>=b -> a-b>=0  
+x=4: a>b -> a-b>=1  
+x=5: a<=b -> b-a>=0  
+
+然后用spfa求最长路即可（注意判断负环的话用栈比较快）  
+
+```cpp
+#include<bits/stdc++.h>
+#include<queue>
+#include<stack>
+using namespace std;
+const int N=1e6+10,M=1e6+10;
+int n,m;
+typedef long long ll;
+int h[N],e[N],ne[N],idx;
+int w[N];
+ll d[N];
+bool st[N];
+int cnt[N];
+void add(int a,int b,int c){
+	e[idx]=b;
+	w[idx]=c;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+bool spfa(){
+	memset(d,-0x3f,sizeof d);
+	d[0]=0;
+	stack<int> q;
+	q.push(0); 
+	st[0]=true;
+	while(q.size() ){
+		int t=q.top() ;
+		q.pop() ;
+		st[t]=false;
+		for(int i=h[t];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(d[j]<d[t]+w[i]){
+				d[j]=d[t]+w[i];
+				cnt[j]=cnt[t]+1;
+				if(cnt[j]>=n+1){
+					return true;
+				}
+				if(!st[j]){
+					q.push(j);
+					st[j]=true; 
+				}
+			}
+		}
+	} 
+	return false;
+}
+int  main(){
+	cin>>n>>m;
+	memset(h,-1,sizeof h);
+	while(m--){
+		int x,a,b;
+		cin>>x>>a>>b;
+		if(x==1){
+			add(b,a,0);
+			add(a,b,0);
+		}else if(x==2){
+			add(a,b,1);
+		}else if(x==3){
+			add(b,a,0);
+		}else if(x==4){
+			add(b,a,1);
+		}else {
+			add(a,b,0);
+		}
+	}
+	for(int i=1;i<=n;i++){
+		add(0,i,1);
+	}
+	if(spfa()){
+		cout<<-1<<endl;
+	}else{
+		ll ans=0;
+		for(int i=1;i<=n;i++){
+			ans+=d[i];
+		}
+		cout<<ans<<endl;
+	}
+	return 0;
+}
+
+```
+
+### 例二：雇佣收银员
+原题链接：https://www.acwing.com/problem/content/395/  
+题意：  
+一个店24小时营业，需要雇佣一大批收银员。  
+已知不同时间段需要的收银员数量不同，希望能够雇佣尽可能少的人员。  
+提供了一个各个时间段收银员最小需求量清单：R(0),R(1)...R(23)  
+R(0)表示午夜00:00到01:00，R(1)表示凌晨01:00-02:00,以此类推。  
+一共有n个合格人申请岗位，第i个人可以从ti时刻开始连续工作8小时。  
+求出最少雇佣多少名收银员。  
+思路：  
+
+num[i]表示从i点开始工作的人数  
+x[i]表示最终从i点开始工作的人里面挑的人数。  
+
+满足的等式关系：  
+1.0<=x[i]<=num[i]  
+2.x[i-7]+x[i-6]+...+x[i]>=r[i]  
 
 
