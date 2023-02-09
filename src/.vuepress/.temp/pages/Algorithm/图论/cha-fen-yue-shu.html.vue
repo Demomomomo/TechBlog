@@ -460,21 +460,23 @@ ll d<span class="token punctuation">[</span>N<span class="token punctuation">]</
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="例二-雇佣收银员" tabindex="-1"><a class="header-anchor" href="#例二-雇佣收银员" aria-hidden="true">#</a> 例二：雇佣收银员</h3>
-<p>原题链接：<a href="https://www.acwing.com/problem/content/395/" target="_blank" rel="noopener noreferrer">https://www.acwing.com/problem/content/395/<ExternalLinkIcon/></a><br>
-题意：<br>
-一个店24小时营业，需要雇佣一大批收银员。<br>
-已知不同时间段需要的收银员数量不同，希望能够雇佣尽可能少的人员。<br>
-提供了一个各个时间段收银员最小需求量清单：R(0),R(1)...R(23)<br>
-R(0)表示午夜00:00到01:00，R(1)表示凌晨01:00-02:00,以此类推。<br>
-一共有n个合格人申请岗位，第i个人可以从ti时刻开始连续工作8小时。<br>
-求出最少雇佣多少名收银员。<br>
-思路：</p>
-<p>num[i]表示从i点开始工作的人数<br>
-x[i]表示最终从i点开始工作的人里面挑的人数。</p>
-<p>满足的等式关系：<br>
-1.0&lt;=x[i]&lt;=num[i]<br>
-2.x[i-7]+x[i-6]+...+x[i]&gt;=r[i]</p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><!-- ### 例二：雇佣收银员
+原题链接：https://www.acwing.com/problem/content/395/  
+题意：  
+一个店24小时营业，需要雇佣一大批收银员。  
+已知不同时间段需要的收银员数量不同，希望能够雇佣尽可能少的人员。  
+提供了一个各个时间段收银员最小需求量清单：R(0),R(1)...R(23)  
+R(0)表示午夜00:00到01:00，R(1)表示凌晨01:00-02:00,以此类推。  
+一共有n个合格人申请岗位，第i个人可以从ti时刻开始连续工作8小时。  
+求出最少雇佣多少名收银员。  
+思路：  
+
+num[i]表示从i点开始工作的人数  
+x[i]表示最终从i点开始工作的人里面挑的人数。  
+
+满足的等式关系：  
+1.0<=x[i]<=num[i]  
+2.x[i-7]+x[i-6]+...+x[i]>=r[i]   -->
 </div></template>
 
 
