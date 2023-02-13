@@ -46,7 +46,7 @@ int main(){
 	}
 	bool f=true;
 	for(int i=1;i<=n;i++){
-		if(!col[i]){
+		if(!col[i]){ 
 			if(!dfs(i,1)){
 				f=false;
 				break;
