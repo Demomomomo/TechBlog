@@ -164,5 +164,87 @@ signed main(){
 	return 0;
 }
 ```
+## 二维树状数组
 
+例题：红色的幻想乡  
+原题链接：https://www.luogu.com.cn/problem/P3801  
+
+题意：有一个n*m的矩阵，q个操作，有两种：  
+1 x y：在（x，y）这个地方向上下左右四个方向放迷雾  
+2 x1 y1 x2 y2：求以（x1，y1）为左上角，（x2，y2）为右下角的矩形内有多少个格子被雾覆盖  
+如果一个格子原来有雾气，再放一个雾，两个雾相遇会消散。  
+
+思路：用两个树状数组来维护行和列，每次在（x，y）这个地方放的时候，相应的第x行和第y列就会增加一个雾，因为两个雾会消散，所以我们要额外用一个数组记录他放雾之前的状态，如果之前是0的话这一行（或列）就+1，如果是1的话就-1.  
+那么如果要求以（x1，y1）为左上角，（x2，y2）为右下角的矩形内有多少个格子被雾覆盖的话，设x0为x1~x2有几行是1，y0为y1~y2有几列是1，那么结果就是x0*(y2-y1+1)+y0*(x2-x1+1)-x0* y0*2(重合的部分消散，等于多算了两遍)  
+
+```cpp
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e5+20;
+#define int long long
+int n,m,q;
+int tx[N],ty[N];
+bool dx[N],dy[N];
+int lowbit(int x){
+	return x&(-x);
+}
+int sumx(int x){
+	int ans=0;
+	for(int i=x;i;i-=lowbit(i)){
+		ans+=tx[i];
+	}
+	return ans;
+}
+int sumy(int x){
+	int ans=0;
+	for(int i=x;i;i-=lowbit(i)){
+		ans+=ty[i];
+	}
+	return ans;
+}
+void addx(int x,int c){
+	for(int i=x;i<=n;i+=lowbit(i)){
+		tx[i]+=c;
+	}
+}
+void addy(int x,int c){
+	for(int i=x;i<=m;i+=lowbit(i)){
+		ty[i]+=c;
+	}
+}
+signed main(){
+	cin>>n>>m>>q;
+	while(q--){
+		int op;
+		cin>>op;
+		if(op==1){
+			int x,y;
+			cin>>x>>y;
+			if(!dx[x]){
+				addx(x,1);
+				dx[x]=1;
+			}else{
+				addx(x,-1);
+				dx[x]=0;
+			}
+			if(!dy[y]){
+				addy(y,1);
+				dy[y]=1;
+			}else{
+				addy(y,-1);
+				dy[y]=0;
+			}
+		}else{
+			int x1,y1,x2,y2;
+			cin>>x1>>y1>>x2>>y2;
+			int x0=sumx(x2)-sumx(x1-1);
+			int y0=sumy(y2)-sumy(y1-1);
+			int ans=x0*(y2-y1+1)+y0*(x2-x1+1)-x0*y0*2;
+			cout<<ans<<endl;
+		}
+	}
+	return 0;
+}
+```
 
