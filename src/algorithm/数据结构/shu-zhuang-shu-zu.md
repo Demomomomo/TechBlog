@@ -44,8 +44,8 @@ void add(int x,int c){
 1.C l r d，表示把a[l]~a[r]都加上d  
 2.Q l r，表示询问数列中第l~r的和。  
 
-<img src="https://img-blog.csdnimg.cn/44aa91a695424c7f9c976fe7d11a1901.png#pic_center" alt="Pulpit rock" width="304" height="228">  
-<img src="https://img-blog.csdnimg.cn/45fb0c656cb24482b7707c584b0680c7.png#pic_center" alt="Pulpit rock" width="304" height="228">  
+<img src="https://img-blog.csdnimg.cn/44aa91a695424c7f9c976fe7d11a1901.png#pic_center" alt="Pulpit rock" width="454" height="100">  
+<img src="https://img-blog.csdnimg.cn/45fb0c656cb24482b7707c584b0680c7.png#pic_center" alt="Pulpit rock" width="454" height="128">  
 
 那么要求a[i]的前缀和我们只需要维护两个树状数组：差分数组d和i*d就可以了。  
 
