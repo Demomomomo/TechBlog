@@ -1,155 +1,207 @@
 ---
 title: 线段树
-
-category:
-  - algorithm
-
-tag:
-  - 数据结构
 ---
 
+## 扶苏的问题
+原题链接：https://www.luogu.com.cn/problem/P1253  
+给定一个长度为n的数组，要求支持以下三种操作：  
+1.给定区间[l,r]，将区间内每个数都改为x。  
+2.给定区间[l,r]，将区间内每个数都加上x。  
+3.给定区间[l,r]，求区间内的最大值。  
 
-## E - Replace Digits（线段树）
-
-<h3>Problem Statement</h3>
-
-<p><a data-link-desc="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." data-link-icon="https://img.atcoder.jp/assets/favicon.png" data-link-title="E - Replace Digits" href="https://atcoder.jp/contests/abl/tasks/abl_e" title="E - Replace Digits">E - Replace Digits</a></p>
-
-<p>You have a string SS of length NN. Initially, all characters in SS are <code>1</code>s.</p>
-
-<p>You will perform queries QQ times. In the ii-th query, you are given two integers L_i, R_iLi​,Ri​ and a character D_iDi​ (which is a digit). Then, you must replace all characters from the L_iLi​-th to the R_iRi​-th (inclusive) with D_iDi​.</p>
-
-<p>After each query, read the string SS as a decimal integer, and print its value modulo 998,244,353998,244,353.</p>
-
-<h3>Constraints</h3>
-
-<ul><li>1 \leq N, Q \leq 200,0001≤N,Q≤200,000</li>
-	<li>1 \leq L_i \leq R_i \leq N1≤Li​≤Ri​≤N</li>
-	<li>1 \leq D_i \leq 91≤Di​≤9</li>
-	<li>All values in input are integers.</li>
-</ul><hr /><h3>Input</h3>
-
-<p>Input is given from Standard Input in the following format:</p>
-
-<pre>
-NN QQ
-L_1L1​ R_1R1​ D_1D1​
-::
-L_QLQ​ R_QRQ​ D_QDQ​
-</pre>
-
-<h3>Output</h3>
-
-<p>Print QQ lines. In the ii-th line print the value of SS after the ii-th query, modulo 998,244,353998,244,353.</p>
-
-<hr /><h3>Sample Input 1 Copy</h3>
-
-<p>Copy</p>
-
-<pre id="pre-sample0">
-8 5
-3 6 2
-1 4 7
-3 8 3
-2 2 2
-4 5 1
-</pre>
-
-<h3>Sample Output 1 Copy</h3>
-
-<p>Copy</p>
-
-<pre id="pre-sample1">
-11222211
-77772211
-77333333
-72333333
-72311333
-</pre>
-
-<p></p>
-
-<p>题意：有一个长为n的串，初始的每个位置都是1</p>
-
-<p>m个操作，每次操作l r x，把l~r这一段位置上的每个数都改成x</p>
-
-<p>每次修改之后看总的串膜上998,244,353之后的结果</p>
-
-<p>思路：先建树</p>
-
-<p>sum表示l~r这段的总数，s表示l~r这段的数应该乘的数位，lazy表示懒标记</p>
-
-<p>建树的时候sum和s随着更新</p>
-
-<p>但是修改的时候只有sum在更新，因为l~r这段应该乘的位数是不变的</p>
-
+思路：  
+因为有两个对区间的修改，所以要用两个修改操作和两个懒标记。  
+定义upd为操作1的懒标记，add为操作2的懒标记。  
+操作1更新：  
+如果当前遍历的区间被需要修改的区间完全覆盖，那么就直接将mx和upd改为x，add改为0.否则的话分裂区间进行pushdown操作然后再分别进行更新。  
+操作2更新：  
+如果当前遍历的区间被需要修改的区间完全覆盖，那么就直接将mx+x，add+x。否则的话分裂区间进行pushdown操作然后再分别进行更新。  
+对于分裂操作，有两种：
+1.将upd下传：左右子树的upd改为父节点的upd，add改为0，mx改为upd，最后将父结点的upd清除。  
+2.将add下传：左右子树的add+父节点的add，mx+父节点的add，最后将父节点的add改为0.  
+注意分裂操作的时候我们需要先下传upd再下传add，因为对于一个区间来说，如果只改了一部分，那么我们需要先把这一部分的数的add改成0之后，再将剩余的部分add进行更新。
 
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
-const int N=2e5+10;
-const long long mod=998244353;
+//#define int long long
 typedef long long ll;
+const int N=2e6+10;
+const ll INF=2e18;
+int n,m;
 struct name{
 	int l,r;
-	ll sum,lazy,s;
+	ll upd,add,mx;
 }tr[N*4];
-int n,m;
-ll a[N];
+int a[N];
 void pushup(int u){
-	tr[u].sum =(tr[u<<1].sum+tr[u<<1|1].sum  )%mod;
-	tr[u].s =(tr[u<<1].s +tr[u<<1|1].s)%mod;
+	tr[u].mx =max(tr[u<<1].mx ,tr[u<<1|1].mx );
 }
 void build(int u,int l,int r){
+	tr[u]={l,r};
+	tr[u].add =0;
+	tr[u].upd =INF;
+	tr[u].mx =-INF;
 	if(l==r){
-		tr[u]={l,r,a[l],0,a[l]};
+		tr[u].mx =a[l];
+		return ;
+	}
+	int mid=l+r>>1;
+	build(u<<1,l,mid);
+	build(u<<1|1,mid+1,r);
+	pushup(u);
+}
+void downupd(int u){
+	if(tr[u].upd !=INF){
+		tr[u<<1].upd =tr[u].upd ;
+		tr[u<<1|1].upd =tr[u].upd ;
+		tr[u<<1].mx =tr[u].upd ;
+		tr[u<<1|1].mx=tr[u].upd ; 
+		tr[u<<1].add =0;
+		tr[u<<1|1].add =0;
+		tr[u].upd =INF;
+	}
+}
+void downadd(int u){
+	if(tr[u].add ){
+		tr[u<<1].add +=tr[u].add ;
+		tr[u<<1|1].add +=tr[u].add ;
+		tr[u<<1].mx +=tr[u].add ;
+		tr[u<<1|1].mx +=tr[u].add ;
+		tr[u].add =0;
+	}
+}
+void upd(int u,int l,int r,ll d){
+	if(l<=tr[u].l &&r>=tr[u].r ){
+		tr[u].add =0;
+		tr[u].mx =d;
+		tr[u].upd =d;
 	}else{
-		int mid=l+r>>1;
-		tr[u]={l,r,0,0,0};
-		build(u<<1,l,mid);
-		build(u<<1|1,mid+1,r);
+		downupd(u);
+		downadd(u);
+		int mid=tr[u].l+tr[u].r >>1;
+		if(l<=mid) upd(u<<1,l,r,d);
+		if(r>mid) upd(u<<1|1,l,r,d);
 		pushup(u);
 	}
 }
-void pushdown(int u){
-	if(tr[u].lazy ){
-		tr[u<<1].lazy =tr[u].lazy ;
-		tr[u<<1].sum =tr[u<<1].s *tr[u].lazy %mod;
-		tr[u<<1|1].lazy =tr[u].lazy ;
-		tr[u<<1|1].sum =tr[u<<1|1].s *tr[u].lazy %mod;
-		tr[u].lazy =0;		
+void add(int u,int l,int r,ll d){
+	if(l<=tr[u].l &&r>=tr[u].r ){
+		tr[u].add +=d;
+		tr[u].mx +=d;
+	}else{
+		downupd(u);
+		downadd(u);
+		int mid=tr[u].l+tr[u].r >>1;
+		if(l<=mid) add(u<<1,l,r,d);
+		if(r>mid) add(u<<1|1,l,r,d);
+		pushup(u);
 	}
 }
-void modify(int u,int l,int r,ll x){
+ll query(int u,int l,int r){
 	if(l<=tr[u].l &&r>=tr[u].r ){
-		tr[u].lazy =x;
-		tr[u].sum =tr[u].s *x%mod;
+		return tr[u].mx;
 	}else{
-		pushdown(u);
+		downupd(u);
+		downadd(u);
 		int mid=tr[u].l +tr[u].r >>1;
-		if(l<=mid)modify(u<<1,l,r,x);
-		if(r>mid)modify(u<<1|1,l,r,x);
-		tr[u].sum =(tr[u<<1].sum +tr[u<<1|1].sum)%mod; 
+		ll num=-2e18;
+		if(l<=mid) num=max(num,query(u<<1,l,r));
+		if(r>mid) num=max(num,query(u<<1|1,l,r));
+		return num;
 	}
 }
 int main(){
-	scanf("%d%d",&n,&m);
-	a[n]=1;
-	for(int i=n-1;i>=1;i--){
-		a[i]=a[i+1]*10%mod;
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	cin>>n>>m;
+	for(int i=1;i<=n;i++){
+		cin>>a[i];
 	}
 	build(1,1,n);
 	while(m--){
-		int l,r;
-		ll x;
-		scanf("%d%d%lld",&l,&r,&x);
-		modify(1,l,r,x);
-		printf("%lld\n",tr[1].sum );
+		int op,l,r;
+		cin>>op>>l>>r;
+		if(op==1){
+			ll x;
+			cin>>x;
+			upd(1,l,r,x);
+		}else if(op==2){
+			ll x;
+			cin>>x;
+			add(1,l,r,x);
+		}else{
+			cout<<query(1,l,r)<<endl;
+		}
 	}
 	return 0;
 }
 ```
 
+## 鸡格线
+原题链接：https://ac.nowcoder.com/acm/contest/46800/G?&headNav=acm
 
-<p></p>
+
+你有一个长为n的数组a，需要支持以下两种操作：  
+1.输入l，r，k，对区间[l,r]中所有数字执行a[i]=10 $\sqrt{a[i]}$ ,round为四舍五入函数  
+2.输出当前数组所有数字的和。  
+你需要正确处理m次这样的操作  
+
+思路：  
+对1e9一直开根号的话，大概操作9次左右最后会变成1  
+数据范围a[i]<=1e9，因为开根号很少次就可以得到一个固定的值，那么我们找一个数试试一直按照上面的函数改变几次会变成一个固定的值  
+那么对于1e9来说，他操作9次之后就变成了100，而且100进行上述的操作时候还是100，那么说明对于数组a，我们最多操作n*10次操作每个数就可以变成一个固定的值。  
+那么我们用set来存储还没有变成100的值的下标，每次需要操作的时候我们就从一个大于等于l的下标开始，大于r结束的set里存的每个下标id，对a[id]进行k次操作就行了  
+为了方便计算sum，我们每次对一个数进行完k次操作的时候，减去原来他的值再加上他变化后的值就可以了E:
+
+```cpp
+#include<bits/stdc++.h>
+#include<set>
+#include<vector>
+#define int long long
+using namespace std;
+const int N=1e5+10;
+int n,m;
+int a[N];
+int f(int x){
+	int op=round(10.0*sqrt(x));
+	return op;
+}
+signed main(){
+	cin>>n>>m;
+	set<int> st;
+	int sum=0;
+	for(int i=1;i<=n;i++){
+		cin>>a[i];
+		st.insert(i); 
+		sum+=a[i];
+	}
+	while(m--){
+		int op;
+		cin>>op;
+		if(op==1){
+			int l,r,k;
+			cin>>l>>r>>k;
+			auto s=st.lower_bound(l);// 
+			vector<int> yy;
+			for(auto i=s;i!=st.end() &&*i<=r;i++){
+				int con=k;
+				int id=*i;
+				while(con&&a[id]!=f(a[id])){
+					sum-=a[id];
+					a[id]=f(a[id]);
+					sum+=a[id];
+					con--;
+				}
+				if(a[id]==f(a[id])) yy.push_back(id) ; //这里注意我们不能直接在st里删除id这个下标，不然指针就会指向删除之后的空值。这里我们先用一个vector数组来存需要删除的下标，在遍历完st之后我们再删除
+			}
+			for(int i=0;i<yy.size() ;i++) st.erase(yy[i]);、、删除下标 
+		}else{
+			cout<<sum<<endl;
+		}
+	}
+	return 0;
+}
+```
+
 
