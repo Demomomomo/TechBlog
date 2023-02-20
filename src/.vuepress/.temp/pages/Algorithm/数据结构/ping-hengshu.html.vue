@@ -23,10 +23,17 @@ BST的中序遍历一定是从大到小。</p>
 3.找前驱/后继：--，++<br>
 4.找最大/最小值：begin(),end()<br>
 如果我们发现一个题中只要求上述几个操作的话，我们不需要手写平衡树，直接用set做就可以了。</p>
-<!-- ### 求某一个值的排名
-
-
-### 求排名是k的数是哪个 -->
+<h2 id="平衡树的结构" tabindex="-1"><a class="header-anchor" href="#平衡树的结构" aria-hidden="true">#</a> 平衡树的结构</h2>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">struct</span> <span class="token class-name">name</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> l<span class="token punctuation">,</span>r<span class="token punctuation">;</span><span class="token comment">//左右子树</span>
+    <span class="token keyword">int</span> key<span class="token punctuation">,</span>val<span class="token punctuation">;</span><span class="token comment">//BST里排序用到的关键值和heap里的优先级，val是随机的</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="求某一个值的排名" tabindex="-1"><a class="header-anchor" href="#求某一个值的排名" aria-hidden="true">#</a> 求某一个值的排名</h3>
+<h3 id="求排名是k的数是哪个" tabindex="-1"><a class="header-anchor" href="#求排名是k的数是哪个" aria-hidden="true">#</a> 求排名是k的数是哪个</h3>
+<h3 id="求比某个数小的最大值" tabindex="-1"><a class="header-anchor" href="#求比某个数小的最大值" aria-hidden="true">#</a> 求比某个数小的最大值</h3>
+<p>区别于前驱：这个数可能在树中不存在</p>
+<h3 id="求比某个数大的最小值" tabindex="-1"><a class="header-anchor" href="#求比某个数大的最小值" aria-hidden="true">#</a> 求比某个数大的最小值</h3>
+<p>区别于后继：这个数可能在树中不存在</p>
 </div></template>
 
 
