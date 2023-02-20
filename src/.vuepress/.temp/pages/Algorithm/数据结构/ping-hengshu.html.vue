@@ -28,12 +28,22 @@ BST的中序遍历一定是从大到小。</p>
     <span class="token keyword">int</span> l<span class="token punctuation">,</span>r<span class="token punctuation">;</span><span class="token comment">//左右子树</span>
     <span class="token keyword">int</span> key<span class="token punctuation">,</span>val<span class="token punctuation">;</span><span class="token comment">//BST里排序用到的关键值和heap里的优先级，val是随机的</span>
 <span class="token punctuation">}</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="求某一个值的排名" tabindex="-1"><a class="header-anchor" href="#求某一个值的排名" aria-hidden="true">#</a> 求某一个值的排名</h3>
-<h3 id="求排名是k的数是哪个" tabindex="-1"><a class="header-anchor" href="#求排名是k的数是哪个" aria-hidden="true">#</a> 求排名是k的数是哪个</h3>
-<h3 id="求比某个数小的最大值" tabindex="-1"><a class="header-anchor" href="#求比某个数小的最大值" aria-hidden="true">#</a> 求比某个数小的最大值</h3>
-<p>区别于前驱：这个数可能在树中不存在</p>
-<h3 id="求比某个数大的最小值" tabindex="-1"><a class="header-anchor" href="#求比某个数大的最小值" aria-hidden="true">#</a> 求比某个数大的最小值</h3>
-<p>区别于后继：这个数可能在树中不存在</p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><!-- 
+
+
+### 求某一个值的排名
+
+
+### 求排名是k的数是哪个
+
+
+### 求比某个数小的最大值
+区别于前驱：这个数可能在树中不存在  
+
+
+
+### 求比某个数大的最小值
+区别于后继：这个数可能在树中不存在   -->
 </div></template>
 
 
