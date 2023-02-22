@@ -161,7 +161,7 @@ BST的中序遍历一定是从大到小。</p>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="求比某个数小的最大值" tabindex="-1"><a class="header-anchor" href="#求比某个数小的最大值" aria-hidden="true">#</a> 求比某个数小的最大值</h3>
 <p>区别于前驱：这个数可能在树中不存在<br>
 如果这个数不存在那么我们就返回负无穷。<br>
-如果当前的结点key值大于key，那么我们就递归找他的左子树。<br>
+如果当前的结点key值大于等于key，那么我们就递归找他的左子树。<br>
 如果当前结点key值小于key，那么将当前结点的key和右子树找到的值取最大。</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">get_prev</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span><span class="token keyword">int</span> key<span class="token punctuation">)</span><span class="token punctuation">{</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span>INF<span class="token punctuation">;</span>
@@ -171,7 +171,7 @@ BST的中序遍历一定是从大到小。</p>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="求比某个数大的最小值" tabindex="-1"><a class="header-anchor" href="#求比某个数大的最小值" aria-hidden="true">#</a> 求比某个数大的最小值</h3>
 <p>区别于后继：这个数可能在树中不存在<br>
 如果这个数不存在那么我们就返回负无穷。<br>
-如果当前的结点key值小于key，那么我们就递归找他的右子树。<br>
+如果当前的结点key值小于等于key，那么我们就递归找他的右子树。<br>
 如果当前结点key值大于key，那么将当前结点的key和右子树找到的值取最小。</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">get_next</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span><span class="token keyword">int</span> key<span class="token punctuation">)</span><span class="token punctuation">{</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p<span class="token punctuation">)</span> <span class="token keyword">return</span> INF<span class="token punctuation">;</span>
