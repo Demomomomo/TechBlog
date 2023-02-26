@@ -13,8 +13,13 @@ log(x)：以e为底取x的对数
 log2(x):以2为底  
 log10(x):以10为底  
 round(x):四舍五入函数  
+floor(x):向下取整  
+ceil(x):向上取整  
 求x是m的几次幂：log(x)/log(m)  
 取几个数最大值：max=({a,b,c,d})  
+
+
+
 
 
 ## 公式

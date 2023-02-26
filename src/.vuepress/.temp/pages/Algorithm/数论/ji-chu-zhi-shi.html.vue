@@ -7,6 +7,8 @@ double: 位数9 精度：1e(-16)</p>
 log2(x):以2为底<br>
 log10(x):以10为底<br>
 round(x):四舍五入函数<br>
+floor(x):向下取整<br>
+ceil(x):向上取整<br>
 求x是m的几次幂：log(x)/log(m)<br>
 取几个数最大值：max=({a,b,c,d})</p>
 <h2 id="公式" tabindex="-1"><a class="header-anchor" href="#公式" aria-hidden="true">#</a> 公式</h2>

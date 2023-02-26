@@ -157,8 +157,146 @@ int main(){
 
 ```
 
+## P5482 [JLOI2011]不等式组
+原题链接：https://www.luogu.com.cn/problem/P5482  
+题意：  
+有n个操作，每个操作有三种情况：  
+1.Add a b c:向不等式组中加入一个不等式ax+b>c  
+2.Del i:删除第i条添加的不等式  
+3.Query k：询问x=k时当前不等式组中成立的不等式有几个。  
+
+思路：  
+对于ax+b>c的解有三种情况：  
+1：a=0,这个时候只要判断一下b>c是否正确即可  
+2：a>0，那么解就是 x>$\frac{c-b}{a} $  
+3：a<0，那么解就是 x<$\frac{c-b}{a} $  
+
+而且我们询问的时候只询问整数，那么我们就需要处理一下边界问题：  
+当x>$\frac{c-b}{a} $ 时，整数解应该是 $\frac{c-b}{a} $ 下取整+1。  
+当x<$\frac{c-b}{a} $ 时，整数解一个是 $\frac{c-b}{a} $ 上取整-1。  
+
+下取整函数：floor(x)  
+上取整函数：ceil(x)  
+
+因为这个值域很大，所以我们要先读入所有添加和询问操作的数离散化一下，假设离散化之后的大小为m。  
+
+那么我们可以用树状数组维护差分数组b来求每个整数为解满足的不等式的个数。当x>$\frac{c-b}{a} $  时，假设离散化之后的 $\frac{c-b}{a} $ 下标为id， 我们将[id,m]这个区间+1。同理当x>$\frac{c-b}{a} $  时，将[1,id]这个区间+1，当a==0的时候单独用个数来记录。  
 
 
+```cpp
+#include<bits/stdc++.h>
+#include<vector>
+#define int long long
+using namespace std;
+const int N=3e5+10;
+struct name{
+	string op;
+	int num;
+}q[N];
+int st[N];
+int n,m;
+int tr[N*4];
+int lowbit(int x){
+	return x&(-x);
+}
+int idx;
+vector<int> yy;
+int ans[N];
+int find(int x){
+	return lower_bound(yy.begin() ,yy.end() ,x)-yy.begin() +1;
+}
+int sum(int x){
+	int res=0;
+	for(int i=x;i;i-=lowbit(i) )res+=tr[i];
+	return res;
+}
+void add(int x,int c){
+	for(int i=x;i<=m;i+=lowbit(i))tr[i]+=c;
+}
+
+void addb(int l,int r,int d){
+	add(l,d);
+	if(r+1<=m) add(r+1,-d);
+}
+signed main(){
+	cin>>n;
+	for(int i=1;i<=n;i++){
+		string op;
+		cin>>op;
+		if(op=="Add"){
+			int a,b,c;
+			cin>>a>>b>>c;
+			idx++;
+			int num;
+			if(a==0){
+				if(b>c){
+					st[idx]=1;
+					num=0;
+				}
+			}else if(a>0){
+				num=floor((c-b)*1.0/a)+1;
+				st[idx]=2;
+				ans[idx]=num;
+				yy.push_back(num); 
+			}else {
+				num=ceil((c-b)*1.0/a)-1;
+				st[idx]=3;
+				ans[idx]=num;
+				yy.push_back(num); 
+			}
+			q[i]={op,num};
+		}else if(op=="Del"){
+			int k;
+			cin>>k;
+			q[i]={op,k};
+		}else{
+			int num;
+			cin>>num;
+			yy.push_back(num);
+			q[i]={op,num}; 
+		}
+	}
+	sort(yy.begin() ,yy.end() );
+	yy.erase(unique(yy.begin() ,yy.end() ),yy.end() );
+	m=yy.size() ;
+	idx=0;
+	int con=0;
+	for(int i=1;i<=n;i++){
+		string op=q[i].op ;
+		int num=q[i].num ;
+		int id;
+		if(op=="Add"){
+			idx++;
+			if(st[idx]==1){
+				con++;
+			}else if(st[idx]==2){
+				id=find(num);
+				addb(id,m,1);
+			}else if(st[idx]==3){
+				id=find(num);
+				addb(1,id,1);
+			}
+		}else if(op=="Del"){
+			int k=q[i].num ;
+			if(st[k]==1){
+				con--;
+			}else if(st[k]==2){
+				num=ans[k];
+				id=find(num);
+				addb(id,m,-1);
+			}else if(st[k]==3){
+				num=ans[k];
+				id=find(num);
+				addb(1,id,-1);
+			}
+			st[k]=0;
+		}else{
+			id=find(num);
+			cout<<sum(id)+con<<endl;
+		}
+	} 
+	return 0;
+}
 
 
-
+```
