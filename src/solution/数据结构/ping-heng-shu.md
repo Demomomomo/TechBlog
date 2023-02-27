@@ -137,3 +137,14 @@ signed main(){
 }
 ```
 
+
+<!-- ## splay
+
+例题：https://www.acwing.com/problem/content/2439/  
+
+题意：  
+有一个长度为n的1~n的序列，有m次操作，每次操作选一个区间[l,r]，将l~r这段区间内的数进行翻转，求m次操作之后的序列。   -->
+
+
+
+
