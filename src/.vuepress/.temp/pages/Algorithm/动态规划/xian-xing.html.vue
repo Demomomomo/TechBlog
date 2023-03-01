@@ -45,6 +45,48 @@ f[i][j]表示A[1<sub>i]变为B[1</sub>j]需要的最小操作次数。<br>
 	cout<span class="token operator">&lt;&lt;</span>f<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="搬寝室" tabindex="-1"><a class="header-anchor" href="#搬寝室" aria-hidden="true">#</a> 搬寝室</h2>
+<p>原题链接：<a href="https://acm.hdu.edu.cn/showproblem.php?pid=1421" target="_blank" rel="noopener noreferrer">https://acm.hdu.edu.cn/showproblem.php?pid=1421<ExternalLinkIcon/></a></p>
+<p>题意：<br>
+有n件物品，从中选择2*k件物品搬，搬一次时左手拿一个物品，右手拿一个物品，这一次的疲劳度是左右手物品重量的差的平方，那么求搬完这些物品之后最低的疲劳度是多少。<br>
+思路：<br>
+第一感觉是每次选的两个值相差的越小越好，那么我们猜测一下每次选是不是一定是两个相邻的数。<br>
+比如有四个数：a &lt; b &lt; c &lt; d,那么有三种搬法：<br>
+ab和cd，ac和bd，bc和ad。<br>
+ac和bd的差肯定大于ab和cd差，那么我们主要看ab和cd以及bc和ad。<br>
+用图来画出他们的差值，就是：<br>
+<img src="https://img-blog.csdnimg.cn/3f9a15bbf88948799e4bdd02ec6f2c86.jpeg#pic_center" alt="Pulpit rock" width="304" height="228"><br>
+很容易能看出ab和cd的差值比ac和bd的差值小，那么我们每次选择的时候，选相邻的两个数的差值是最小的。<br>
+f[i][j]表示前i个物品中选j对<br>
+我们可以分成选第i件和不选第i件两种情况：<br>
+选第i件：因为选择相邻两个最优，那么我们就只能选择a[i-1]和a[i]，并且在前i-2个物品中选j-1对。<br>
+不选第i件：那么就从前i-1个里面选j对，那么就是f[i-1][j]<br>
+那么这两种状态取最大即可。<br>
+注意将a数组排序。</p>
+<!-- ```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+const int N=2005;
+int f[N][N];
+int a[N];
+int main(){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)cin>>a[i];
+	sort(a+1,a+1+n);
+	memset(f,0x3f,sizeof f);
+	for(int i=0;i<=n;i++)f[i][0]=0;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m&&j*2<=i;j++){
+			f[i][j]=min(f[i-1][j],f[i-1][j-1]+(a[i]-a[i-1])*(a[i]-a[i-1]));
+		}
+	}
+	cout<<f[n][m]<<endl;
+	return 0;
+}
+
+
+``` -->
+</div></template>
 
 
