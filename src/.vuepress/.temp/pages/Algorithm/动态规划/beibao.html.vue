@@ -1,4 +1,12 @@
-<template><div><h2 id="_01背包" tabindex="-1"><a class="header-anchor" href="#_01背包" aria-hidden="true">#</a> 01背包</h2>
+<template><div><p>在设基本状态的时候有三种设法：<br>
+1.体积最多为j（一般的背包问题）</p>
+<p>初始化所有值都是0，当体积的状态大于等于0的时候才能转换</p>
+<p>2.体积恰好为j</p>
+<p>初始化f[0]=0,其他的都是正无穷（根据题意设），当体积恰好是要求的体积且大于0的时候才能转换</p>
+<p>3.体积最少为j（潜水员）</p>
+<p>初始化f[0]=0，其他都是正无穷（根据题意）
+当状态的体积小于0的时候也可以转换</p>
+<h2 id="_01背包" tabindex="-1"><a class="header-anchor" href="#_01背包" aria-hidden="true">#</a> 01背包</h2>
 <p>容量为v的背包里，有n件物品，每件物品的体积为vi，价值为wi，求不超过背包体积的情况下能获得的物品的最大价值<br>
 有序变无序：从1~i依次遍历，那么处理到i的是吧前i-1个已经被处理过了，可以直接拿着算<br>
 f[i][j]表示在前i个物品中选，总体积不超过j的方案的能获得的最大价值<br>
@@ -57,12 +65,21 @@ f[i][j]=max(f[i-1][j],f[i-1][j-vi]+wi);<br>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果要求背包装满的话，那我们设的状态是：f[i][j]表示在前i个物品里恰好选择了体积为j的物品获得的最大价值，那么我们初始化的时候f[0][0]表示在前0个物品选体积恰好为0的最大价值，那么是0，但是f[0][i]表示在前0个物品中选体积恰好为i的最大价值，无解，所以1~n的f[0][i]的值是负无穷，然后我们再正常按01和完全背包做，当最后f[m]是负无穷的话说明没有能正好装满的方案，如果不是那就是最大价值<br>
 memset(f,-0x3f,sizeof f);<br>
 f[0][0]=0;</p>
-<h2 id="多重背包" tabindex="-1"><a class="header-anchor" href="#多重背包" aria-hidden="true">#</a> 多重背包</h2>
+<h2 id="完全背包求方案数" tabindex="-1"><a class="header-anchor" href="#完全背包求方案数" aria-hidden="true">#</a> 完全背包求方案数</h2>
+<p>和01背包的思路一样，优化之后是将j从大到小列举。</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>	f<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+=</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	cout<span class="token operator">&lt;&lt;</span>f<span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="多重背包" tabindex="-1"><a class="header-anchor" href="#多重背包" aria-hidden="true">#</a> 多重背包</h2>
 <h3 id="二进制优化" tabindex="-1"><a class="header-anchor" href="#二进制优化" aria-hidden="true">#</a> 二进制优化</h3>
 <p>数据范围：n&lt;=1000 v&lt;=2000 si&lt;=2000<br>
 有一个体积为v的背包，n种物品，每个物品的体积是vi，价值是wi，个数是si，求拿的物品的体积不超过背包体积时的最大价值<br>
 用二进制优化<br>
-对于一种背包，我们可以拿0<sub>si个，我们把他分成1,2,4...这种二进制个捆在一起作为一组，那么我们可以用这几组凑出0</sub>si中所有的数，然后对这几组进行01背包问题的拿取就可以了</p>
+对于一种背包，我们可以拿0 ~ si个，我们把他分成1,2,4...这种二进制个捆在一起作为一组，那么我们可以用这几组凑出0 ~ si中所有的数，然后对这几组进行01背包问题的拿取就可以了</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>cin<span class="token operator">>></span>n<span class="token operator">>></span>m<span class="token punctuation">;</span>
 	<span class="token keyword">int</span> cnt<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -95,7 +112,7 @@ f[0][0]=0;</p>
 
 
 思路：  
-f[i][j]表示在前i个物品中选，体积不超过j的最大价值。   -->
+f[i][j]表示在前i个物品中选，体积不超过j的最大价值。    -->
 <h2 id="二维费用的背包问题" tabindex="-1"><a class="header-anchor" href="#二维费用的背包问题" aria-hidden="true">#</a> 二维费用的背包问题</h2>
 <p>宠物小精灵之收服<br>
 原题链接：<a href="https://www.acwing.com/problem/content/1024/" target="_blank" rel="noopener noreferrer">https://www.acwing.com/problem/content/1024/<ExternalLinkIcon/></a><br>
@@ -151,7 +168,108 @@ f[i][j][k]表示在前i个小精灵中，花费的精灵球数不超过j，损�
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="货币系统" tabindex="-1"><a class="header-anchor" href="#货币系统" aria-hidden="true">#</a> 货币系统</h2>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>潜水员<br>
+原题链接：<a href="https://www.acwing.com/problem/content/1022/" target="_blank" rel="noopener noreferrer">https://www.acwing.com/problem/content/1022/<ExternalLinkIcon/></a><br>
+题意：<br>
+有n个气缸，每个气缸都装有两种气体：氧气和氮气，还有相应的气体容量。第i个气缸中有容量为v1[i]的氧气和v2[i]的氮气，他的重量是w[i]。那么求至少装容量为m1的氧气和容量为m2的氮气时，选择的气缸的重量的最小值。<br>
+思路：<br>
+f[i][j1][j2]表示在前i个物品中选，氧气的体积至少为j1，氮气体积至少为j2的情况下，选择的气缸重量的最小值。<br>
+不选第i个物品：f[i-1][j1][j2]<br>
+选第i个物品：f[i-1][j1-v1[i]][j2-v2[i]]<br>
+因为要求最小值，初始化的时候把所有值都赋值成极大值，将f[0][0][0]赋值成0.<br>
+那么我们在转移的时候，从j-v转移过来的时候，如果j-v是负数，那么这个状态也是合法的，表示为如果容量至少为负数的时候，所选气缸的最小重量。<br>
+换一种说法，当j-v&lt;0的时候表示v&gt;j，那么选了这个物品之后肯定满足至少为j，那么我们就不需要选之前的物品，那么就按照之前的物品的容量至少为0来算就可以了。</p>
+<p>核心代码：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>	<span class="token function">memset</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span><span class="token number">0x3f</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span> f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	f<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j1<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j1<span class="token operator">&lt;=</span>m1<span class="token punctuation">;</span>j1<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j2<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j2<span class="token operator">&lt;=</span>m2<span class="token punctuation">;</span>j2<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j1<span class="token punctuation">]</span><span class="token punctuation">[</span>j2<span class="token punctuation">]</span><span class="token operator">=</span>f<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j1<span class="token punctuation">]</span><span class="token punctuation">[</span>j2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+				f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j1<span class="token punctuation">]</span><span class="token punctuation">[</span>j2<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0ll</span><span class="token punctuation">,</span>j1<span class="token operator">-</span>v1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0ll</span><span class="token punctuation">,</span>j2<span class="token operator">-</span>v2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">+</span>w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j1<span class="token punctuation">]</span><span class="token punctuation">[</span>j2<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>优化一维之后的代码是：</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">int</span> <span class="token expression"><span class="token keyword">long</span> <span class="token keyword">long</span></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span>m1<span class="token punctuation">,</span>m2<span class="token punctuation">;</span>
+<span class="token keyword">int</span> f<span class="token punctuation">[</span><span class="token number">30</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">85</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">signed</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	cin<span class="token operator">>></span>m1<span class="token operator">>></span>m2<span class="token punctuation">;</span>
+	cin<span class="token operator">>></span>n<span class="token punctuation">;</span>
+	<span class="token function">memset</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span><span class="token number">0x3f</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span> f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	f<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> v1<span class="token punctuation">,</span>v2<span class="token punctuation">,</span>w<span class="token punctuation">;</span>
+		cin<span class="token operator">>></span>v1<span class="token operator">>></span>v2<span class="token operator">>></span>w<span class="token punctuation">;</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j1<span class="token operator">=</span>m1<span class="token punctuation">;</span>j1<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>j1<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j2<span class="token operator">=</span>m2<span class="token punctuation">;</span>j2<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>j2<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				f<span class="token punctuation">[</span>j1<span class="token punctuation">]</span><span class="token punctuation">[</span>j2<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j1<span class="token punctuation">]</span><span class="token punctuation">[</span>j2<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0ll</span><span class="token punctuation">,</span>j1<span class="token operator">-</span>v1<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0ll</span><span class="token punctuation">,</span>j2<span class="token operator">-</span>v2<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">+</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	cout<span class="token operator">&lt;&lt;</span>f<span class="token punctuation">[</span>m1<span class="token punctuation">]</span><span class="token punctuation">[</span>m2<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="混合背包问题" tabindex="-1"><a class="header-anchor" href="#混合背包问题" aria-hidden="true">#</a> 混合背包问题</h2>
+<p>原题链接：<a href="https://www.acwing.com/problem/content/7/" target="_blank" rel="noopener noreferrer">https://www.acwing.com/problem/content/7/<ExternalLinkIcon/></a><br>
+题意：<br>
+有n种物品和一个容量为v的背包<br>
+物品有三类：<br>
+第一类只能用一次（01背包）<br>
+第二类物品可以用无限次（完全背包）<br>
+第三类物品最多只能用si次（多重背包）<br>
+每种体积是vi，价值是wi<br>
+将哪些物品装入背包使总体积不超过m的情况下总价值最大。</p>
+<p>思路：<br>
+f[i][j]表示在前i个物品中选，且体积不超过j的选法中能得到的最大价值。</p>
+<p>01背包：f[i][j]=max(f[i-1][j],f[i-1][j-v[i]]+w[i])</p>
+<p>完全背包：f[i][j]=max(f[i-1][j],f[i][j-v[i]]+w[i])</p>
+<p>多重背包：f[i][j]=max(f[i-1][j],f[i-1][j-v[i]]+w[i],f[i-1][j-2v[i]]+2w[i]...)</p>
+<p>对于第i个物品有选或者不选两种情况。<br>
+不选:f[i-1][j]<br>
+选：要考虑第i件物品的类型：<br>
+对于第i种物品：<br>
+如果是完全背包，那么我们就按正常的优化后的f[j]从小到大更新f[j]=max(f[j],f[j-v]+w)<br>
+01背包是个数为1的多重背包，那么我们就认为他是si为1的完全背包。<br>
+对于完全背包，我们要对他进行二进制优化。把他分成二进制的多个01背包，然后对每个背包进行一次01背包的状态转移就可以了。</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token operator">=</span><span class="token number">1005</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> f<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	cin<span class="token operator">>></span>n<span class="token operator">>></span>m<span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> v<span class="token punctuation">,</span>w<span class="token punctuation">,</span>s<span class="token punctuation">;</span>
+		cin<span class="token operator">>></span>v<span class="token operator">>></span>w<span class="token operator">>></span>s<span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>v<span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>v<span class="token punctuation">]</span><span class="token operator">+</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">==</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>s<span class="token punctuation">;</span>k<span class="token operator">*=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>m<span class="token punctuation">;</span>j<span class="token operator">>=</span>k<span class="token operator">*</span>v<span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+					f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>k<span class="token operator">*</span>v<span class="token punctuation">]</span><span class="token operator">+</span>k<span class="token operator">*</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+				s<span class="token operator">-=</span>k<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>m<span class="token punctuation">;</span>j<span class="token operator">>=</span>s<span class="token operator">*</span>v<span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+					f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>s<span class="token operator">*</span>v<span class="token punctuation">]</span><span class="token operator">+</span>s<span class="token operator">*</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	cout<span class="token operator">&lt;&lt;</span>f<span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="货币系统" tabindex="-1"><a class="header-anchor" href="#货币系统" aria-hidden="true">#</a> 货币系统</h2>
 <p>原题链接：<a href="https://www.acwing.com/video/388/" target="_blank" rel="noopener noreferrer">https://www.acwing.com/video/388/<ExternalLinkIcon/></a><br>
 题意：</p>
 <p>有n种面额的货币，第i种货币的面额为a[i]，每种货币有无数张。那么我们将这n种货币能凑成的全部面额称为一个货币系统，记为（n,a)。那么我们要找到一个货币系统(m,b)，m尽可能小，使得这个货币系统和(n,a)这个货币系统凑成的数值相等。</p>
@@ -203,6 +321,58 @@ f[i][j][k]表示在前i个小精灵中，花费的精灵球数不超过j，损�
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="混合背包问题-1" tabindex="-1"><a class="header-anchor" href="#混合背包问题-1" aria-hidden="true">#</a> 混合背包问题</h2>
+<p>原题链接：<a href="https://www.acwing.com/problem/content/7/" target="_blank" rel="noopener noreferrer">https://www.acwing.com/problem/content/7/<ExternalLinkIcon/></a><br>
+有n种物品和一个容量是m的背包，类型有3种：<br>
+1.第一种物品只能用一次<br>
+2.第二种物品可以用无限次<br>
+3.第三种物品只能用si次<br>
+求物品体积总和不超过背包容量，能装的最大价值。</p>
+<p>思路：<br>
+完全背包的转移公式：f[i][j]=max(f[i][j],f[i][j-v[i]]+w[i])<br>
+多重背包的转移公式：f[i][j]=max(f[i][j],f[i-1][j-k<em>v[i]]+k</em>w[i])<br>
+01背包是特殊的多重背包，将si设为1即可<br>
+那么对于多重背包，我们将他进行一个二进制优化，将他分成多个背包之后再进行01背包的转换。</p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+<span class="token keyword">int</span> f<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	cin<span class="token operator">>></span>n<span class="token operator">>></span>m<span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> v<span class="token punctuation">,</span>w<span class="token punctuation">,</span>s<span class="token punctuation">;</span>
+		cin<span class="token operator">>></span>v<span class="token operator">>></span>w<span class="token operator">>></span>s<span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>v<span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>v<span class="token punctuation">]</span><span class="token operator">+</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">==</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>s<span class="token punctuation">;</span>k<span class="token operator">*=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>m<span class="token punctuation">;</span>j<span class="token operator">>=</span>k<span class="token operator">*</span>v<span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+					f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>k<span class="token operator">*</span>v<span class="token punctuation">]</span><span class="token operator">+</span>w<span class="token operator">*</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+				s<span class="token operator">-=</span>k<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>m<span class="token punctuation">;</span>j<span class="token operator">>=</span>s<span class="token operator">*</span>v<span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+					f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>j<span class="token operator">-</span>s<span class="token operator">*</span>v<span class="token punctuation">]</span><span class="token operator">+</span>s<span class="token operator">*</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	cout<span class="token operator">&lt;&lt;</span>f<span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><!-- ## 有依赖的背包问题
+原题链接：https://www.acwing.com/problem/content/10/  
+题意：  
+有n个物品和容量是v的背包，物品之间有依赖关系，如果选择一个物品，则必须选择他的父节点。  
+每件物品编号是i，体积是vi，价值是wi，依赖的父节点编号是pi，下标范围1~n。  
+求将哪些物品装入背包，使物品总体积不超过背包容量且总价值最大。   -->
+<!-- ## 背包问题求方案数 -->
+</div></template>
 
 
