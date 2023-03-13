@@ -40,7 +40,7 @@ f[i][j]=max(f[i-1][j],f[i-1][j-vi]+wi);
 
 ```
 
-## 01背包求方案数
+### 01背包求方案数
 原题链接：https://www.acwing.com/problem/content/280/  
 题意：  
 
@@ -97,7 +97,7 @@ memset(f,-0x3f,sizeof f);
 f[0][0]=0;  
 
 
-## 完全背包求方案数
+### 完全背包求方案数
 和01背包的思路一样，优化之后是将j从大到小列举。  
 ```cpp
 	f[0]=1;
@@ -146,14 +146,95 @@ cin>>n>>m;
 	cout<<f[m]<<endl;
 ```
 
-<!-- ### 单调队列优化
-数据范围：n<=1000 v<=20000 vi,wi,si<=20000  
-原题链接：https://www.acwing.com/problem/content/6/  
-题意：和上面一样，不过数据范围变大了。  
 
-
+## 分组背包
+原题链接：https://www.acwing.com/problem/content/9/  
+题意：  
+有n组物品和容量是m的背包。每组物品有若干个，同一组的物品只能选择一个，每件物品的体积是vij，价值是wij，i是组号，j是组内编号。求将哪些物品装入背包里，可以使物品的总体积不超过背包容量，且总价值最大。  
 思路：  
-f[i][j]表示在前i个物品中选，体积不超过j的最大价值。    -->
+f[i][j]表示在前i个物品中选，体积不超过j的选法的最大价值。  
+那么我们只需要在01背包的基础上多加一层循环，循环每组内的每个物品就可以了。  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+const int N=105;
+int f[N][N];
+int s[N];
+int v[N][N],w[N][N];
+int main(){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++){
+		cin>>s[i];
+		for(int j=1;j<=s[i];j++){
+			cin>>v[i][j]>>w[i][j];
+		}
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=0;j<=m;j++){
+			f[i][j]=f[i-1][j];
+			for(int k=1;k<=s[i];k++){
+				if(j>=v[i][k]) f[i][j]=max(f[i][j],f[i-1][j-v[i][k]]+w[i][k]);
+			}
+		}
+	}
+	cout<<f[n][m];
+	return 0;
+}
+```
+
+### 分组背包求具体方案
+
+例题：机器分配  
+原题链接：https://www.acwing.com/problem/content/1015/  
+题意：  
+有n个公司，一共有m个机器。现在要把这m个机器分给n个公司，每个公司可以分配任意数量的机器，但是所有分配给公司的机器总和不能超过m。当第i个公司分配j台设备的时候，会有w[i][j]的盈利。那么求满足条件的分配方案，并且输出最大盈利。  
+思路：  
+f[i][j]表示分配给前i个公司不超过j台的机器，那么我们就对第i个公司分配的机器数k遍历一遍，取最大值。  
+转移方程:f[i][j]=max(f[i][j],f[i-1][j-k]+w[i][k])  
+那么我们再求具体方案的时候，设剩余可以分配的机器数j为m，从最后一个公司往前遍历，遍历每个公司分配机器的数量，得到取到最大价值分配的机器数id，那么我们就将这个公司分配的机器数定为id，然后再将j减去id，继续按同样的方法遍历剩下的公司即可。  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+const int N=105;
+int f[N][N];
+int s[N];
+int v[N][N],w[N][N];
+int g[N];
+int main(){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			cin>>w[i][j];
+		}
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=0;j<=m;j++){
+			f[i][j]=f[i-1][j];
+			for(int k=0;k<=j;k++){
+				f[i][j]=max(f[i][j],f[i-1][j-k]+w[i][k]);
+			}
+		}
+	}
+	cout<<f[n][m]<<endl;
+	int j=m;
+	for(int i=n;i>=1;i--){
+		int id=0;
+		for(int k=0;k<=j;k++){
+			if(f[i-1][j-k]+w[i][k]>f[i-1][j-id]+w[i][id]) id=k;
+		}
+		g[i]=id;
+		j-=id;
+	}
+	for(int i=1;i<=n;i++){
+		cout<<i<<" "<<g[i]<<endl;
+	}
+	return 0;
+}
+```
+
 
 
 
@@ -284,70 +365,6 @@ signed main(){
 }
 ```
 
-
-
-## 混合背包问题
-原题链接：https://www.acwing.com/problem/content/7/  
-题意：  
-有n种物品和一个容量为v的背包  
-物品有三类：  
-第一类只能用一次（01背包）  
-第二类物品可以用无限次（完全背包）  
-第三类物品最多只能用si次（多重背包）  
-每种体积是vi，价值是wi  
-将哪些物品装入背包使总体积不超过m的情况下总价值最大。  
-
-思路：  
-f[i][j]表示在前i个物品中选，且体积不超过j的选法中能得到的最大价值。  
-
-01背包：f[i][j]=max(f[i-1][j],f[i-1][j-v[i]]+w[i])  
-
-完全背包：f[i][j]=max(f[i-1][j],f[i][j-v[i]]+w[i])  
-
-多重背包：f[i][j]=max(f[i-1][j],f[i-1][j-v[i]]+w[i],f[i-1][j-2v[i]]+2w[i]...)  
-
-对于第i个物品有选或者不选两种情况。  
-不选:f[i-1][j]  
-选：要考虑第i件物品的类型：  
-对于第i种物品：  
-如果是完全背包，那么我们就按正常的优化后的f[j]从小到大更新f[j]=max(f[j],f[j-v]+w)  
-01背包是个数为1的多重背包，那么我们就认为他是si为1的完全背包。  
-对于完全背包，我们要对他进行二进制优化。把他分成二进制的多个01背包，然后对每个背包进行一次01背包的状态转移就可以了。  
-```cpp
-#include<bits/stdc++.h>
-using namespace std;
-const int N=1005;
-int f[N];
-int n,m;
-
-int main(){
-	cin>>n>>m;
-	for(int i=1;i<=n;i++){
-		int v,w,s;
-		cin>>v>>w>>s;
-		if(s==0){
-			for(int j=v;j<=m;j++){
-				f[j]=max(f[j],f[j-v]+w);
-			}
-		}else {
-			if(s==-1) s=1;
-			for(int k=1;k<=s;k*=2){
-				for(int j=m;j>=k*v;j--){
-					f[j]=max(f[j],f[j-k*v]+k*w);
-				}
-				s-=k;
-			}
-			if(s>0){
-				for(int j=m;j>=s*v;j--){
-					f[j]=max(f[j],f[j-s*v]+s*w);
-				}
-			}
-		}
-	}
-	cout<<f[m]<<endl;
-	return 0;
-}
-```
 
 
 
@@ -481,7 +498,132 @@ int main(){
 求将哪些物品装入背包，使物品总体积不超过背包容量且总价值最大。   -->
 
 
-<!-- ## 背包问题求方案数 -->
+## 背包问题求方案数
+原题链接：https://www.acwing.com/problem/content/11/  
+
+题意：  
+n个物品，一个容量为m的背包，每个物品体积为vi，价值为wi，只能用一次，求所选择的物品总体积不超过背包容量时得到的最大价值的方案数，对1e9+7取模。  
+思路：  
+f[i][j]表示前i个物品中选，体积恰好是j的最大价值。  
+转移方程：f[i][j]=max(f[i-1][j],f[i-1][j-vi]+wi);  
+g[i][j]表示当f[i][j]取到最大值时的方案数。  
+那么我们就判断f[i-1][j]和f[i-1][j-vi]哪个大：  
+如果f[i-1][j]大，那么方案数就加上g[i-1][j]  
+如果f[i-1][j-vi]大，那么方案数就加上g[i-1][j-vi]  
+如果一样大，那么就加上g[i-1][j]和g[i-1][j-vi]  
+
+注意：对于每个选择来说，不选择也是一种方案，所以我们在初始化的时候将所有不选择的方案数都初始化为1：  
+g[i][0]：前i个物品中选体积不超过0的方案就是不选  
+g[0][i]：前0个物品中体积不超过i的方案也是不选  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+const int mod=1e9+7;
+int n,m;
+const int N=1005;
+int f[N][N];
+int g[N][N];
+int v[N],w[N];
+signed main(){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)cin>>v[i]>>w[i];
+	memset(f,-0x3f,sizeof f);
+	for(int i=0;i<=n;i++) g[i][0]=1;
+	for(int j=0;j<=m;j++)g[0][j]=1;
+	
+	for(int i=1;i<=n;i++){
+		for(int j=0;j<=m;j++){
+			f[i][j]=f[i-1][j];
+			g[i][j]=g[i-1][j];
+			if(j>=v[i]){
+				if(f[i-1][j-v[i]]+w[i]>f[i][j]){
+					f[i][j]=f[i-1][j-v[i]]+w[i];
+					g[i][j]=g[i-1][j-v[i]];
+				}else if(f[i-1][j-v[i]]+w[i]==f[i][j]){
+					g[i][j]=(g[i][j]+g[i-1][j-v[i]])%mod;
+				}
+				
+			}
+		}
+	}
+	cout<<g[n][m]<<endl;
+	return 0;
+}
+```
+
+
+
+## 背包问题求具体方案
+原题链接：https://www.acwing.com/problem/content/12/  
+题意：  
+n个物品，容量为m的背包，每个物品的体积是vi，容量是wi，只能选一次，求在不超过背包的体积的条件下，能选择的物品的总价值最大的方案。输出字典序最小的方案。  
+思路：  
+要求字典序最小的话，我们需要从前往后考虑，在考虑第i个物品的时候：  
+如果只能不选，就不选  
+只能选，就选  
+可以选也可以不选，就得选（不选的话字典序会变大）  
+我们在状态转移的时候，如果从前往后转移就没有办法从前往后找字典序最小的方案，那么我们需要从后往前转移：从第n个物品到第1个物品考虑选或者不选，那么这个时候的f[i][j]就表示在后i个物品中选，体积不超过j的方案的最大价值。转移方程为：  
+f[i][j]=max(f[i+1][j],f[i+1][j-v]+w)  
+那么最后我们求得的f[1][m]实际上就是最大值。  
+
+将背包剩下的体积j设为m，当前遍历的背包设为1，背包从1开始遍历，当遍历到第i个背包的时候，剩余的体积j如果大于这个背包，我们就考虑选择不选择这个背包：选这个背包的价值是f[i+1][j-v[i]]+w[i]，不选这个背包的价值是f[i+1][j]，如果选择这个背包的价值大于等于不选，那么我们就选。  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+const int N=1005;
+int f[N][N];
+int g[N][N];
+int v[N],w[N];
+int main(){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)cin>>v[i]>>w[i];
+	for(int i=n;i>=1;i--){
+		for(int j=0;j<=m;j++){
+			f[i][j]=f[i+1][j];
+			if(j>=v[i]) f[i][j]=max(f[i][j],f[i+1][j-v[i]]+w[i]);
+		}
+	}
+	int j=m;
+	for(int i=1;i<=n;i++){
+		if(j>=v[i]){
+			if(f[i+1][j-v[i]]+w[i]>=f[i+1][j]){
+				cout<<i<<" ";
+				j-=v[i];
+			}
+		}
+	}
+	return 0;
+}
+
+```
+
+<!-- ## 有依赖的背包问题
+原题链接：https://www.acwing.com/problem/content/10/  
+题意：  
+有n个物品和容量为m的背包，物品之间有依赖关系，依赖关系组成一个数的形状，如果选择一个物品，那么必须选择他的父节点。  
+第i件物品体积是vi，价值是wi，依赖的父节点编号是pi。  
+求解将哪些物品放入背包中可以满足题意且总价值最大。  
+思路：  
+树形dp  
+如果我们想在一个以i为根的子树中选，那么我们必须得选根节点。  
+f[u][j]表示所有从以u为根节点的子树中选，且总体积不超过j的方案的最大价值。  
+对于u连接的每个子节点，我们可以将他按体积分类。比如和u连接的子节点有j1，j2，j3三个子节点，那么我们在考虑的时候就分别考虑这三个节点。对于j1节点，列举出以他为根的子树中选择的物品所占的体积，取最大价值。那么其实对于u的每个子节点来说是个分组背包问题，即对于每个节点选择一个体积大小使得价值最大。 -->
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
