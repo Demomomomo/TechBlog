@@ -182,6 +182,61 @@ int main(){
 	return 0;
 }
 ```
+变形：金明的预算方案  
+原题链接：https://www.acwing.com/problem/content/489/  
+题意：  
+有n个想买的物品，m元钱。每个物品要么是主件，要么是从属于某个主件的附件，要买一个附件的话必须要买他的主件。每个主件最多有两个附件。每个物品的价格是vi，重要度是wi，编号是p，当p=0时他就是主件，当p>0时这个物品是从属于p的附件。求在买的东西的总价格不超过m的情况下，所有物品的价格和重要度的乘积和的最大值。  
+思路：  
+把每个主件都看成一个组，对于所有组最多只有4种情况：  
+只选主件  
+选主件和附件1  
+选主件和附件2  
+选主件和附件1附件2  
+那么实际上就是对每组选一种情况，实质就是分组背包问题。  
+我们用二进制枚举来枚举选了哪些附件，最后如果选择的物品的体积小于我们枚举的不超过的体积，那么就可以更新。  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#include<vector>
+#define  v first
+#define w  second
+const int N=70,M=32005;
+typedef pair<int,int> pii;
+int n,m;
+int f[M];
+pii ma[N];
+vector <pii> son[N];
+int main(){
+	cin>>m>>n;
+	for(int i=1;i<=n;i++){
+		int v,w,p;
+		cin>>v>>w>>p;
+		if(p==0) ma[i]={v,v*w};
+		else son[p].push_back({v,v*w});
+	}
+	for(int i=1;i<=n;i++){
+		if(ma[i].v){
+			for(int j=m;j>=0;j--){
+				for(int k=0;k<(1<<son[i].size());k++){
+					int v=ma[i].v,w=ma[i].w;
+					for(int u=0;u<son[i].size();u++){
+						if(k>>u&1){
+							v+=son[i][u].v;
+							w+=son[i][u].w;
+						}
+					}
+				if(j>=v) f[j]=max(f[j],f[j-v]+w);
+				}
+			}
+		}
+	}
+	cout<<f[m];
+	return 0;
+}
+```
+
+
 
 ### 分组背包求具体方案
 
@@ -235,7 +290,66 @@ int main(){
 }
 ```
 
-
+## 有依赖的背包问题
+原题链接：https://www.acwing.com/problem/content/10/  
+题意：  
+有n个物品和容量为m的背包，物品之间有依赖关系，依赖关系组成一个数的形状，如果选择一个物品，那么必须选择他的父节点。  
+第i件物品体积是vi，价值是wi，依赖的父节点编号是pi。  
+求解将哪些物品放入背包中可以满足题意且总价值最大。  
+思路：  
+树形dp  
+如果我们想在一个以i为根的子树中选物品，那么我们必须得选根节点。  
+f[u][j]表示所有从以u为根节点的子树中选，必选u且总体积不超过j的方案的最大价值。  
+因为u是必选的，所以我们预留u的体积，j从0~m-v[u]，先算u所连的子结点son的子树能达到的最大价值。  
+那么对于他的每个子节点son，枚举所占的体积k，相当于一个分组背包，每个子结点为一组，在一组中选择一个所占的体积。  
+对于分组背包的状态转移方程是：f[i][j]=max(f[i-1][j],f[i-1][j-v[i][k]]+w[i][k])  
+由于都是从第i-1层转移过来的，那么我们就将他的体积从大到小枚举  
+那么最终的状态转移方程就是:f[u][j]=max(f[u][j],f[u][j-k]+f[son][k])  
+这个时候算出的最大价值是没有加上u的最大价值，那么我们就将体积j大于v[u]的状态用j-v[u]更新一下，加上u的价值即可。  
+那么同理，小于v[u]的状态值是0。  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+const int N=400;
+int n,m;
+int f[N][N];
+int v[N],w[N];
+int e[N*2],h[N],ne[N*2];
+int idx;
+void add(int a,int b){
+	e[idx]=b;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+void dfs(int u){
+	for(int i=h[u];i!=-1;i=ne[i]){
+		int son=e[i];
+		dfs(son);
+		for(int j=m-v[u];j>=0;j--){//预留u的体积
+			for(int k=0;k<=j;k++){//枚举子树所占的体积
+				f[u][j]=max(f[u][j],f[u][j-k]+f[son][k]);
+			}
+		}
+	}
+	for(int j=m;j>=v[u];j--) f[u][j]=f[u][j-v[u]]+w[u];
+	for(int i=0;i<v[u];i++) f[u][i]=0;
+}
+signed main(){
+	cin>>n>>m;
+	memset(h,-1,sizeof h);
+	int root=-1;
+	for(int i=1;i<=n;i++){
+		int p;
+		cin>>v[i]>>w[i]>>p;
+		add(p,i);
+		if(p==-1) root=i;
+	}
+	dfs(root);
+	cout<<f[root][m];
+	return 0;
+}
+```
 
 
 
@@ -601,17 +715,6 @@ int main(){
 
 ```
 
-<!-- ## 有依赖的背包问题
-原题链接：https://www.acwing.com/problem/content/10/  
-题意：  
-有n个物品和容量为m的背包，物品之间有依赖关系，依赖关系组成一个数的形状，如果选择一个物品，那么必须选择他的父节点。  
-第i件物品体积是vi，价值是wi，依赖的父节点编号是pi。  
-求解将哪些物品放入背包中可以满足题意且总价值最大。  
-思路：  
-树形dp  
-如果我们想在一个以i为根的子树中选，那么我们必须得选根节点。  
-f[u][j]表示所有从以u为根节点的子树中选，且总体积不超过j的方案的最大价值。  
-对于u连接的每个子节点，我们可以将他按体积分类。比如和u连接的子节点有j1，j2，j3三个子节点，那么我们在考虑的时候就分别考虑这三个节点。对于j1节点，列举出以他为根的子树中选择的物品所占的体积，取最大价值。那么其实对于u的每个子节点来说是个分组背包问题，即对于每个节点选择一个体积大小使得价值最大。 -->
 
 
 
