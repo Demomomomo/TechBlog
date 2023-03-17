@@ -79,14 +79,15 @@ a<span class="token punctuation">.</span><span class="token function">resize</sp
 函数： <code v-pre>a.size( )</code>返回长度<br>
 <code v-pre>a.empty( )</code>是否为空<br>
 <code v-pre>a.clear( )</code>清除队列<br>
-<code v-pre>a.end( )</code>返回最后一个元素的后一个位置<br>
+<code v-pre>a.end( )</code>返回最后一个元素的后一个位置（set中的最大值的迭代器）<br>
 <code v-pre>a.insert(1)</code>表示插入一个元素1<br>
-<code v-pre>a.find( 2)</code>表示查找一个元素2，返回的是元素2的迭代器（指针），如果数组中没有这个元素则返回<code v-pre>a.end( )</code><br>
+<code v-pre>a.find(2)</code>表示查找一个元素2，返回的是元素2的迭代器（指针），如果数组中没有这个元素则返回<code v-pre>a.end( )</code><br>
 <code v-pre>if(a.find(x)==a.end())</code>判断x在a中是否存在<br>
 <code v-pre>a.lower_bound(x)</code>找到大于等于x的最小迭代器<br>
 <code v-pre>a.upper_bound(x)</code>找到大于x的最小元素的迭代器<br>
 <code v-pre>s.erase(it)</code>把it这个迭代器指向的元素删掉<br>
-<code v-pre>s.erase(x)</code>把容器中所有等于x的数都删掉<br>
+<code v-pre>s.erase(x)</code>把容器中所有等于x的数都删掉（在multiset中也是将所有的x的数都删掉）<br>
+<code v-pre>s.erase(s.find(x))</code>找到x所在的迭代器，删掉这个迭代器（与上一行操作不同的是只删除了一个x）<br>
 <code v-pre>a.count (x)</code> 表示x在a里的个数（因为set不存重复元素，所以存在x就返回1，不存在就返回0，<code v-pre>multiset</code>则返回个数）<br>
 访问set：</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>set<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st<span class="token punctuation">;</span>

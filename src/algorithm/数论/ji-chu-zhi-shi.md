@@ -97,5 +97,53 @@ $\frac{n*(n-1)}{2}$
 
 ​
 
+## _int 128
+是一个比较大的数据类型，最大为10^38，可以解决大整数问题  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N =  55;
+//读入函数
+inline __int128 read(){
+    __int128 x = 0, f = 1;
+    char ch = getchar();
+    while(ch < '0' || ch > '9'){
+        if(ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while(ch >= '0' && ch <= '9'){
+        x = x * 10 + ch - '0';
+        ch = getchar();
+    }
+    return x * f;
+}
+//输出函数
+inline void print(__int128 x){
+    if(x < 0){
+        putchar('-');
+        x = -x;
+    }
+    if(x > 9)
+        print(x / 10);
+    putchar(x % 10 + '0');
+}
+//使用的时候直接定义即可
+__int128 f[N][N];
+__int128 w[N];
+const __int128 inf = 1e27;
+//当输入的时候直接写要输入的数=read(）
+//输出的时候print（要输出的数）
+int main(){
+    int n;
+    cin >>n;
+    for(int i =1 ; i <= n ; i++) w[i] = read();
+    print(f[1][n]);
+    return 0;
+}
+
+```
+
+
 
 

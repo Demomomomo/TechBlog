@@ -23,3 +23,129 @@ void sove(){
 }
 ```
 
+```cpp
+#include<bits/stdc++.h>
+#include<queue>
+#include<vector>
+using namespace std;
+vector<char> q;
+const int N=5;
+int n;
+string s;
+int con[N];
+map<char,pair<int,char> > ch;
+map<char,int> mp;
+int main(){
+	int id=0;
+	bool f=false;
+	while(cin>>s,s!="."){
+		int len=s.size();
+		if(f)continue;
+		for(int i=0;i<len;i++){
+			if(s[i]=='('||s[i]=='['||s[i]=='{'||(s[i]=='/'&&s[i+1]=='*')){
+				if(mp[s[i]]==0){
+					id++;
+					mp[s[i]]=1;
+					q.push_back(s[i]);
+					ch[s[i]]={id,s[i]}; 
+				}
+				int op=ch[s[i]].first;
+				con[op]++;
+				if(s[i]=='/') i++;
+			}else if(s[i]==')'||s[i]==']'||s[i]=='}'||(s[i]=='*'&&s[i+1]=='/')){
+				if(s[i]==')'){
+					if(mp['(']==0){
+						cout<<"NO"<<endl;
+						cout<<"(-?"<<endl;
+						f=true;
+					}
+					int op=ch['('].first;
+					if(con[op]<=0){
+						cout<<"NO"<<endl;
+						cout<<"(-?"<<endl;
+						f=true;						
+					}
+					con[op]--;
+				}
+				if(s[i]=='}'){
+					if(mp['}']==0){
+						cout<<"NO"<<endl;
+						cout<<"{-?"<<endl;
+						f=true;
+					}
+					int op=ch['}'].first;
+					if(con[op]<=0){
+						cout<<"NO"<<endl;
+						cout<<"{-?"<<endl;
+						f=true;						
+					}
+					con[op]--;
+				}				
+				if(s[i]==']'){
+					if(mp['[']==0){
+						cout<<"NO"<<endl;
+						cout<<"[-?"<<endl;
+						f=true;
+					}
+					int op=ch[']'].first;
+					if(con[op]<=0){
+						cout<<"NO"<<endl;
+						cout<<"[-?"<<endl;
+						f=true;						
+					}
+					con[op]--;
+				}
+				if(s[i]=='*'){
+					if(mp['/']==0){
+						cout<<"NO"<<endl;
+						cout<<"/*-?"<<endl;
+						f=true;
+					}
+					int op=ch['/'].first;
+					if(con[op]<=0){
+						cout<<"NO"<<endl;
+						cout<<"/*-?"<<endl;
+						f=true;						
+					}
+					con[op]--;
+					i++;
+				}			
+			}
+		}
+		
+		
+	}
+
+
+
+
+
+
+	for(int i=0;i<q.size() ;i++){
+		int op=ch[q[i]].first;
+		if(con[op]>0){
+			if(q[i]=='('){
+				cout<<"NO"<<endl;
+				cout<<"?-)"<<endl;
+			}else if(q[i]=='['){
+				cout<<"NO"<<endl;
+				cout<<"?-]"<<endl;
+			}else if(q[i]=='{'){
+				cout<<"NO"<<endl;
+				cout<<"?-}"<<endl;
+			}else if(q[i]=='/'){
+				cout<<"NO"<<endl;
+				cout<<"?-*/"<<endl;
+			}
+			f=true;
+			break;
+		}
+	}
+	if(!f)cout<<"YES"<<endl;
+	return 0;
+}
+
+```
+
+
+
