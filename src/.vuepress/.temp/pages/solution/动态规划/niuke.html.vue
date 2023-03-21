@@ -1,8 +1,9 @@
-<template><div><h2 id="题目" tabindex="-1"><a class="header-anchor" href="#题目" aria-hidden="true">#</a> 题目</h2>
-<p>把m个仙贝分给n个朋友，假设手里现在有x个仙贝，分给一个朋友y个仙贝，那么这个朋友对你的好感度就增加y/x，每个朋友可以分也可以不分，如果分的话每个朋友只能分一次，仙贝也可以剩下或不剩下。<br>
-求最优送仙贝的策略下，朋友对你的好感度之和最大是多少</p>
-<h2 id="思路" tabindex="-1"><a class="header-anchor" href="#思路" aria-hidden="true">#</a> 思路</h2>
-<p>设f[i][j]为前i个人送完之后，还剩下j个仙贝的情况下所有人对你的最大好感度和<br>
+<template><div><p>原题链接：<a href="https://ac.nowcoder.com/acm/contest/46800/M" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46800/M<ExternalLinkIcon/></a></p>
+<p>题意：<br>
+把m个仙贝分给n个朋友，假设手里现在有x个仙贝，分给一个朋友y个仙贝，那么这个朋友对你的好感度就增加y/x，每个朋友可以分也可以不分，如果分的话每个朋友只能分一次，仙贝也可以剩下或不剩下。<br>
+求最优送仙贝的策略下，朋友对你的好感度之和最大是多少<br>
+思路：<br>
+设f[i][j]为前i个人送完之后，还剩下j个仙贝的情况下所有人对你的最大好感度和<br>
 对于第i个人：我们需要枚举送几个，假设送k个，设前i-1个人送完之后还剩j个，那么给i送完k个还剩j-k个<br>
 f[i][j-k]=max(f[i][j-k],f[i-1][j]+1.0*k/j);
 初始化：最初所有人的好感都是0，不用初始化</p>

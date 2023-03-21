@@ -2585,3 +2585,58 @@ int main(){
 
 <p></p>
 
+
+## 小朋友崇拜圈
+原题链接：https://www.lanqiao.cn/problems/182/learning/?page=1&first_category_id=1&sort=students_count&name=%E5%B0%8F%E6%9C%8B%E5%8F%8B  
+题意：  
+有n个小朋友，每个小朋友都有一个崇拜的人，也可以是自己。对于每个小朋友，让他崇拜的人做他的右手边。那么求组成的圈的最多的人数是多少。  
+思路：  
+因为对于每个圈来说，如果想组成圈，那么起点的小朋友必须被人崇拜。  
+那么我们枚举每个小朋友当圈头，然后对他进行dfs。  
+记录当前遍历的小朋友的编号和圈头小朋友的编号和当前遍历到的人数。如果当前小朋友的崇拜对象是圈头小朋友，那么说明从圈头小朋友到当前小朋友组成一个圈，那么就找到了一个圈记录一下大小。如果不是的话，就对当前小朋友崇拜的人进行dfs。  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e5+10;
+int n;
+int fa[N];
+int con[N];
+bool st[N];//记录是否走过，因为一个小朋友只能崇拜一个人，那么每个小朋友只能出现在一个圈中，如果遍历过就不用遍历了
+int ans;
+void dfs(int u,int str,int size){//当前小朋友编号，起始小朋友编号，当前遍历到的小朋友的个数
+	if(fa[u]==str){//可以组成一个圈
+		ans=max(ans,size);
+		return ;
+	}
+	int v=fa[u];
+	if(!st[v]){//如果没有遍历过那么我们遍历
+		st[v]=true;
+		dfs(v,str,size+1);
+	}
+}
+int main(){
+	cin>>n;
+	for(int i=1;i<=n;i++){
+		cin>>fa[i];
+		con[fa[i]]++;
+	}
+	ans=0;
+	for(int i=1;i<=n;i++){
+		if(!st[i]&&con[i]){
+			dfs(i,i,1);
+		}
+	}
+	cout<<ans<<endl;
+	return 0;
+}
+```
+
+
+
+
+
+
+
+
+
+
