@@ -2,7 +2,8 @@
 <p>从一堆物品中选择一些物品，满足某些条件，求选择的最大值/最小值/方法数</p>
 <p>有几种限制条件就有几维，先枚举物品再枚举其他的限制条件，对于01背包来讲剩下的限制条件需要从大到小枚举以防重复选择</p>
 <h2 id="质数拆分" tabindex="-1"><a class="header-anchor" href="#质数拆分" aria-hidden="true">#</a> 质数拆分</h2>
-<p>原题链接：<a href="https://www.lanqiao.cn/problems/809/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;tags=2019&amp;status=2" target="_blank" rel="noopener noreferrer">https://www.lanqiao.cn/problems/809/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;tags=2019&amp;status=2<ExternalLinkIcon/></a></p>
+<p>原题链接：<br>
+<a href="https://www.lanqiao.cn/problems/809/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;tags=2019&amp;status=2" target="_blank" rel="noopener noreferrer">https://www.lanqiao.cn/problems/809/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;tags=2019&amp;status=2<ExternalLinkIcon/></a></p>
 <p>题意：<br>
 将2019拆分成若干个不同的质数，一共有多少种不同的方法？<br>
 思路：<br>
@@ -46,7 +47,8 @@ ll f<span class="token punctuation">[</span>N<span class="token punctuation">]</
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="倍数问题" tabindex="-1"><a class="header-anchor" href="#倍数问题" aria-hidden="true">#</a> 倍数问题</h2>
-<p>原题链接：<a href="https://www.lanqiao.cn/problems/168/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;name=%E5%80%8D%E6%95%B0%E9%97%AE%E9%A2%98" target="_blank" rel="noopener noreferrer">https://www.lanqiao.cn/problems/168/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;name=倍数问题<ExternalLinkIcon/></a></p>
+<p>原题链接：<br>
+<a href="https://www.lanqiao.cn/problems/168/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;name=%E5%80%8D%E6%95%B0%E9%97%AE%E9%A2%98" target="_blank" rel="noopener noreferrer">https://www.lanqiao.cn/problems/168/learning/?page=1&amp;first_category_id=1&amp;sort=students_count&amp;name=倍数问题<ExternalLinkIcon/></a></p>
 <p>题意：<br>
 有n个数，从中选三个数，使得三个数的和是m的倍数，求满足条件的和的最大值。<br>
 思路：<br>
@@ -97,7 +99,8 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
 <span class="token punctuation">}</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="清楚姐姐学01背包-hard-version-必选蝴蝶结" tabindex="-1"><a class="header-anchor" href="#清楚姐姐学01背包-hard-version-必选蝴蝶结" aria-hidden="true">#</a> 清楚姐姐学01背包(Hard Version)（必选蝴蝶结</h2>
-<p>原题链接：<a href="https://ac.nowcoder.com/acm/contest/46812/D" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46812/D<ExternalLinkIcon/></a></p>
+<p>原题链接：<br>
+<a href="https://ac.nowcoder.com/acm/contest/46812/D" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46812/D<ExternalLinkIcon/></a></p>
 <p>题意：有n个蝴蝶结，每个蝴蝶结的体积是vi，好看程度为wi，有一个容量大小是m的背包，将这n个蝴蝶结放入背包中且总体积不能超过背包容量，想让好看程度最大化。<br>
 定义上面的问题的好看程度最大值为mmax1。<br>
 定义这n个蝴蝶结中去掉第i个蝴蝶结之后，从剩余n-1个蝴蝶结中选蝴蝶结放入背包，好看程度最大值为mmax2。<br>
@@ -174,7 +177,8 @@ z[i]表示不选第i个蝴蝶结，最大体积不超过m的最大好看程度<b
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="b-glasshalfspilled" tabindex="-1"><a class="header-anchor" href="#b-glasshalfspilled" aria-hidden="true">#</a> B_GlassHalfSpilled</h2>
-<p>原题链接：<a href="https://codeforces.com/contest/1458/problem/B" target="_blank" rel="noopener noreferrer">https://codeforces.com/contest/1458/problem/B<ExternalLinkIcon/></a><br>
+<p>原题链接：<br>
+<a href="https://codeforces.com/contest/1458/problem/B" target="_blank" rel="noopener noreferrer">https://codeforces.com/contest/1458/problem/B<ExternalLinkIcon/></a><br>
 题意：<br>
 有n个杯子，每个杯子有vi的容量，杯子里有wi的水。当我们想从第i个杯子向第j个杯子里倒x的水时，会撒一半。那么第i个杯子就剩下wi-x的水，第j个杯子就有wj+x/2的水。<br>
 现在我们要选k个杯子（k从1~n），可以任意选两个杯子倒任意体积的水，求这k个杯子里最多能放多少容量的水。<br>
@@ -228,7 +232,8 @@ f[i][j]=max(f[i][j],f[i-1][j-v[x]]+w[x])<br>
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="分仙贝" tabindex="-1"><a class="header-anchor" href="#分仙贝" aria-hidden="true">#</a> 分仙贝</h2>
-<p>原题链接：<a href="https://ac.nowcoder.com/acm/contest/46800/M" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46800/M<ExternalLinkIcon/></a></p>
+<p>原题链接：<br>
+<a href="https://ac.nowcoder.com/acm/contest/46800/M" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46800/M<ExternalLinkIcon/></a></p>
 <p>题意：<br>
 把m个仙贝分给n个朋友，假设手里现在有x个仙贝，分给一个朋友y个仙贝，那么这个朋友对你的好感度就增加y/x，每个朋友可以分也可以不分，如果分的话每个朋友只能分一次，仙贝也可以剩下或不剩下。<br>
 求最优送仙贝的策略下，朋友对你的好感度之和最大是多少<br>
@@ -257,7 +262,8 @@ f[i][j-k]=max(f[i][j-k],f[i-1][j]+1.0*k/j);
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="小沙の抱团-hard" tabindex="-1"><a class="header-anchor" href="#小沙の抱团-hard" aria-hidden="true">#</a> 小沙の抱团 hard</h2>
-<p>原题链接：<a href="https://ac.nowcoder.com/acm/contest/46813/L" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46813/L<ExternalLinkIcon/></a></p>
+<p>原题链接：<br>
+<a href="https://ac.nowcoder.com/acm/contest/46813/L" target="_blank" rel="noopener noreferrer">https://ac.nowcoder.com/acm/contest/46813/L<ExternalLinkIcon/></a></p>
 <p>题意：有n个人，m条指令，对第i条指令可以花费bi的代价,要求xi个人抱团，剩下的人淘汰，m条指令可以重复选，那么最少花费多少代价使剩余的人数最少？</p>
 <p>思路：f[i]表示剩下i个人时花费的最小代价，初始化f[n]=0，对于第j条指令，如果当前有i个人，那么行使完指令之后还剩i-i%x[i]个人，代价是f[i]+b[i]，那么状态转移方程就是：</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>f<span class="token punctuation">[</span>i<span class="token operator">-</span>i<span class="token operator">%</span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i<span class="token operator">-</span>i<span class="token operator">%</span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span>b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -292,7 +298,8 @@ f[i][j-k]=max(f[i][j-k],f[i-1][j]+1.0*k/j);
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="i-love-exam" tabindex="-1"><a class="header-anchor" href="#i-love-exam" aria-hidden="true">#</a> i love exam</h2>
-<p>原题链接：<a href="https://vjudge.net/contest/541856#problem/H" target="_blank" rel="noopener noreferrer">https://vjudge.net/contest/541856#problem/H<ExternalLinkIcon/></a><br>
+<p>原题链接：<br>
+<a href="https://vjudge.net/contest/541856#problem/H" target="_blank" rel="noopener noreferrer">https://vjudge.net/contest/541856#problem/H<ExternalLinkIcon/></a><br>
 题意：<br>
 有n场考试，还有t天开学<br>
 有m本复习资料<br>
@@ -302,7 +309,7 @@ f[i][j-k]=max(f[i][j-k],f[i-1][j]+1.0*k/j);
 数据范围：n&lt;=50,m&lt;=15000,s[i]长度不超过15,x[i]和y[i]数据范围是1<sub>10，天数t:1</sub>500，允许不及格科目p:0&lt;=3
 思路：<br>
 f[i][j]表示第i门课程花费时间不超过j能得到的最大分数<br>
-先用一个vector<pii> a[i]来存第i门课程的所有书籍<br>
+先用一个vector&lt; pii&gt; a[i]来存第i门课程的所有书籍<br>
 那么枚举第i门的每个书籍x，每本都有选或者不选的情况，选x的状态转移是：<br>
 f[i][j]=max(f[i][j],f[i][j-v[x]]+w[x]);<br>
 dp[i][j][pp]表示在前i科里，花费不超过j天的时间，挂了pp门课的最大分数。<br>

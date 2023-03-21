@@ -9,7 +9,8 @@ title: 背包
 
 
 ## 质数拆分
-原题链接：https://www.lanqiao.cn/problems/809/learning/?page=1&first_category_id=1&sort=students_count&tags=2019&status=2  
+原题链接：  
+https://www.lanqiao.cn/problems/809/learning/?page=1&first_category_id=1&sort=students_count&tags=2019&status=2  
 
 题意：  
 将2019拆分成若干个不同的质数，一共有多少种不同的方法？  
@@ -58,7 +59,8 @@ int main(){
 ```
 
 ## 倍数问题
-原题链接：https://www.lanqiao.cn/problems/168/learning/?page=1&first_category_id=1&sort=students_count&name=%E5%80%8D%E6%95%B0%E9%97%AE%E9%A2%98  
+原题链接：  
+https://www.lanqiao.cn/problems/168/learning/?page=1&first_category_id=1&sort=students_count&name=%E5%80%8D%E6%95%B0%E9%97%AE%E9%A2%98  
 
 题意：  
 有n个数，从中选三个数，使得三个数的和是m的倍数，求满足条件的和的最大值。  
@@ -116,7 +118,8 @@ signed main(){
 
 
 ## 清楚姐姐学01背包(Hard Version)（必选蝴蝶结
-原题链接：https://ac.nowcoder.com/acm/contest/46812/D  
+原题链接：  
+https://ac.nowcoder.com/acm/contest/46812/D  
 
 题意：有n个蝴蝶结，每个蝴蝶结的体积是vi，好看程度为wi，有一个容量大小是m的背包，将这n个蝴蝶结放入背包中且总体积不能超过背包容量，想让好看程度最大化。  
 定义上面的问题的好看程度最大值为mmax1。  
@@ -205,7 +208,8 @@ signed main(){
 ```
 
 ## B_GlassHalfSpilled
-原题链接：https://codeforces.com/contest/1458/problem/B  
+原题链接：  
+https://codeforces.com/contest/1458/problem/B  
 题意：  
 有n个杯子，每个杯子有vi的容量，杯子里有wi的水。当我们想从第i个杯子向第j个杯子里倒x的水时，会撒一半。那么第i个杯子就剩下wi-x的水，第j个杯子就有wj+x/2的水。  
 现在我们要选k个杯子（k从1~n），可以任意选两个杯子倒任意体积的水，求这k个杯子里最多能放多少容量的水。  
@@ -265,7 +269,8 @@ signed main(){
 ## 分仙贝
 
 
-原题链接：https://ac.nowcoder.com/acm/contest/46800/M  
+原题链接：  
+https://ac.nowcoder.com/acm/contest/46800/M  
 
 题意：  
 把m个仙贝分给n个朋友，假设手里现在有x个仙贝，分给一个朋友y个仙贝，那么这个朋友对你的好感度就增加y/x，每个朋友可以分也可以不分，如果分的话每个朋友只能分一次，仙贝也可以剩下或不剩下。  
@@ -300,7 +305,8 @@ signed main(){
 
 
 ## 小沙の抱团 hard
-原题链接：https://ac.nowcoder.com/acm/contest/46813/L  
+原题链接：  
+https://ac.nowcoder.com/acm/contest/46813/L  
 
 题意：有n个人，m条指令，对第i条指令可以花费bi的代价,要求xi个人抱团，剩下的人淘汰，m条指令可以重复选，那么最少花费多少代价使剩余的人数最少？  
 
@@ -357,7 +363,8 @@ signed main(){
 
 
 ## i love exam
-原题链接：https://vjudge.net/contest/541856#problem/H  
+原题链接：  
+https://vjudge.net/contest/541856#problem/H  
 题意：  
 有n场考试，还有t天开学  
 有m本复习资料  
@@ -367,7 +374,7 @@ signed main(){
 数据范围：n<=50,m<=15000,s[i]长度不超过15,x[i]和y[i]数据范围是1~10，天数t:1~500，允许不及格科目p:0<=3
 思路：  
 f[i][j]表示第i门课程花费时间不超过j能得到的最大分数  
-先用一个vector<pii> a[i]来存第i门课程的所有书籍  
+先用一个vector< pii> a[i]来存第i门课程的所有书籍  
 那么枚举第i门的每个书籍x，每本都有选或者不选的情况，选x的状态转移是：  
 f[i][j]=max(f[i][j],f[i][j-v[x]]+w[x]);  
 dp[i][j][pp]表示在前i科里，花费不超过j天的时间，挂了pp门课的最大分数。  
