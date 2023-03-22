@@ -2640,3 +2640,48 @@ int main(){
 
 
 
+
+
+
+
+## 龙龙送外卖
+原题链接：  
+https://pintia.cn/problem-sets/994805046380707840/exam/problems/1518582482059845632  
+题意：  
+有一个树状的地图，需要从根节点开始走，有m个点依次出现，求每个点出现之后遍历所有出现过的点的最短距离（不用回到根节点）。  
+思路：  
+当用回到根节点的时候，距离是走过的所有路径的两倍，那么不用回到原点就是减去离原点最远的点到原点的距离。  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=2e5+20;
+int p[N];
+int n,m;
+int root;
+int d[N];
+int s,mx;
+bool st[N];
+int dfs(int u){
+	if(p[u]==-1||d[u]>0) return d[u];
+	s++;
+	d[u]=dfs(p[u])+1;
+	return d[u];
+}
+int main(){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++){
+		cin>>p[i];
+		if(p[i]==-1) root=i;
+	}
+	s=mx=0;
+	for(int i=1;i<=m;i++){
+		int x;
+		cin>>x;
+		mx=max(mx,dfs(x));
+		cout<<2*s-mx<<endl;
+	}
+	return 0;
+}
+```
+
+
