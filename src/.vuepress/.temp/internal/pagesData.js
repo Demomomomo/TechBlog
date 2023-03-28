@@ -71,26 +71,28 @@ export const pagesData = {
   "v-624abbbe": () => import(/* webpackChunkName: "v-624abbbe" */"E:/TechBlog/src/.vuepress/.temp/pages/algorithm/计算几何/chaji.html.js").then(({ data }) => data),
   // path: /algorithm/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/tu-bao.html
   "v-ccec4096": () => import(/* webpackChunkName: "v-ccec4096" */"E:/TechBlog/src/.vuepress/.temp/pages/algorithm/计算几何/tu-bao.html.js").then(({ data }) => data),
-  // path: /solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/bei-bao0.html
-  "v-7a3c5c44": () => import(/* webpackChunkName: "v-7a3c5c44" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/动态规划/bei-bao0.html.js").then(({ data }) => data),
-  // path: /solution/%E5%9B%BE%E8%AE%BA/shu.html
-  "v-3318fe32": () => import(/* webpackChunkName: "v-3318fe32" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/图论/shu.html.js").then(({ data }) => data),
-  // path: /solution/%E5%9B%BE%E8%AE%BA/zui-duan-lu.html
-  "v-f78f0f64": () => import(/* webpackChunkName: "v-f78f0f64" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/图论/zui-duan-lu.html.js").then(({ data }) => data),
   // path: /solution/%E5%AD%97%E7%AC%A6%E4%B8%B2/A-ST%20and%20Ts.html
   "v-3290ded0": () => import(/* webpackChunkName: "v-3290ded0" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/字符串/A-ST and Ts.html.js").then(({ data }) => data),
   // path: /solution/%E5%AD%97%E7%AC%A6%E4%B8%B2/kmp.html
   "v-59ad23c3": () => import(/* webpackChunkName: "v-59ad23c3" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/字符串/kmp.html.js").then(({ data }) => data),
   // path: /solution/%E5%AD%97%E7%AC%A6%E4%B8%B2/zi-fu-chuan.html
   "v-07f2a534": () => import(/* webpackChunkName: "v-07f2a534" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/字符串/zi-fu-chuan.html.js").then(({ data }) => data),
-  // path: /solution/%E6%80%9D%E7%BB%B4/D.%20Buying%20gifts.html
-  "v-4a0c9776": () => import(/* webpackChunkName: "v-4a0c9776" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/思维/D. Buying gifts.html.js").then(({ data }) => data),
+  // path: /solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/bei-bao0.html
+  "v-7a3c5c44": () => import(/* webpackChunkName: "v-7a3c5c44" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/动态规划/bei-bao0.html.js").then(({ data }) => data),
+  // path: /solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/xian-xing.html
+  "v-032d8aa4": () => import(/* webpackChunkName: "v-032d8aa4" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/动态规划/xian-xing.html.js").then(({ data }) => data),
+  // path: /solution/%E5%9B%BE%E8%AE%BA/shu.html
+  "v-3318fe32": () => import(/* webpackChunkName: "v-3318fe32" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/图论/shu.html.js").then(({ data }) => data),
+  // path: /solution/%E5%9B%BE%E8%AE%BA/zui-duan-lu.html
+  "v-f78f0f64": () => import(/* webpackChunkName: "v-f78f0f64" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/图论/zui-duan-lu.html.js").then(({ data }) => data),
   // path: /solution/%E6%90%9C%E7%B4%A2/+-.html
   "v-789f38b2": () => import(/* webpackChunkName: "v-789f38b2" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/搜索/+-.html.js").then(({ data }) => data),
   // path: /solution/%E6%90%9C%E7%B4%A2/bfs.html
   "v-267368ef": () => import(/* webpackChunkName: "v-267368ef" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/搜索/bfs.html.js").then(({ data }) => data),
   // path: /solution/%E6%90%9C%E7%B4%A2/dfs.html
   "v-13947aa6": () => import(/* webpackChunkName: "v-13947aa6" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/搜索/dfs.html.js").then(({ data }) => data),
+  // path: /solution/%E6%80%9D%E7%BB%B4/D.%20Buying%20gifts.html
+  "v-4a0c9776": () => import(/* webpackChunkName: "v-4a0c9776" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/思维/D. Buying gifts.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E5%AD%A6/ai-aj-ak.html
   "v-61d13f86": () => import(/* webpackChunkName: "v-61d13f86" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数学/ai-aj-ak.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E5%AD%A6/C.%20Serval%20and%20Toxel's%20Arrays.html
@@ -101,6 +103,8 @@ export const pagesData = {
   "v-2a1a8ba6": () => import(/* webpackChunkName: "v-2a1a8ba6" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数学/ju-zhen-kuai-su-mi.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E5%AD%A6/pai-lie-shu-xue.html
   "v-b2dbcbaa": () => import(/* webpackChunkName: "v-b2dbcbaa" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数学/pai-lie-shu-xue.html.js").then(({ data }) => data),
+  // path: /solution/%E6%95%B0%E5%AD%A6/si-wei.html
+  "v-682b313c": () => import(/* webpackChunkName: "v-682b313c" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数学/si-wei.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E5%AD%A6/tong-yu.html
   "v-03e26e17": () => import(/* webpackChunkName: "v-03e26e17" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数学/tong-yu.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E5%AD%A6/triangle.html
@@ -115,8 +119,6 @@ export const pagesData = {
   "v-279cebf0": () => import(/* webpackChunkName: "v-279cebf0" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数据结构/xian-duan-shu.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/zhu-xi-shu.html
   "v-394b5610": () => import(/* webpackChunkName: "v-394b5610" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数据结构/zhu-xi-shu.html.js").then(({ data }) => data),
-  // path: /solution/%E6%9D%82%E8%AE%B0/bi-ji.html
-  "v-1d691529": () => import(/* webpackChunkName: "v-1d691529" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/杂记/bi-ji.html.js").then(({ data }) => data),
   // path: /solution/%E6%9E%84%E9%80%A0/a-b-pi.html
   "v-b60648be": () => import(/* webpackChunkName: "v-b60648be" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/构造/a-b-pi.html.js").then(({ data }) => data),
   // path: /solution/%E6%9E%84%E9%80%A0/beishu.html
@@ -129,6 +131,8 @@ export const pagesData = {
   "v-f6116122": () => import(/* webpackChunkName: "v-f6116122" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/构造/mx-mul.html.js").then(({ data }) => data),
   // path: /solution/%E6%9E%84%E9%80%A0/tea-tasting.html
   "v-5f91316a": () => import(/* webpackChunkName: "v-5f91316a" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/构造/tea-tasting.html.js").then(({ data }) => data),
+  // path: /solution/%E6%9D%82%E8%AE%B0/bi-ji.html
+  "v-1d691529": () => import(/* webpackChunkName: "v-1d691529" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/杂记/bi-ji.html.js").then(({ data }) => data),
   // path: /solution/%E6%AF%94%E8%B5%9B/abc.html
   "v-11413ec7": () => import(/* webpackChunkName: "v-11413ec7" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/比赛/abc.html.js").then(({ data }) => data),
   // path: /solution/%E6%AF%94%E8%B5%9B/ccpc-icpc.html
@@ -143,14 +147,14 @@ export const pagesData = {
   "v-5f8a0336": () => import(/* webpackChunkName: "v-5f8a0336" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/算法技巧/pai-xu.html.js").then(({ data }) => data),
   // path: /solution/%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7/si-wei.html
   "v-06000b64": () => import(/* webpackChunkName: "v-06000b64" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/算法技巧/si-wei.html.js").then(({ data }) => data),
-  // path: /solution/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/ji-suan-ji-he.html
-  "v-0826d81a": () => import(/* webpackChunkName: "v-0826d81a" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/计算几何/ji-suan-ji-he.html.js").then(({ data }) => data),
   // path: /solution/%E8%AF%AD%E6%B3%95%E6%8A%80%E5%B7%A7/jie-gou-ti-pai-xu.html
   "v-7c8a5a6c": () => import(/* webpackChunkName: "v-7c8a5a6c" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/语法技巧/jie-gou-ti-pai-xu.html.js").then(({ data }) => data),
   // path: /solution/%E8%AF%AD%E6%B3%95%E6%8A%80%E5%B7%A7/map.html
   "v-187be613": () => import(/* webpackChunkName: "v-187be613" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/语法技巧/map.html.js").then(({ data }) => data),
   // path: /solution/%E8%AF%AD%E6%B3%95%E6%8A%80%E5%B7%A7/stl.html
   "v-6e05f6a4": () => import(/* webpackChunkName: "v-6e05f6a4" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/语法技巧/stl.html.js").then(({ data }) => data),
+  // path: /solution/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/ji-suan-ji-he.html
+  "v-0826d81a": () => import(/* webpackChunkName: "v-0826d81a" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/计算几何/ji-suan-ji-he.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"E:/TechBlog/src/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
   // path: /category/
