@@ -164,7 +164,7 @@ A<span class="token punctuation">[</span>x<span class="token punctuation">]</spa
 也可以用pair来存三个值：<br>
 <code v-pre>pair&lt;int,pair&lt;int,int&gt; &gt; p;</code></p>
 <h2 id="string" tabindex="-1"><a class="header-anchor" href="#string" aria-hidden="true">#</a> string</h2>
-<p><code v-pre>s.Size();</code><br>
+<p><code v-pre>s.size();</code><br>
 <code v-pre>s.empty();</code><br>
 <code v-pre>s.clear();</code><br>
 s可以加一个字符串：<code v-pre>s+=&quot;abf&quot;;</code><br>

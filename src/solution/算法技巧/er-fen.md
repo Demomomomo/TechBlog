@@ -8,7 +8,7 @@ tag:
   - 技巧
 ---
 
-
+## 跳石头
 ​
 题目描述
 
@@ -548,4 +548,62 @@ while(r-l>=1e-6){
 
 
 <p></p>
+
+
+
+## matrix
+原题链接：  
+http://acm.zzuli.edu.cn/problem.php?id=2259  
+题意：  
+
+有n个数，有一个r*c的矩阵，需要在这n个数中r *c个数填入这个矩阵。每行矩阵的法值是最大值和最小值的差，整个矩阵的法值是每行法值的最大值。求矩阵的最小法值是多少。  
+思路：  
+
+要想差值尽可能小，那么一定是连续的c个数。那么就先将n个数从小到大排序。  
+
+然后我们再二分最小法值x，检查能否找到r组c个数的法值小于等于x。  
+
+由于挨着的c个数最小，那么我们贪心的找，求出每段长度为c的连续区间的法值。用dis数组存以i为结尾长度为c的连续的区间的法值。然后从左往右扫，如果当前的dis[i]<=x，那么符合题意，计数++，找下一段：i+=c。如果当前不符合那找下一个位置：i++。  
+
+最后计数大于等于r就符合题意。  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int n,r,c;
+const int N=1e6+10;
+int a[N];
+int dis[N];
+bool cheek(int x){
+	int con=0;
+	int i=c;
+	while(i<=n){
+		if(dis[i]<=x){
+			con++;
+			i+=c;
+		}else{
+			i++;
+		}
+		if(con>=r) return true;
+	}
+	return con>=r;
+}
+int main(){
+	cin>>n>>r>>c;
+	for(int i=1;i<=n;i++)cin>>a[i];
+	sort(a+1,a+1+n);
+	for(int i=c;i<=n;i++){
+		dis[i]=a[i]-a[i-c+1];
+	}
+	int l=0,r=a[n]-a[1];
+	while(l<r){
+		int mid=(l+r)/2;
+		if(cheek(mid)) r=mid;
+		else l=mid+1;
+	}
+	cout<<l;
+	return 0;
+}
+
+```
 

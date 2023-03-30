@@ -190,7 +190,7 @@ map<string,int> a;
 `pair<int,pair<int,int> > p;`  
 
 ## string 
-`s.Size();`  
+`s.size();`  
 `s.empty();`  
 `s.clear();`  
 s可以加一个字符串：`s+="abf";`  
