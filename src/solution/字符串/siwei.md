@@ -1,7 +1,8 @@
 ---
-title: A - ST and TS Palindrome
+title: 思维
 ---
 
+## A - ST and TS Palindrome
 原题链接：https://atcoder.jp/contests/arc155/tasks/arc155_a  
 
 题意：给你一个长度为n的字符串s以及一个数字k，能否找出一个字符串t，使得：  
@@ -95,5 +96,102 @@ signed main(){
 	return 0;
 }
 ```
+
+
+## 7-8 what's 莫比乌斯最大值
+
+
+![(SWC85VE8F6{_Y4AH8395{3](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/(SWC85VE8F6{_Y4AH8395{3.png)
+
+题意：  
+
+有n个问题和闲聊  
+
+问题的格式是'what's +$S_{问题}$'  
+
+闲聊的格式是 $S_{问题}$+$S_{回答}$，$S_{问题}$的长度>=0  
+
+对于每个 $S_{回答}$ ，只能回答在这句话之前提问的问题  
+
+那么求最多能回答几个不同的问题  
+
+思路：  
+
+对于每个回答，他的每个前缀都可能是一个出现过的问题  
+
+那么我们对于一个回答，让他贪心的回答出现过的前缀最长的问题  
+
+因为对于一个回答，如果他的长度长，可以回答长度长的问题和长度短的问题，如果他的长度短的话就只能回答长度短的问题，所以我们优先让他回答没有回答过的长度最长的问题  
+
+用umap来记录一个问题是否出现过，以及是否被回答过。  
+
+注意：  
+
+加了ios::sync_with_stdio(false)就不能用getchar()，需要用cin.get()  
+
+对于map的每次询问都是插入，如果对于每出现过的map，需要先判断是否出现过载判断值，可以节省时间防止tle  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=4e6+10;
+int idx,n;
+
+int main(){
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	cin>>n;
+	cin.get();//加了ios不能用getchar
+	unordered_map<string,int> chuxian;//记录是否被回答过，如果等于0就是没有
+	unordered_map<string,int> huida;
+	int con=0;
+	for(int i=1;i<=n;i++){
+		string s;
+		cin>>s;
+		if(s=="what's"){
+			cin>>s;
+			chuxian[s]=1;
+		}else{
+			string op;
+			int id=-1;
+			string ans;
+			for(int i=0;i<s.size();i++){
+				op+=s[i];
+				if(chuxian.count(op)&&chuxian[op]==1&&huida.count(op)==0){
+					id=i;
+					ans=op;
+				}
+			}
+			if(id!=-1){
+				huida[ans]=1;
+				con++;
+			}
+		}
+	}
+	cout<<con;
+	return 0;
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

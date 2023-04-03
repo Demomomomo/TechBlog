@@ -126,3 +126,116 @@ int main(){
 ```
 
 
+
+
+## 7-12 子序列
+
+![20230403205244](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230403205244.png)
+
+题意：  
+
+有一个长度为n的子序列，第i个数为a[i]  
+求不超过三对位置的元素相等的子序列的个数  
+
+思路：  
+
+对于每个数，我们先存他有几个位置  
+
+然后我们再遍历每种数：  
+
+设数x的不同位置有y个  
+
+dp[i]表示所选的序列恰好有i对相等的数的序列的个数  
+
+dp[0]表示所选序列中恰好有0对相同的数的序列的个数，那么我们在之前的所有的序列之后选上x这个数或者不选x这个数之后，所选的序列依旧是有0对相同的数，有因为x这个数有y种位置，所以我们有y+1种选法，即：  
+
+dp[0]=dp[0]*(y+1)  
+
+dp[1]表示所选序列中恰好有1对相同的数的序列个数  
+那么由两部分组成：  
+1.在之前序列中相同的数为0对的序列的基础上，再选一对相同的x(在y个位置里选两个)，即dp[0] * $C_{y}^{2}$；  
+2.在之前序列中相同的数为1对的序列的基础上，再选一个x，或者不选x，即dp[1] *(y+1)  
+
+dp[2]表示所选序列中恰好有两对相同的数的序列的个数  
+那么由两部分组成:  
+1.在之前相同数的对数为1的序列的基础上，再选一对相同的x(在y个位置里选两个)，即dp[1] *$C_{y}^{2}$；  
+2.在之前序列中相同的数为两对的序列的基础上，再选一个x，或者不选，即dp[2] *(y+1)  
+
+dp[3]表示所选序列中恰好有三对相同的数的序列的个数  
+那么由三部分组成：  
+1.在之前相同数的对数为0的基础上选三对相同的x（在y个位置中选三个），即dp[0] * $C_{y}^{3}$;  
+2.在之前相同数对数为2的序列的基础上选一对相同的x（在y个位置里选两个），即dp[2] *$C_{y}^{2}$  
+3.在之前相同数对数为3的序列的基础上选一个x或者不选x，即dp[3] *(y+1)  
+
+```cpp
+#include<bits/stdc++.h>
+#include<vector>
+#define int long long
+using namespace std;
+const int N=2e5+10;
+const int mod=998244353;
+typedef long long ll;
+int n,m;
+int a[N];
+ll dp[N][6];
+int f[N],fi[N];
+int ksm(int a,int b){
+	int res=1%mod;
+	while(b){
+		if(b&1)res=res*a%mod;
+		a=a*a%mod;
+		b>>=1;
+	}
+	return res;
+}
+void init(){
+	f[0]=fi[0]=1;
+	for(int i=1;i<N;i++){
+		f[i]=(f[i-1]*i)%mod;
+		fi[i]=(fi[i-1]*ksm(i,mod-2))%mod;
+	}
+}
+signed main(){
+	scanf("%lld",&n);
+	init();
+	map<int,int> mp;
+	vector<int> op;
+	op.push_back(0);
+	for(int i=1;i<=n;i++){
+		scanf("%lld",&a[i]);
+		mp[a[i]]++;
+		op.push_back(a[i]);
+	}
+	sort(op.begin(),op.end());
+	op.erase(unique(op.begin(),op.end()),op.end());
+	dp[0][0]=1;
+	for(int i=1;i<op.size();i++){
+		int y=mp[op[i]];
+		dp[i][3]=dp[i-1][3]%mod*(y+1)%mod;
+		if(y>=2){
+			dp[i][3]=(dp[i][3]+dp[i-1][2]%mod*(f[y]*fi[2]%mod*fi[y-2]%mod)%mod)%mod;
+		}
+		if(y>=3){
+			dp[i][3]=(dp[i][3]+dp[i-1][0]%mod*(f[y]*fi[3]%mod*fi[y-3]%mod)%mod)%mod;
+		}
+		dp[i][2]=(dp[i-1][2]%mod*(y+1))%mod;
+		if(y>=2){
+			dp[i][2]=(dp[i][2]%mod+dp[i-1][1]*(f[y]*fi[2]%mod*fi[y-2]%mod)%mod)%mod;
+		}
+		dp[i][1]=(dp[i-1][1]%mod*(y+1)%mod)%mod;
+		if(y>=2){
+			dp[i][1]=(dp[i][1]%mod+dp[i-1][0]*(f[y]*fi[2]%mod*fi[y-2]%mod)%mod)%mod;
+		}
+		dp[i][0]=dp[i-1][0]*(y+1)%mod;
+	}
+	ll ans=0;
+	int len=op.size();
+	for(int i=0;i<=3;i++){
+		ans=(ans%mod+dp[len-1][i]%mod)%mod;
+	}
+	cout<<ans-1;//减掉一个空字符
+	
+	return 0;
+}
+```
+
