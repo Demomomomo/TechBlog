@@ -161,3 +161,13 @@ int ksm(int a,int b,int p){
 	return ans;
 }
 ```
+
+
+## gcd
+```cpp
+int gcd(int a,int b) {
+	return b? gcd(b,a%b):a;
+}
+```
+
+

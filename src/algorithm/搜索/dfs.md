@@ -1,5 +1,5 @@
 ---
-title: dfs
+title: DFS
 ---
 ## 普通dfs
 ### 求全排列
@@ -41,7 +41,118 @@ signed main(){
 }
 ```
 
-### 
+### 爆搜
+分成互质组  
+原题链接：  
+https://www.acwing.com/problem/content/description/1120/  
+题意：  
+给定n个正整数，将他们分组，使得每组中任意两个数互质，问至少分成多少组  
+思路：  
+能放进已经存在的组尽量放已经存在的组，不能放了再开新组，这样保证最优  
+那么我们就先对于每个组来说，遍历所有的数，先将能放进去的都放进去，如果没有能放进去的那么就新开，有的话就不用新开  
+那么每次dfs需要记录当前组的组编号，组内的元素个数，已经放进组里了几个数和从那个下标开始搜  
+那么就先从开始搜的下标开始，如果有一个数没被用过且与组内的所有数都互质，那么我们就将他放进当前组之后进行dfs，dfs之后恢复现场。如果没有一个数能被放，那么我们就新开一个组  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=20;
+int a[N];
+bool st[N];
+int group[N][N];
+int n;
+int ans;
+int gcd(int a,int b){
+	return b?gcd(b,a%b):a;
+}
+bool cheek(int b[],int cnt,int x){
+	for(int i=0;i<cnt;i++){
+		if(gcd(b[i],x)!=1) return false;
+	}
+	return true;
+}
+void dfs(int g,int gc,int tc,int start){
+	if(g>=ans) return ;
+	if(tc==n){
+		ans=g;
+		return ;
+	}
+	bool f=true;
+	for(int i=start;i<n;i++){
+		if(!st[i]&&cheek(group[g],gc,a[i])){
+			st[i]=true;
+			group[g][gc]=a[i];
+			dfs(g,gc+1,tc+1,i+1);
+			st[i]=false;
+			f=false;
+		}
+	}
+	if(f) dfs(g+1,0,tc,0);
+}
+int main(){
+	cin>>n;
+	for(int i=0;i<n;i++)cin>>a[i];
+	ans=n;
+	dfs(1,0,0,0);
+	cout<<ans;
+	return 0;
+}
+
+```
+
+### 剪枝
+1.优化搜索顺序，选择分支较少的顺序进行搜索  
+例题：小猫下山  
+原题链接：  
+https://www.acwing.com/problem/content/167/  
+题意：  
+有n只小猫，第i只小猫的重量是a[i]，每个缆车的最大承重是w，问将所有小猫都送走最少需要多少缆车  
+思路：  
+枚举当前小猫放到哪个车上，对于每个小猫，有两种情况：可以放到之前已经有的小车上或者新建一辆小车放上  
+如果一个车上放上一个体重较轻的小猫，那么我们再放的小猫的方案数肯定比放上一个体重较重的小猫的方案数多。所以我们先枚举体重较重的小猫放置的位置。即先将小猫从大到小排序。  
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=60;
+bool st[N];
+int sum[N];
+int n,w;
+int a[N];
+int ans;
+bool cmp(int a,int b){
+	return a>b;
+}
+void dfs(int u,int g){
+	if(g>=ans)return ;
+	if(u==n){
+		ans=g;
+		return ;
+	}
+	for(int i=0;i<g;i++){
+		if(sum[i]+a[u]<=w){
+			sum[i]+=a[u];
+			dfs(u+1,g);
+			sum[i]-=a[u];
+		}
+	}
+	sum[g]=a[u];//将他放到新建的车里
+	dfs(u+1,g+1);
+}
+int main(){
+	cin>>n>>w;
+	for(int i=0;i<n;i++)cin>>a[i];
+	sort(a,a+n,cmp);
+	ans=n;
+	dfs(0,0);
+	cout<<ans;
+	return 0;
+}
+```
+
+2.排除等效冗余
+3.可行性剪枝  
+如果不符合要求就剪枝  
+4.最优性剪枝  
+如果当前搜到的方案数已经大于我们找到的最小方案数，那么我们就剪枝  
 
 ## 记忆化dfs
 
@@ -160,7 +271,49 @@ dfs(x,y)表示以(x,y)为起点，走到终点的方案数
 注意：有些点走不到终点，方案数为0，那么我们就需要额外初始化f数组为-1，每次判断f等不等于-1，如果等于的话说明没有搜过，那么我们就将他的f值变成0,再加上他能走到的所有格子的方案数。  
 
 ```cpp
-
+#include<bits/stdc++.h>
+using namespace std;
+const int N=106;
+int a[N][N];
+int n,m;
+int f[N][N];
+const int mod=10000;
+int dfs(int x,int y){
+	if(f[x][y]!=-1)return f[x][y];
+	f[x][y]=0;
+	for(int i=0;i<=a[x][y];i++){
+		for(int j=0;j<=a[x][y]-i;j++){
+			int xx=x+i;
+			int yy=y+j;
+			if(xx<1||xx>n||yy<1||yy>m)continue;
+			f[x][y]=(f[x][y]+dfs(xx,yy))%mod;
+		}
+	}
+	return f[x][y];
+}
+void sove(){
+	cin>>n>>m;
+	memset(f,-1,sizeof f);
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			cin>>a[i][j];
+		}
+	}
+	f[n][m]=1;
+	
+	dfs(1,1);
+	
+	cout<<f[1][1]<<endl;
+	
+}
+int main(){
+	int t;
+	cin>>t;
+	while(t--){
+		sove();
+	}
+	return 0;
+}
 ```
 
 

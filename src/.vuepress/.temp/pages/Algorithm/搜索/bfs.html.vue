@@ -2,11 +2,13 @@
 数组d记录第一次到达这个点的最短距离。<br>
 初始状态加入队列，将初始状态的距离设为0<br>
 当队列不空的时候一直循环：取出队头，拓展队头，如果拓展的点没有出现过，那么我们就将他的距离用队头的距离更新之后加入队列。</p>
-<h2 id="flood-fill模型" tabindex="-1"><a class="header-anchor" href="#flood-fill模型" aria-hidden="true">#</a> flood fill模型</h2>
+<h2 id="联通块模型" tabindex="-1"><a class="header-anchor" href="#联通块模型" aria-hidden="true">#</a> 联通块模型</h2>
 <p>可以在线性时间内找到某个点所在的连通块<br>
 作用：找联通块（几片池塘，几块房间）<br>
-把没有遍历过的点加入队中，进行bfs：<br>
-当队列不空的时候，取队头，拓展队头，如果拓展的点满足更新条件被更新，那么就加入队列中。所有加入队列中的点需要记录已经被遍历过。</p>
+每次遍历，把没有遍历过的点进行一次bfs：<br>
+加入队中<br>
+当队列不空的时候，取队头<br>
+拓展队头，如果拓展的点满足更新条件被更新，那么就加入队列中。所有加入队列中的点需要记录已经被遍历过。</p>
 <h2 id="最短路模型" tabindex="-1"><a class="header-anchor" href="#最短路模型" aria-hidden="true">#</a> 最短路模型</h2>
 <p>求从一个点走到另一个点的最短路。</p>
 <p>设起点坐标为(se,sy)，终点坐标为(ex,ey)</p>
@@ -106,6 +108,9 @@
 
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="最小步数模型" tabindex="-1"><a class="header-anchor" href="#最小步数模型" aria-hidden="true">#</a> 最小步数模型</h2>
+<p>有一个字符串，每次有几种操作，问最少需要多少步达到目标字符串</p>
+<p>将初始状态加入队中，没次按照步骤拓展队头，并更新字符的最小步数</p>
+</div></template>
 
 
