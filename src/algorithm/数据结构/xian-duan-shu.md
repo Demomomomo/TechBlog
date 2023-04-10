@@ -81,7 +81,7 @@ void pushdown(int u){
 	tr[u<<1].add+=tr[u].add;
 	tr[u<<1|1].add+=tr[u].add;
 	tr[u<<1].sum+=(tr[u<<1].r-tr[u<<1].l+1)*tr[u].add;
-	tr[u<<1|1].sum+=(tr[u].r-tr[u].l+1)*tr[u].add;
+	tr[u<<1|1].sum+=(tr[u<<1|1].r-tr[u<<1|1].l+1)*tr[u].add;
 	tr[u].add=0;
 }
 ```
