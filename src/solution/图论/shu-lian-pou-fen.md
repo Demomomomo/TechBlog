@@ -1,8 +1,6 @@
 ---
 title: 树链剖分
-
 ---
-
 ## 苹方树
 原题链接：  
 https://ac.nowcoder.com/acm/contest/38487/J?&headNav=acm  
