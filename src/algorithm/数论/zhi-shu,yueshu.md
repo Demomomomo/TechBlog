@@ -107,6 +107,7 @@ void pr(int x){
 
 试除法求一个数的所有约数  
 
+
 ```cpp
 void yue(int x){
 	for(int i=1;i<=x/i;i++){
