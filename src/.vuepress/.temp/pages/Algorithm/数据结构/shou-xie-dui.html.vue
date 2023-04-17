@@ -12,10 +12,10 @@
 基本操作：<br>
 down(x)：向下调整。假设我们修改一个数，将他改为一个比他大的数x，由于左右子树都得比父节点大，那么我们需要往下调整，将他和他的左右儿子中最小的数交换。如果交换之后x还是比他的左右儿子大，那么再将他与左右儿子中最小的交换。<br>
 例如有一个结构为下图的堆：
-<img src="https://img-blog.csdnimg.cn/b00428d963f04f0a9637bfe3f14364ff.jpeg#pic_center" alt="Pulpit rock" width="304" height="228"><br>
-把1改为6的操作：<br>
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230411171154.png" alt="Pulpit rock" width="304" height="228"></p>
+<p>把1改为6的操作：<br>
 先将1改为6，因为6比3和4大，那么我们将6和3交换，交换之后6比3和5大，然后我们再将6和3交换。<br>
-<img src="https://img-blog.csdnimg.cn/fb3aae7534624c38a6822b1a9c8667b4.jpeg#pic_center" alt="Pulpit rock" width="604" height="228"><br>
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230411171230.png" alt="Pulpit rock" width="604" height="228"><br>
 up（x）：往上调整。假设我们修改一个数，将他变为更小的数x，那么我们就需要将他与他的父节点比较，如果x小于他的父节点，那么他就与父节点交换。</p>
 <h3 id="down-x" tabindex="-1"><a class="header-anchor" href="#down-x" aria-hidden="true">#</a> down(x)</h3>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>

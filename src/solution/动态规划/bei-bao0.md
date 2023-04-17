@@ -457,3 +457,70 @@ int main(){
 
 
 
+
+
+## 九小时九个人九扇门
+
+原题链接：  
+https://ac.nowcoder.com/acm/contest/23106/A  
+
+题意：  
+
+有n个人，每个人都有一个值是a[i]，有数字为1~9的9扇门。如果有x个人，他们的值的和的数字根是j，他们x个人才能打开第j扇门。  
+
+一个数字的数字根是指：将该数字各数位上的数字相加得到一个新的数，直到得到的数字小于10为止  
+
+求每扇门各有多少种方案使得门能打开  
+
+思路：  
+
+数字根：对于各个数k位进制下的数字根，就是他们的和sum%（k-1）+1  
+
+对于每个数都只能选一次，对应选或者不选两种情况，那么我们就可以转换为01背包问题  
+
+dp[i][j]表示前i个数中能组成数字根是j的方案数  
+
+转移方程：  
+不选：dp[i][j]+=dp[i-1][j];  
+选：dp[i][gen(j+a[i])]+=dp[i-1][j];  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+const int N=1e5+10;
+const int mod=998244353;
+int n;
+int a[N];
+int dp[N][10];
+int gen(int x){
+	while(x>=10){
+		int ans=0;
+		int con=x;
+		while(con){
+			ans+=con%10;
+			con/=10;
+		}
+		x=ans;
+	}
+	return x;
+}
+signed main(){
+	cin>>n;
+	for(int i=1;i<=n;i++)cin>>a[i];
+	dp[0][0]=1;
+	for(int i=1;i<=n;i++){
+		for(int j=0;j<=9;j++){
+			dp[i][j]=(dp[i-1][j]+dp[i][j])%mod;
+			dp[i][gen(j+a[i])]=(dp[i][gen(j+a[i])]+dp[i-1][j])%mod;
+		}
+	}
+	for(int i=1;i<=9;i++){
+		cout<<dp[n][i]<<" ";
+	}
+	return 0;
+}
+
+```
+
+
