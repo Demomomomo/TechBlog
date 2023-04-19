@@ -1,4 +1,4 @@
-<!-- ---
+---
 title: kmp
 
 category:
@@ -6,6 +6,7 @@ category:
 
 tag:
   - 字符串
+
 ---
 
 
@@ -15,30 +16,15 @@ tag:
 
 <p>输入格式</p>
 
-<p>输入数据为多组数据，读取到 `#` 字符时结束。每组数据仅有一行，为由空格分开的花布条和小饰条。花布条和小饰条都是用可见 ASCII 字符表示的，不会超过 10001000 个字符。</p>
+<p>输入数据为多组数据，读取到`#`字符时结束。每组数据仅有一行，为由空格分开的花布条和小饰条。花布条和小饰条都是用可见 ASCII 字符表示的，不会超过10001000个字符。</p>
 
-<p><strong>注意：这个 `#` 应为单个字符。若某字符串开头有 `#`，不意味着读入结束！</strong></p>
+<p><strong>注意：这个`#`应为单个字符。若某字符串开头有`#`，不意味着读入结束！</strong></p>
 
 <p>输出格式</p>
 
 <p>对于每组数据，输出一行一个整数，表示能从花纹布中剪出的最多小饰条个数。</p>
 
-<p>样例</p>
 
-<table><thead><tr><th>Inputcopy</th>
-			<th>Outputcopy</th>
-		</tr></thead><tbody><tr><td>
-			<pre>
-abcde a3
-aaaaaa aa
-#</pre>
-			</td>
-			<td>
-			<pre>
-0
-3</pre>
-			</td>
-		</tr></tbody></table>
 
 ```cpp
 #include<iostream>
@@ -84,7 +70,7 @@ int main(){
 ```
 
 
-<p> 核心：找ne数组，判断找到子串后应该进行的操作。</p>
+<p>核心：找ne数组，判断找到子串后应该进行的操作。</p>
 
 ## Power Strings
 
@@ -98,26 +84,8 @@ int main(){
 
 <p>对于每个s，你应该打印出最大的n，使得s =某个字符串a的a^n</p>
 
-<p>样品</p>
 
-<table><thead><tr><th>投入copy</th>
-			<th>输出复制</th>
-		</tr></thead><tbody><tr><td>
-			<pre>
-abcd
-aaaa
-ababab
-.
-</pre>
-			</td>
-			<td>
-			<pre>
-1
-4
-3
-</pre>
-			</td>
-		</tr></tbody></table><p>暗示</p>
+
 
 <p>这个问题的输入量很大，用scanf代替cin可以避免超时。</p>
 
@@ -165,16 +133,14 @@ int main(){
 }
 ```
 
-
-<p></p>
-
 ## A-花非花 第十八届西南科技大学ACM程序设计竞赛（同步赛）
 
-### <p><br /><strong>柳庭风静人眠昼，昼眠人静风庭柳。香汗薄衫凉，凉衫薄汗香。</strong><br /><br /><strong>手红冰碗藕，藕碗冰红手。郎笑藕丝长，长丝藕笑郎。</strong><br /><br />
-给出一个序列 ana_nan​，对于 iii，求有几个数 jjj 满足：<br /><br />
+柳庭风静人眠昼，昼眠人静风庭柳。香汗薄衫凉，凉衫薄汗香。手红冰碗藕，藕碗冰红手。郎笑藕丝长，长丝藕笑郎。
+
+给出一个序列 ana_nan，对于 iii，求有几个数 jjj 满足：<br /><br />
 111 、i≤ji \le ji≤j<br /><br />
-222 、子串 ai∼ja_{i\sim j}ai∼j​ 是一个回文串<br /><br />
-回文串定义：当序列 ana_nan​ 满足，对任意 1≤i≤n1\le i\le n1≤i≤n，ai=an−i+1a_i=a_{n-i+1}ai​=an−i+1​ 成立。</p>
+222 、子串 ai∼ja_{i\sim j}ai∼j 是一个回文串<br /><br />
+回文串定义：当序列 ana_nan 满足，对任意 1≤i≤n1\le i\le n1≤i≤n，ai=an−i+1a_i=a_{n-i+1}ai=an−i+1 成立。
 
 <p>思路：这个时候就用到了一个算法：manacher算法（不会的看一下别的dalao的博客学习一下）</p>
 
@@ -224,15 +190,13 @@ int main(){
 ```
 
 
-<p></p>
-
 ## kmp（next模板）
 
 <p>时间复杂度O（n+m）</p>
 
 <p>ne数组表示下标为i为结尾的最长前缀和后缀相等的长度</p>
 
-<p>比如ne[i]=k，说明下标为[0，k-1]和[ i-（k-1),i]这两段的字符串相等</p>
+<p>比如ne[i]=k，说明下标为[0，k-1]和[ i-（k-1）,i]这两段的字符串相等</p>
 
 <p>先求ne数组：</p>
 
@@ -358,25 +322,27 @@ signed main(){
 
 ## Oulipo
 
-<p>The French author Georges Perec (1936–1982) once wrote a book, La disparition, without the letter 'e'. He was a member of the Oulipo group. A quote from the book:</p>
+<p>The French author Georges Perec (1936–1982) once wrote a book, La disparition, without the letter'e'. He was a member of the Oulipo group. A quote from the book:</p>
 
 <blockquote>
 <p>Tout avait Pair normal, mais tout s’affirmait faux. Tout avait Fair normal, d’abord, puis surgissait l’inhumain, l’affolant. Il aurait voulu savoir où s’articulait l’association qui l’unissait au roman : stir son tapis, assaillant à tout instant son imagination, l’intuition d’un tabou, la vision d’un mal obscur, d’un quoi vacant, d’un non-dit : la vision, l’avision d’un oubli commandant tout, où s’abolissait la raison : tout avait l’air normal mais…</p>
 </blockquote>
 
-<p>Perec would probably have scored high (or rather, low) in the following contest. People are asked to write a perhaps even meaningful text on some subject with as few occurrences of a given “word” as possible. Our task is to provide the jury with a program that counts these occurrences, in order to obtain a ranking of the competitors. These competitors often write very long texts with nonsense meaning; a sequence of 500,000 consecutive 'T's is not unusual. And they never use spaces.</p>
 
-<p>So we want to quickly find out how often a word, i.e., a given string, occurs in a text. More formally: given the alphabet {'A', 'B', 'C', …, 'Z'} and two finite strings over that alphabet, a word <em>W</em> and a text <em>T</em>, count the number of occurrences of <em>W</em> in <em>T</em>. All the consecutive characters of W must exactly match consecutive characters of <em>T</em>. Occurrences may overlap.</p>
+<p>Perec would probably have scored high (or rather, low) in the following contest. People are asked to write a perhaps even meaningful text on some subject with as few occurrences of a given “word” as possible. Our task is to provide the jury with a program that counts these occurrences, in order to obtain a ranking of the competitors. These competitors often write very long texts with nonsense meaning; a sequence of 500,000 consecutive'T's is not unusual. And they never use spaces.</p>
+
+<p>So we want to quickly find out how often a word, i.e., a given string, occurs in a text. More formally: given the alphabet {'A','B','C', …,'Z'} and two finite strings over that alphabet, a word<em>W</em>and a text<em>T</em>, count the number of occurrences of<em>W</em>in<em>T</em>. All the consecutive characters of W must exactly match consecutive characters of<em>T</em>. Occurrences may overlap.</p>
 
 <p>Input</p>
 
 <p>The first line of the input file contains a single number: the number of test cases to follow. Each test case has the following format:</p>
 
-<ul><li>One line with the word <em>W</em>, a string over {'A', 'B', 'C', …, 'Z'}, with 1 ≤ |<em>W</em>| ≤ 10,000 (here |<em>W</em>| denotes the length of the string <em>W</em>).</li>
-	<li>One line with the text <em>T</em>, a string over {'A', 'B', 'C', …, 'Z'}, with |<em>W</em>| ≤ |<em>T</em>| ≤ 1,000,000.</li>
+<ul><li>One line with the word<em>W</em>, a string over {'A','B','C', …,'Z'}, with 1 ≤ |<em>W</em>| ≤ 10,000 (here |<em>W</em>| denotes the length of the string<em>W</em>).</li>
+	<li>One line with the text<em>T</em>, a string over {'A','B','C', …,'Z'}, with |<em>W</em>| ≤ |<em>T</em>| ≤ 1,000,000.</li>
 </ul><p>Output</p>
 
-<p>For every test case in the input file, the output should contain a single number, on a single line: the number of occurrences of the word <em>W</em> in the text <em>T</em>.</p>
+
+<p>For every test case in the input file, the output should contain a single number, on a single line: the number of occurrences of the word<em>W</em>in the text<em>T</em>.</p>
 
 <p>Sample</p>
 
@@ -399,6 +365,7 @@ AVERDXIVYERDIAN</pre>
 0</pre>
 			</td>
 		</tr></tbody></table><p>kmp模板往上套就完了</p>
+
 
 
 ```cpp
@@ -461,6 +428,7 @@ int main(){
 <p></p>
 
 ## 2264: sequence
+
 原题链接：  
 http://acm.zzuli.edu.cn/problem.php?id=2264  
 题意：  
@@ -527,4 +495,3 @@ signed main(){
 
 
 
- -->
