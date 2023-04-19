@@ -6,7 +6,7 @@
 设记录i的倍数的个数的数组为v，那么其实我们每添加一个数x的时候，x的所有因数的v都会+1。<br>
 当我们询问a[x]的倍数的时候，只需要将记录a[x]的倍数个数的v值减去在[1~x]中的a[x]的倍数就行了。<br>
 那么我们用一个g数组来存当走到i时，a[i]的倍数个数。<br>
-那么答案就是v[ a[x]]-g[x]</p>
+那么答案就是v[ a[ x ] ]-g[ x ]</p>
 <p>时间复杂度：O（n*450）（n个数，每个数找他的所有因子）</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
