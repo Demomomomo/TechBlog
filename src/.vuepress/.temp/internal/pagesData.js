@@ -201,4 +201,6 @@ export const pagesData = {
   "v-b7e505f4": () => import(/* webpackChunkName: "v-b7e505f4" */"E:/TechBlog/src/.vuepress/.temp/pages/tag/语言基础/index.html.js").then(({ data }) => data),
   // path: /tag/stl/
   "v-b3059a9c": () => import(/* webpackChunkName: "v-b3059a9c" */"E:/TechBlog/src/.vuepress/.temp/pages/tag/stl/index.html.js").then(({ data }) => data),
+  // path: /solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/qu-jian.html
+  "v-5b9a51f2": () => import(/* webpackChunkName: "v-5b9a51f2" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/动态规划/qu-jian.html.js").then(({ data }) => data),
 }

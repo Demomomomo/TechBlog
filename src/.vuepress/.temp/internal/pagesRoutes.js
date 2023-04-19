@@ -100,4 +100,5 @@ export const pagesRoutes = [
   ["v-b7d62b20","/tag/%E6%8A%80%E5%B7%A7/",{"t":"技巧 标签","y":"p"},["/tag/技巧/","/tag/%E6%8A%80%E5%B7%A7/index.html"]],
   ["v-b7e505f4","/tag/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/",{"t":"语言基础 标签","y":"p"},["/tag/语言基础/","/tag/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/index.html"]],
   ["v-b3059a9c","/tag/stl/",{"t":"STL 标签","y":"p"},["/tag/stl/index.html"]],
+  ["v-5b9a51f2","/solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/qu-jian.html",{"t":"区间dp","y":"a","r":{"minutes":0.01,"words":4}},["/solution/动态规划/qu-jian.html","/solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/qu-jian","/solution/动态规划/qu-jian.md","/solution/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/qu-jian.md"]],
 ]
