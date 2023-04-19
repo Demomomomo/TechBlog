@@ -102,6 +102,89 @@ void pr(int x){
 	}
 }
 ```
+#### 例题：质数距离
+原题链接：  
+https://www.acwing.com/problem/content/198/  
+
+题意：  
+
+给出一个区间[l,r],求这个区间里的所有相邻的两个质数的差值的最小距离和最大距离的两组数，如果距离相同输出第一组  
+
+l,r<=2e9+10  
+r-l<=1e6  
+
+思路：  
+
+由于lr范围很大，所以我们不能直接从1~n直接筛质数  
+对于一个数，如果他是合数，那么他一定有一个质因子在 $\sqrt{n}$ 的范围内。那么对于每个在2e9以内的lr，一定会有个质因子在
+$\sqrt{2e9}$ ，即50000以内，那么我们可以先处理出来这些质数，然后对于每个质数，用埃氏筛法将他们的倍数全都删去(删一个质数的倍数的时间复杂度ln(n)),那么最后的时间复杂度就能优化  
+
+这里有一个小技巧，lr里合数的值域是2e9，但是l~r的区间是1e6，那么我们就可以将l~r这段区间通过-l映射到0~1e6  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+ll l,r;
+const int N=1e6+10;
+bool st[N];
+ll prim[N];
+int cnt;
+void init(){
+	cnt=0;
+	memset(st,false,sizeof st);
+	for(int i=2;i<=50000;i++){
+		if(!st[i]) prim[++cnt]=i;
+		for(int j=1;prim[j]<=50000/i;j++){
+			st[prim[j]*i]=true;
+			if(i%prim[j]==0)break;
+		}
+	}
+}
+int main(){
+	while(cin>>l>>r){
+		init();
+		memset(st,false,sizeof st);
+		for(int i=1;i<=cnt;i++){
+			ll p=prim[i];
+			for(ll j=max(2*p,(l+p-1)/p*p);j<=r;j+=p){
+				st[j-l]=true;
+			}
+		}
+		cnt=0;
+		
+		int miid=0,mxid=0;
+		ll mi=3e9,mx=0;
+		for(int i=0;i+l<=r;i++){
+			if(!st[i]&&i+l>1) {
+				prim[++cnt]=i+l;
+//				cout<<"=="<<i+l<<endl;
+			}
+		}
+		if(cnt<2){
+			cout<<"There are no adjacent primes."<<endl;
+		}else{
+			for(int i=1;i+1<=cnt;i++){
+				if(prim[i+1]-prim[i]>mx){
+					mxid=i;
+					mx=prim[i+1]-prim[i];
+				}
+				if(prim[i+1]-prim[i]<mi){
+					miid=i;
+					mi=prim[i+1]-prim[i];
+				}
+			}
+			printf("%lld,%lld are closest, %lld,%lld are most distant.\n",prim[miid],prim[miid+1],prim[mxid],prim[mxid+1]);
+		}
+	}
+	return 0;
+}
+
+
+```
+
+
+
 
 ## 约数
 
