@@ -101,6 +101,10 @@
 <img src="https://img-blog.csdnimg.cn/8ca09824970b40f493e3dd7fc0389531.png#pic_center" alt="Pulpit rock" width="304" height="228"></p>
 <p>1.前序遍历的第一个是root，后序的最后一个根是root。<br>
 2.先确定根节点，然后根据中序遍历，在根左边的为左子树，在根右边的为右子树。</p>
+<h3 id="例题" tabindex="-1"><a class="header-anchor" href="#例题" aria-hidden="true">#</a> 例题</h3>
+<p>FBI树<br>
+题意：</p>
+<p>给你一个01串，将他按照下</p>
 <h2 id="树的重心" tabindex="-1"><a class="header-anchor" href="#树的重心" aria-hidden="true">#</a> 树的重心</h2>
 <p>定义：树的重心是树中的一个结点，如果将这个结点删除之后，剩余各个联通块中点数的最大值最小，那么这个点就是树的重心。</p>
 <h3 id="例题-树的重心" tabindex="-1"><a class="header-anchor" href="#例题-树的重心" aria-hidden="true">#</a> 例题：树的重心</h3>

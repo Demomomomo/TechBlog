@@ -1,4 +1,4 @@
----
+<!-- ---
 title: kmp
 
 category:
@@ -527,4 +527,4 @@ signed main(){
 
 
 
-
+ -->
