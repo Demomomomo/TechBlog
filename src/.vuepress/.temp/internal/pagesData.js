@@ -133,8 +133,6 @@ export const pagesData = {
   "v-279cebf0": () => import(/* webpackChunkName: "v-279cebf0" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数据结构/xian-duan-shu.html.js").then(({ data }) => data),
   // path: /solution/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/zhu-xi-shu.html
   "v-394b5610": () => import(/* webpackChunkName: "v-394b5610" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/数据结构/zhu-xi-shu.html.js").then(({ data }) => data),
-  // path: /solution/%E6%9D%82%E8%AE%B0/bi-ji.html
-  "v-1d691529": () => import(/* webpackChunkName: "v-1d691529" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/杂记/bi-ji.html.js").then(({ data }) => data),
   // path: /solution/%E6%9E%84%E9%80%A0/a-b-pi.html
   "v-b60648be": () => import(/* webpackChunkName: "v-b60648be" */"E:/TechBlog/src/.vuepress/.temp/pages/solution/构造/a-b-pi.html.js").then(({ data }) => data),
   // path: /solution/%E6%9E%84%E9%80%A0/beishu.html
