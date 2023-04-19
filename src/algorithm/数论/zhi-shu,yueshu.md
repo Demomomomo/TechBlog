@@ -6,12 +6,15 @@ title: 质数约数
 
 ### 等差数列
 $S_{n}=\frac{(a_{1}+a_{n})n}{2}$  
-=$a_{1}n+\frac{n(n-1)d}{2}$ 
+
+$S_{n}=a_{1}n+\frac{n(n-1)d}{2}$  
 ### 等比数列
 a1为首项，q为公差  
 
-$S_{n}=a_{1}n$ (q=1)  
-$S_{n}=\frac{a_{1}(1-q^{n} )}{1-q}$ (q!=1)  
+$S_{n}=a_{1}n (q=1)$  
+
+
+$S_{n}=\frac{a_{1}(1-q^{n} )}{1-q} (q!=1)$  
 
 
 ## 质数
@@ -61,6 +64,85 @@ void zhiyinshu(int x){
 }
 
 ```
+
+变形：  
+阶乘分解  
+原题链接：  
+https://www.acwing.com/problem/content/199/  
+
+题意：给定一个数n，求他的阶乘的质因数的底数和指数，按照底数从小到大的排列输出  
+
+数据范围：1e6  
+
+思路：  
+
+最朴素的做法是1~n中的每个数都分解质因数。但是分解质因数的时间复杂度是 $\sqrt{n}$ ,那么这种方法的时间复杂度就是n $\sqrt{n}$，显然要超时  
+
+那么我们换种方法遍历，去遍历1e6中每个质数，对于每个质数再算他们的个数  
+
+大约有50000+的质数，对于每个质数x，x的倍数质因数肯定是x  
+
+比如当前要找个数的质因数是p，那么他的倍数，即p，2p，3p...肯定含有一个质因数p。那么n中有 $\frac{n}{p}$ 个p的倍数，那么我们个数就加上 $\frac{n}{p}$  
+
+然而还有一些数不仅有一个质因数p，如p * p ，2p * p，3p*p...就含有两个p，那么我们还需要加上多出来的p的个数，也就是 $\frac{n}{p * p}$ 个  
+
+还有3个质数p，4个质数p的情况，，，那么结果一直加到 $p^{k}$ >n就没有了  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+typedef long long ll;
+const int N=1e6+10;
+typedef pair<int,int> pii;
+const int mod=200907;
+int prim[N];
+bool st[N];
+int cnt;
+void init(int op){
+	cnt=0;
+	for(int i=2;i<=op;i++){
+		if(!st[i]) prim[++cnt]=i;
+		for(int j=1;prim[j]<=op/i;j++){
+			st[prim[j]*i]=true;
+			if(i%prim[j]==0)break;
+		}
+	}
+//	cout<<cnt<<endl;
+}
+int a[N],b[N];
+void sove(){
+	
+	int n;
+	cin>>n;
+	init(n);
+	int id=0;
+	for(int i=1;i<=cnt;i++){
+		int con=0;
+		int op=prim[i];
+		while(op<=n){
+			
+			con+=n/op;
+//			cout<<"op=="<<op<<" cnt=="<<n/op<<endl;
+			op*=prim[i];
+		}
+		if(con>0){
+			id++;
+			a[id]=prim[i];
+			b[id]=con;
+		}
+	}
+	for(int i=1;i<=id;i++)cout<<a[i]<<" "<<b[i]<<endl;
+	
+}
+signed main(){
+	sove();
+	return 0;
+}
+```
+
+
+
 
 ### 筛质数
 
