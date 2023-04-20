@@ -1,1 +1,14 @@
-export const data = JSON.parse("{\"key\":\"v-0b1ee0e9\",\"path\":\"/solution/%E5%9B%BE%E8%AE%BA/shu-lian-pou-fen.html\",\"title\":\"树链剖分\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"树链剖分\",\"description\":\"苹方树 原题链接： https://ac.nowcoder.com/acm/contest/38487/J?&headNav=acm 题意： 20230410222201 思路： 利用树上差分 完全平方数的质因数的个数都是偶数个，而且数据范围很小，100以内大概只有20个左右的质因数，那么我们就对一个点上出现过的所有质因数的个数进行维护 然而，题目要求...\",\"head\":[[\"meta\",{\"property\":\"og:url\",\"content\":\"https://mister-hope.github.io/solution/%E5%9B%BE%E8%AE%BA/shu-lian-pou-fen.html\"}],[\"meta\",{\"property\":\"og:site_name\",\"content\":\"Demo\"}],[\"meta\",{\"property\":\"og:title\",\"content\":\"树链剖分\"}],[\"meta\",{\"property\":\"og:description\",\"content\":\"苹方树 原题链接： https://ac.nowcoder.com/acm/contest/38487/J?&headNav=acm 题意： 20230410222201 思路： 利用树上差分 完全平方数的质因数的个数都是偶数个，而且数据范围很小，100以内大概只有20个左右的质因数，那么我们就对一个点上出现过的所有质因数的个数进行维护 然而，题目要求...\"}],[\"meta\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"meta\",{\"property\":\"og:locale\",\"content\":\"zh-CN\"}]]},\"excerpt\":\"\",\"headers\":[{\"level\":2,\"title\":\"苹方树\",\"slug\":\"苹方树\",\"link\":\"#苹方树\",\"children\":[]}],\"git\":{},\"readingTime\":{\"minutes\":2.26,\"words\":677},\"filePathRelative\":\"solution/图论/shu-lian-pou-fen.md\"}")
+export const data = JSON.parse("{\"key\":\"v-0b1ee0e9\",\"path\":\"/solution/%E5%9B%BE%E8%AE%BA/shu-lian-pou-fen.html\",\"title\":\"树链剖分\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"树链剖分\",\"description\":\"苹方树 原题链接： https://ac.nowcoder.com/acm/contest/38487/J?&headNav=acm 题意： 20230410222201 思路： 利用树上差分 完全平方数的质因数的个数都是偶数个，而且数据范围很小，100以内大概只有20个左右的质因数，那么我们就对一个点上出现过的所有质因数的个数进行维护 然而，题目要求...\",\"head\":[[\"meta\",{\"property\":\"og:url\",\"content\":\"https://mister-hope.github.io/solution/%E5%9B%BE%E8%AE%BA/shu-lian-pou-fen.html\"}],[\"meta\",{\"property\":\"og:site_name\",\"content\":\"Demo\"}],[\"meta\",{\"property\":\"og:title\",\"content\":\"树链剖分\"}],[\"meta\",{\"property\":\"og:description\",\"content\":\"苹方树 原题链接： https://ac.nowcoder.com/acm/contest/38487/J?&headNav=acm 题意： 20230410222201 思路： 利用树上差分 完全平方数的质因数的个数都是偶数个，而且数据范围很小，100以内大概只有20个左右的质因数，那么我们就对一个点上出现过的所有质因数的个数进行维护 然而，题目要求...\"}],[\"meta\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"meta\",{\"property\":\"og:locale\",\"content\":\"zh-CN\"}]]},\"excerpt\":\"\",\"headers\":[{\"level\":2,\"title\":\"苹方树\",\"slug\":\"苹方树\",\"link\":\"#苹方树\",\"children\":[]}],\"readingTime\":{\"minutes\":2.26,\"words\":677},\"filePathRelative\":\"solution/图论/shu-lian-pou-fen.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}
