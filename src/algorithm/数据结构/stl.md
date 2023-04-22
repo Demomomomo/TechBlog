@@ -38,6 +38,16 @@ vector<vector<int> > a;
 a.resize(n+5);
 for(int i=1;i<=n;i++) a[i].resize(m);
 ```
+或者这样：  
+```cpp
+char **g=new char*[n];
+for(int i=0;i<n;i++){
+	g[i]=new char[m];
+}
+```
+
+
+
 ## queue(无clear函数)
 包括循环队列`queue`和优先队列`priority_queue`两个容器  
 `queue`是先进先出，`priority_queue`是先出最大的数  
