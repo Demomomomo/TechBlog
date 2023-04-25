@@ -115,3 +115,181 @@ signed main(){
 
 
 
+## HDU-5929 Basic Data Structure
+
+原题链接：  
+https://acm.hdu.edu.cn/showproblem.php?pid=5929  
+
+题意：  
+
+有一个栈，每次有四种操作：  
+1、PUSH X向栈顶加一个数x（x只能是0或1）  
+2、POP 删除栈顶元素  
+3、REVERSE 将整个栈翻转  
+4、NAND 从栈顶到栈底的顺序进行&计算整个栈中元素最后的值，如果栈为空就输出"Invalid.",按照以下规则计算：  
+0&0=1  
+0&1=1  
+1&0=1  
+1&1=0  
+
+思路：  
+
+只有1和1的结果是0，0和任意数结果都是1，那么我们可以从栈底到上看，碰到的第一个0，如果0的上面有数的话，他们的结果是1，如果没有数的话，那么结果是0  
+
+那么对于都是1的结果来说，如果有奇数个1结果就是1，偶数个1结果就是0  
+
+那么我们用一个数组a来模拟整个栈，lr记录当前的栈底和栈顶，双端队列q来记录0的下标，f记录数组是正序还是倒序  
+
+push操作：  
+是正序的时候，r++，a[r]=x，x如果是0的话，就在q的后面加上r  
+是倒序的时候，l--，a[l]=x，x如果是0的话，就在q的前面加上l  
+
+pop操作：  
+是正序的时候，先判断r处是不是0，如果是0的话就将q最后的数删掉，r--  
+是倒序的时候，先判断l处是不是0，如果是0的话就将q最前面的数删掉，l++  
+
+reverse操作：  
+修改f  
+
+nand操作：  
+特判一下栈为空  
+如果是正序，我们要算从栈顶到栈底的顺序，就是从r到l的顺序。算的时候看从栈底到栈顶的第一个出现的0，即l到r中先出现的0：如果没有0，直接判断栈中有几个1，如果是奇数个就输出1，偶数个就输出0；如果有0，且0前面没有数，即	q的第一个元素是r，那么0和前面的结果就是0，总的结果就是直接看1的个数-1的奇偶，即r-l的奇偶；否则的话就是1的个数+1个数的奇偶，即算q.front-l+1的奇偶  
+
+倒序的话就是看栈底到栈顶的顺序，就是从l到r的顺序，算的时候看从栈顶到栈底的第一个出现的0，即r到l第一个出现的0：如果没有0就看1个数的奇偶，如果有0：如果0前面没有数，即q.back==l，那么就是1的个数-1个数的奇偶；如果有数，就是1的个数+1的奇偶，即r-q.back+1的奇偶  
+
+
+
+```cpp
+#include<bits/stdc++.h>
+#include<deque>
+using namespace std;
+const int N=2e5+10;
+int a[2*N];
+int l,r,si;
+deque<int> q;
+int n;
+void push0(int x){
+	r++;
+	a[r]=x;
+	if(x==0){
+		q.push_back(r);
+	}
+}
+void push1(int x){
+	l--;
+	a[l]=x;
+	if(x==0){
+		q.push_front(l);
+	}
+}
+int get0(){
+	if(q.size()==0){
+		int op=r-l+1;
+		return op%2;
+	}
+	int op;
+	if(q.front()==r){
+		op=r-l;
+	}else{
+		op=q.front()-l+1;
+	}
+	return op%2;
+	
+}
+int get1(){
+	int op;
+	if(q.size()==0){
+		op=r-l+1;
+	}else{
+		if(q.back()==l){
+			op=r-l;
+		}else{
+			op=r-q.back()+1;
+		}
+	}
+	return op%2;
+	
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	int t;
+	cin>>t;
+	for(int ca=1;ca<=t;ca++){
+		cout<<"Case #"<<ca<<":"<<endl;
+//		printf("%d:\n",ca);
+		cin>>n;
+		q.clear();
+		l=N,r=N-1;
+		si=0;
+		int f=0;
+		while(n--){
+			string op;
+			cin>>op;
+			if(op=="PUSH"){
+				si++;
+				int x;
+				cin>>x;
+				if(f==0){
+					push0(x);
+				}else{
+					push1(x);
+				}
+			}else if(op=="POP"){
+				if(si==0){
+					continue;
+				}
+				si--;
+				if(f==0){
+					if(a[r]==0){
+						q.pop_back();
+					}
+					r--;
+				}else{
+					if(a[l]==0){
+						q.pop_front();
+					}
+					l++;
+				}
+			}else if(op=="REVERSE"){
+				f=1-f;
+			}else{
+				if(si==0){
+					cout<<"Invalid."<<endl;
+//					printf("\n");
+					continue;
+				}
+				if(f==0){
+					cout<<get0()<<endl;
+//					printf("%d\n",);
+				}else{
+					cout<<get1()<<endl;
+//					printf("%d\n",get1());
+				}
+			}
+		}
+	}
+	return 0;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
