@@ -168,8 +168,106 @@ int main()
 
 
 
+## Total Eclipse
+原题链接：  
+https://acm.hdu.edu.cn/showproblem.php?pid=6763  
+
+题意：  
+有一个n个点m条边的图，每个点有一个值，每次可以做这样的操作：选择一些点，这些点联通并且值都大于0，然后每个点的值减去1。那么最小操作数是多少  
+
+思路：  
+对于一个联通块来说，我们最优的方法是选择这整个联通块内的点，操作其中最小值点的次数，那么这样我们就将每个点都减去最小值，然后对于新图再重复如上操作  
+
+但是这样写的话就需要对于每个联通块找最小值，找到之后减去最小值对于新图再继续找联通块，时间复杂度很大，那么我们就逆向思维来考虑这个问题  
+
+对于一个联通块来说，我们是找到最小的值，操作数加上值，再将联通块内的每个点减去这个值，删除这个点，然后找到删掉这个点之后新的联通块  
 
 
+
+那么反过来就是将点按照从大到小的顺序加入图中，ans记录联通块的数量，每次加他与下一个点的差值和联通块个数的乘积  
+
+如下图：  
+![2D8F7B2B1BAF61A58791B67E5C2A4653](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/2D8F7B2B1BAF61A58791B67E5C2A4653.png)
+
+```cpp
+
+#include<bits/stdc++.h>
+#include<vector>
+//#define int long long 
+using namespace std;
+const int N=1e5+10,M=4e5+10;
+typedef long long ll;
+int n,m;
+int h[N],ne[M],e[M],idx;
+void add(int a,int b){
+	e[idx]=b;
+	ne[idx]=h[a];
+	h[a]=idx++;
+}
+struct name{
+	int id;
+	ll b;
+}q[N];
+int p[N];
+int find(int x){
+	if(p[x]!=x) p[x]=find(p[x]);
+	return p[x];
+}
+bool cmp(name a,name b){
+	return a.b >b.b ;
+}
+bool vis[N];
+void sove(){
+	scanf("%d%d",&n,&m);
+	for(int i=1;i<=n;i++) {
+		scanf("%lld",&q[i].b );
+		q[i].id =i;
+	}
+	sort(q+1,q+1+n,cmp);
+	idx=0;
+	for(int i=1;i<=n;i++){
+		p[i]=i;
+		h[i]=-1;
+		vis[i]=false;
+	}
+	ll ans=0,sum=0;
+	for(int i=1;i<=m;i++){
+		int o,p;
+		scanf("%d%d",&o,&p);
+		add(o,p);
+		add(p,o);
+	}
+	q[n+1].b=0;
+	for(int ca=1;ca<=n;ca++){
+		int u=q[ca].id ;
+		vis[u]=true;
+		ans++;
+		for(int i=h[u];i!=-1;i=ne[i]){
+			int j=e[i];
+			if(vis[j]){
+				if(find(j)!=find(u)){
+					p[find(j)]=find(u);
+					ans--;
+				}
+			}
+		}
+		sum+=ans*(q[ca].b -q[ca+1].b );
+		
+	}
+	printf("%lld\n",sum);
+	
+}
+int main(){
+	int t;
+	scanf("%d",&t);
+	while(t--){
+		sove();
+	}
+	return 0;
+}
+
+
+```
 
 
 

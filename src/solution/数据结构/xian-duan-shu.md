@@ -205,3 +205,175 @@ signed main(){
 ```
 
 
+
+## Problem C. Serval 的试卷答案
+
+原题链接：https://codeforces.com/gym/103941/attachments  
+
+题意：  
+
+有一个长度为n，只含有ABCD的字符串s，有q个操作，分为两种：  
+1.1 l r：将[l,r]这段的每个s[x]变成下一个字母，即将A变成B，将B变成C，将C变成D，将D变成A  
+2.2 l r k:对于[l,r]这段字符串，问有多少种分法将字符串分为恰好k个合法的答案。  
+一个字符串是合法答案的定义：对于每个字符，他都比后面的所有字符小。比如ACD是合法答案，AA和DB都不是合法答案  
+
+思路：  
+
+如果一个字符串合法的话，如果s[i]>s[i+1]，那么这个位置是必须分割开的一个间隔，其他的位置间隔可以分割开也可以不分割开。  
+
+那么求[l,r]这个区间里有多少种k个合法答案，实际上就是将[l,r]这段分割成k份，分割成k份需要k-1个间隔，如果[l,r]有x个位置必须要有间隔，那么分成k个合法答案的个数就是： $C_{r-l-x}^{k-1-x}$  
+
+那么对于每段，我们需要找有多少个间隔满足s[i]< s[i+1]，那么其实对于s[i]和s[i+1]这一对间隔，只有AA，AB，...，CD，DD这16种情况  
+那么我们维护一个线段树：  
+
+lr表示区间，left，right表示字符串两端的字符，c[i][j]表示前面字母是i后面字母是j的间隔个数，lz表示懒标记，cnt记录当前区间的s[i] > s[i+1]的个数  
+
+```cpp
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+const int N=1e5+10,mod=998244353;
+int f[N],fi[N];
+int ksm(int a,int b){
+	int res=1%mod;
+	while(b){
+		if(b&1)res=res*a%mod;
+		a=a*a%mod;
+		b>>=1;
+	}
+	return res;
+}
+void init(){
+	f[0]=fi[0]=1;
+	for(int i=1;i<N;i++){
+		f[i]=(f[i-1]*i)%mod;
+		fi[i]=(fi[i-1]*ksm(i,mod-2))%mod;
+	}
+}
+int C(int a,int b){
+	int ans=(f[a]*fi[b]%mod*fi[a-b])%mod;
+	return ans;
+}
+struct name{
+	int l,r,cnt,lz,left,right;
+	int c[5][5],tmp[5][5];
+}tr[4*N];
+int n,m;
+string s;
+void pushup(int u){
+	tr[u].left=tr[u<<1].left;
+	tr[u].right=tr[u<<1|1].right;
+	tr[u].cnt=tr[u<<1].cnt+tr[u<<1|1].cnt ;
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			tr[u].c[i][j]=tr[u<<1].c[i][j]+tr[u<<1|1].c[i][j];
+		}
+	}
+	tr[u].c[tr[u<<1].right][tr[u<<1|1].left]++;
+	if(tr[u<<1].right>=tr[u<<1|1].left) tr[u].cnt++;
+}
+
+void update(int u,int x){
+	tr[u].cnt=0;
+	tr[u].left=(tr[u].left+x)%4;
+	tr[u].right=(tr[u].right+x)%4;
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			tr[u].tmp[(i+x)%4][(j+x)%4]=tr[u].c[i][j];
+		}
+	}
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			tr[u].c[i][j]=tr[u].tmp[i][j];
+		}
+	}	
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			if(i>=j) tr[u].cnt+=tr[u].c [i][j];
+		}
+	}
+	
+}
+
+
+void pushdown(int u){
+	if(tr[u].lz){
+		tr[u<<1].lz+=tr[u].lz ;
+		tr[u<<1|1].lz+=tr[u].lz;
+		update(u<<1,tr[u].lz);
+		update(u<<1|1,tr[u].lz);
+		tr[u].lz=0;
+	}
+}
+void build(int u,int l,int r){
+	tr[u]={l,r,0,0};
+	if(l==r){
+		tr[u].left=tr[u].right=s[l]-'A';
+		return ;
+	}
+	int mid=l+r>>1;
+	build(u<<1,l,mid);
+	build(u<<1|1,mid+1,r);
+	pushup(u);
+}
+
+void modify(int u,int l,int r){
+	if(l<=tr[u].l&&r>=tr[u].r ){
+		tr[u].lz++;
+		update(u,1);
+		return ;
+	}
+	pushdown(u);
+	int mid=tr[u].l+tr[u].r >>1;
+	if(l<=mid) modify(u<<1,l,r);
+	if(r>mid) modify(u<<1|1,l,r);
+	pushup(u);
+}
+
+int query(int u,int l,int r){
+	if(l<=tr[u].l &&r>=tr[u].r ){
+		return tr[u].cnt;
+	}
+	pushdown(u);
+	int mid=tr[u].l+tr[u].r >>1;
+	int res=0,ff=0;
+	if(l<=mid) res+=query(u<<1,l,r),ff++;
+	if(r>mid) res+=query(u<<1|1,l,r),ff++;
+	if(ff==2&&tr[u<<1].right>=tr[u<<1|1].left) res++;
+	return res;
+}
+
+
+signed main(){
+	init();
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	cin>>n>>m;
+	cin>>s;
+	s=" "+s;
+	build(1,1,n);
+	while(m--){
+		int op,l,r,k;
+		cin>>op;
+		if(op==1){
+			cin>>l>>r;
+			modify(1,l,r);
+		}else{
+			cin>>l>>r>>k;
+//			cout<<"==";
+			int c=query(1,l,r);
+			if(r-l<k-1||k-1<c){
+				cout<<0<<endl;
+			}else{
+				cout<<C(r-l-c,k-1-c)<<endl;
+			}
+		}
+	}
+	return 0;
+}
+```
+
+
+
+
+

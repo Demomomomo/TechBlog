@@ -277,6 +277,103 @@ int main(){
 
 
 
+## HDU 6695 Welcome Party
+原题链接：  
+https://acm.hdu.edu.cn/showproblem.php?pid=6695  
+
+题意：  
+有n个人，每个人有一个x属性有一个y属性，每个人选择其中的一个属性，并且每个人都需要选。求所有方案中两种属性的最大值的差的最小值是多少  
+
+思路：  
+a数组记录x属性和y属性
+
+先将a数组按照x属性从大到小排序  
+
+然后遍历整个数组，每次将a[i].x当做所挑的x中最大的值  
+
+那么[1,i-1]之间的数就不能选x，就必须选y，[i+1,n]之间的数可以选x也可以选y，那么我们就找到与mx相差最小的y选择就可以了  
+
+假设[1,i-1]中的数最大值是my，如果my大于等于a[i].x，那么选择比my小的y最大值还是my，选择比my大的数a[i].x和my的差值会越来越大，所以当my比a[i].x大的时候最小值就是my-a[i].x  
+
+当my比a[i].x小的时候，我们就需要在[i+1,n]之间选择最接近a[i].x的y值，即找一个比a[i].x大的最小值，找一个比a[i].x小的最大值，取他们之间差值最小的就可以了  
+
+具体处理的话，用一个multiset类型的ly和ry分别来存a[i]前面的y值和a[i]后面的y值，初始的时候将所有y值都加入到ry中去，然后开始遍历a数组  
+
+当遍历到a[i]的时候，先将ry中的a[i].y删去，再进行上面的找差值的操作，找完差值之后再将a[i].y加入到ly中去，利用multiset就可以线性的找到差值  
+
+注意细节的处理，比如当在第一个的时候，ly中没有数，那么我们就直接在ry中找，最后一个的时候ry中没有数，并且唯一值就是ly的最大值
+
+```cpp
+#include<bits/stdc++.h>
+#include<set>
+#define int long long
+#define ra multiset<int>::iterator
+using namespace std;
+int n;
+const int N=2e5+20;
+struct name{
+	int x,y;
+}a[N];
+bool cmp(name a,name b){
+	return a.x >b.x ;
+}
+void sove(){
+	cin>>n;
+	for(int i=1;i<=n;i++){
+		cin>>a[i].x >>a[i].y ;
+	}
+	sort(a+1,a+1+n,cmp);
+	int mi=2e18;
+	multiset<int> ly,ry;
+	for(int i=1;i<=n;i++){
+		ry.insert(a[i].y ); 
+	}
+	for(int i=1;i<=n;i++){
+		  ry.erase(ry.find(a[i].y ) );
+		  int mx=a[i].x ;
+		  if(ly.size() ==0){
+		  	ra id=ry.lower_bound(mx); 
+		  	if(id!=ry.end() ){
+		  		mi=min(mi,abs(*id-mx));
+			}
+			if(id!=ry.begin() ){
+				id--;
+				mi=min(mi,abs(*id-mx));
+			}
+		  }else{
+		  	ra id=ly.end() ;
+		  	id--;
+		  	mi=min(mi,abs(*id-mx));
+		  	if(*id<mx&&ry.size() ){
+		  		ra id1=ry.lower_bound(mx); 
+		  		if(id1!=ry.end() ){
+		  			mi=min(mi,abs(*id1-mx));
+				  }
+		  		if(id1!=ry.begin() ){
+		  			id1--;
+		  			mi=min(mi,abs(*id1-mx));
+				  }
+			  }
+		  }
+		  ly.insert(a[i].y );  
+	}
+	cout<<mi<<endl;
+}
+signed main(){
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	int t;
+	cin>>t;
+	while(t--){
+		sove();
+	}
+	return 0;
+}
+```
+
+
+
+
 
 
 
