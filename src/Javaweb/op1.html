@@ -1,0 +1,36 @@
+1:
+
+<html>
+    <head>
+
+    </head>
+    <body>
+        <jsp:include page="op2">
+        <jsp:param name="n" value="3"/>
+        <jsp:param name="m" value="4"/>
+        </jsp:include>
+    </body>
+</html>
+
+
+
+<html>
+    <head>
+
+    </head>
+    <body>
+        String str1=request.getParameter("n");
+        String str2=request.getParameter("m");
+        int nn=Integer.parseInt(str1);
+        int mm=Integer.parseInt(str2);
+        
+        for(int i=1;i<=nn;i++){
+            for(int j=1;j<=mm;j++){
+                <%="*"%>
+            }
+            out.print("<br>");
+        }
+
+    </body>
+</html>
+
