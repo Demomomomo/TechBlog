@@ -12,6 +12,35 @@ jsp=html+java
 
 java代码用`<%%>`包含  
 
+## jsp指令元素
+
+指令包括：`page`,`include`,`taglib`  
+
+指令的语法格式：
+```jsp
+<%@ 指令名称 属性1="属性值1" 属性2="属性值2"...%>
+```
+
+### page指令
+
+定义jsp页面的全局属性  
+
+作用域：他所在的jsp文件页面和其包含的文件  
+
+属性：  
+
+```jsp
+<%page language="java"%>//指定用到的脚本语言，默认是java
+<%page import="java.until.Date"%>//需要显示当前时间时，导入java.until.Date类
+<%page contentType="text/html" pageEncoding="UTF-8"%>//页面使用汉字的时候，采用UTF-8编码
+```
+### include指令
+
+文件加载指令，将其他的文件插入jsp文件中，属于静态插入  
+
+```jsp
+<%@include file="被插入的文件的名称"%>
+```
 
 
 ## 脚本
@@ -27,13 +56,14 @@ Date day=new Date();
 ```
 
 
-## 传输数据
+## 动作元素
 
 ### 1.<jsp:include>动作
 
-语法格式：  
 
 功能：当前jsp文件动态包含另一个文件  
+
+语法格式：  
 
 ```jsp
 <jsp:include page="文件的名字">
@@ -48,7 +78,7 @@ Date day=new Date();
 
 语法：  
 ```jsp
-<jsp:forward page="文件名字"/>
+<jsp:forward page="文件名字">
 ...
 </jsp:forward>
 ```
@@ -63,7 +93,7 @@ Date day=new Date();
 ```jsp
 <jsp:include page="文件的名字">
     <jsp:param name="变量名字1" value="变量值1"/>
-    <jsp:param name="变量名字2" value="变量值2">
+    <jsp:param name="变量名字2" value="变量值2"/>
     ...
 </jsp:include>
 ```
@@ -72,11 +102,17 @@ Date day=new Date();
 ```jsp
 <jsp:forward page="文件的名字">
     <jsp:param name="变量名字1" value="变量值1"/>
-    <jsp:param name="变量名字2" value="变量值2">
+    <jsp:param name="变量名字2" value="变量值2"/>
     ...
 </jsp:forward>
 ```
-### 表单的传输
+
+### 传递参数的三种方式  
+
+1.用`jsp`的`forward`或`include`操作  
+
+2.用表单传输数据  
+
 当向页面2传输表单时，页面1应该这样写：  
 ```jsp
 <form action="页面2的名字" method="post">
@@ -86,35 +122,13 @@ Date day=new Date();
 </form>
 ```
 
-页面二这样显示：  
+3.追加在网址后的参数传递或追加在超链接后面的参数  
 
-```jsp
-<body>
-<%String str1=request.getParameter("mz");
-String str2=request.getParameter("dh");%>
-<font face="宋体" size="4" color="blue">
-您输入的名字为：<%=str1%>
-电话：<%=str2%>
-</font>
-<body>
-```
-
-
-
-被传入的页面获取参数用：  
-
-```jsp
-<%String str1=request.getParameter("变量名字1");%>
-```
-
-
-### 用超链接传输
 
 在上面的`<form>`的标签，也可以转换为超链接传输：  
 
 ```jsp
 <a href="文件2地址?mz=姓名&dh=123456">传递参数</a>
-
 ```
 
 
@@ -124,27 +138,26 @@ String str2=request.getParameter("dh");%>
 
 ### 获取数据
 
-`request`对象的`Parameter("name")`的方法，可以将数据获取  
+`request`对象的`getParameter("name")`的方法，可以将数据获取  
 
- 
+```jsp
+String str1=request.getParameter("获取的数据的name");
+```
 
 字符串变为数字：  
 
 ```jsp
 整数：
-int n=Integer.parseInt(字符串名);
+Integer n=Integer.parseInteger(字符串名);
 小数：
 double n=Double.parseDouble(字符串变量名);
 ```
-
 
 如果输入的是汉字，显示页面出现乱码，那么就在最上面添加一行
 ```jsp
 request.setCharacterEncoding("UTF-8");
 ```
 ### 新属性的设置和获取
-
-
 
 使用`request`对象的`setAttribute("name",obj)`的方法，把数据设置在`request`范围内，请求转发之后的页面用`getAttribute("name")`就可以获取obj的值  
 
@@ -167,7 +180,7 @@ double a2=(Double)request.getAttribute("m");
 ## response对象
 
 
-### 重定位
+### 重定向网页
 
 用`response`中的,`sendRedirect`方法重定位到另一个页面  
 
@@ -188,7 +201,13 @@ response.setHeader("refresh","10;url=要跳转的地址");//延迟10秒之后自
 ```
 ## session对象
 
+会话：用户在浏览某个网站的时候，从进入网站到浏览器关闭所经过的这段时间称为一次会话  
+
 范围：在一次会话中生效  
+
+```jsp
+session.isNew();//判断当前session是否为新的session
+```
 
 
 ## application对象
