@@ -4,7 +4,7 @@ title: javaweb
 
 
 
-# HTML
+## HTML
 
 
 1.新建一个文本文件，后缀名改为`.html  `
@@ -206,7 +206,7 @@ op3:
 
 
 
-# CSS
+## CSS
 
 CSS是一门语言，用于控制页面表现  
 
@@ -321,7 +321,7 @@ id选择器只能选择一个元素
 <a href="https://www.w3school.com.cn/css/index.asp">点击查看</a>
 
 
-# JavaScript
+## JavaScript
 
 用来控制网页行为的，使网页可交互  
 
@@ -773,7 +773,7 @@ test(str):判断指定字符是否符合规则，返回true或false
 ![20230531143113](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230531143113.png)
 
 
-# JSP
+## JSP
 概念：  
 
 java服务端页面  
@@ -1012,12 +1012,13 @@ out.print("abc");//直接输出abc
 ```
 
 
-# JDBC
+## JDBC
 
-JDBC访问数据库的流程如下：  
-1.注册驱动
+JDBC访问数据库流程：
+
+1.注册驱动  
 2.建立连接  
-3.创建数据库操作对象用于执行SQL的语句  
+3.创建数据库操作对象用于执行SQL语句  
 4.执行语句  
 5.处理执行结果  
 6.释放资源  
