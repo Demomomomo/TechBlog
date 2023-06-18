@@ -523,3 +523,91 @@ signed main(){
 
 ```
 
+## 费用报销
+
+题目链接：  
+
+https://www.lanqiao.cn/problems/2195/learning/?page=2&first_category_id=1&sort=students_count&second_category_id=3&tags=%E5%9B%BD%E8%B5%9B,2022  
+
+题意：  
+
+有n个票，每个票上有日期（X月X日），还有面额w。  
+
+想从中挑选若干张票使得满足：  
+
+1.任意两张票的天数相差>=k  
+
+2.这些面额的总值不超过m  
+
+求最接近m面额  
+
+思路：  
+
+先将每个日期映射为是今年的第x天，用于判断相隔天数  
+
+先将票按照天数从小到大排序  
+
+f[i][j]表示在前i张票中，存在挑选满足条件的票使得能凑出总面额为j的方案  
+
+对于第i张票来说，有选和不选两种情况：  
+
+不选：f[i][j]=f[i-1][j]  
+
+选：前提是j必须大于等于w[i];那么我们找到i左边第一个满足相差天数大于等于k的票数编号last，f[i][j]|=f[last][j-w[i]];  
+
+```cpp
+#include<bits/stdc++.h>
+#include<queue>
+#define int long long
+using namespace std;
+const int N=1005;
+bool f[N][5005];
+int mon[30];
+int s[30];
+int n,m,k;
+struct name{
+	int d,m,v;
+}a[N];
+void pro(){
+	mon[1]=mon[3]=mon[5]=mon[7]=mon[8]=mon[10]=mon[12]=31;
+	mon[4]=mon[6]=mon[9]=mon[11]=30;
+	mon[2]=28;
+	for(int i=1;i<=12;i++){
+		s[i]=s[i-1]+mon[i];
+	}
+}
+int get(int m,int d){
+	return s[m-1]+d;
+}
+bool cmp(name a,name b){
+	return get(a.m ,a.d )<get(b.m ,b.d );
+}
+signed main(){
+	pro();
+	cin>>n>>m>>k;
+	for(int i=1;i<=n;i++){
+		cin>>a[i].m >>a[i].d >>a[i].v ;
+	}
+	sort(a+1,a+1+n,cmp);
+	f[0][0]=true;
+	for(int i=1;i<=n;i++){
+		int last=i-1;
+		while(last>0&&get(a[i].m ,a[i].d )-get(a[last].m,a[last].d)<k)last--;
+		for(int j=0;j<=m;j++){
+			f[i][j]=f[i-1][j];
+			if(j>=a[i].v )f[i][j]|=f[last][j-a[i].v ];
+		}
+	}
+	int ans=0;
+	for(int i=m;i>=0;i--){
+		if(f[n][i]){
+			ans=i;
+			break;
+		}
+	}
+	cout<<ans;
+	return 0;
+}
+
+```
+
