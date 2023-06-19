@@ -1,4 +1,5 @@
-<template><div><p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230614165659.png" alt="20230614165659" loading="lazy"></p>
+<template><div><p>程序=数据结构+算法</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230614165659.png" alt="20230614165659" loading="lazy"></p>
 <h2 id="线性表" tabindex="-1"><a class="header-anchor" href="#线性表" aria-hidden="true">#</a> 线性表</h2>
 <p>线性表有两种存结构：顺序存储结构和链式存储结构</p>
 <h3 id="线性表的顺序存储" tabindex="-1"><a class="header-anchor" href="#线性表的顺序存储" aria-hidden="true">#</a> 线性表的顺序存储</h3>
@@ -1251,8 +1252,384 @@ a q<span class="token punctuation">[</span>N<span class="token punctuation">]</s
 <p>先将图的一个结点加入我们构造的最小生成树中的点集，然后找这个点集中有的点到这个点集中没有的点之间的所有边权最小的边，保留这条边，将这个边链接的没有加入点集的点加入点集</p>
 <p>如下图：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616105111.png" alt="20230616105111" loading="lazy"></p>
-<p>yi</p>
-<h4 id="" tabindex="-1"><a class="header-anchor" href="#" aria-hidden="true">#</a> </h4>
+<p>用prim算法的步骤就是：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616105138.png" alt="20230616105138" loading="lazy"></p>
+<h4 id="kruskal算法" tabindex="-1"><a class="header-anchor" href="#kruskal算法" aria-hidden="true">#</a> kruskal算法</h4>
+<p>在所有的边中每次找到边权最小的边，满足：加入边之后的图不形成回路</p>
+<p>先画出所有点，然后慢慢加边</p>
+<h3 id="最短路" tabindex="-1"><a class="header-anchor" href="#最短路" aria-hidden="true">#</a> 最短路</h3>
+<h4 id="dijkstra算法-单源最短路" tabindex="-1"><a class="header-anchor" href="#dijkstra算法-单源最短路" aria-hidden="true">#</a> dijkstra算法：单源最短路</h4>
+<p>g[i][j]表示第i个点到第j个点的最短边，先初始化g数组为极大值，每次输入取最小<br>
+然后进行dijk算法：<br>
+d[i]表示i点到1的最小距离，初始化为极大值，先设d[1]=0<br>
+进行n次循环，每次找到一个没有被确定的最短距离d[t]<br>
+再用d[t]来更新每个点到1的最小距离（d[j]=min(d[j],d[t]+g[t][j]))</p>
+<p>例：求下图中，a到其他结点的最短路径，画出求解过程<br>
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616112224.png" alt="20230616112224" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616112313.png" alt="20230616112313" loading="lazy"></p>
+<h4 id="floyd算法-多源汇最短路" tabindex="-1"><a class="header-anchor" href="#floyd算法-多源汇最短路" aria-hidden="true">#</a> floyd算法：多源汇最短路</h4>
+<p>算法思想：</p>
+<p>逐个顶点试探，从vi到vj的所有可能存在的路径中，选出一条最短的路径</p>
+<p>求最短路径步骤：</p>
+<p>初始时设置一个n阶方阵令其对角线元素为0，若存在边i-&gt;j，则对应元素为权值;否则为正无穷</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616163007.png" alt="20230616163007" loading="lazy"></p>
+<p>逐步试着在原直接路径中增加中间顶点，若加入中间顶点后路径变短，则修改之;否则，维持原值。所有顶点试探完毕，算法结束</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616164031.png" alt="20230616164031" loading="lazy"></p>
+<h3 id="拓扑排序" tabindex="-1"><a class="header-anchor" href="#拓扑排序" aria-hidden="true">#</a> 拓扑排序</h3>
+<p>有向无环图：无环的有向图，简称DAG图</p>
+<p>有向无环图常用来描述一个工程或系统的进行过程。(通常把计划、施工、生产、程序流程等当成是一个工程)</p>
+<p>AOV网：用一个有向图表示一个工程的各子工程及其相互制约的关系，其中以顶点表示活动，弧表示活动之间的优先制约关系，称这种有向图为顶点表示活动的网，简称AOV网，用来解决拓扑排序</p>
+<p>AOV网的特点：</p>
+<p>1.若从i到j有一条有向路径，则i是j的前驱;j是i的后继。</p>
+<p>2.若有i-&gt;j的一条有向边，则i是j的直接前驱;j是i的直接后继。</p>
+<p>3.AOV网中不允许有回路，因为如果有回路存在，则表明某项活动以自己为先决条件，显然这是荒谬的</p>
+<p>拓扑排序：在AOV网没有回路的前提下，我们将全部活动排列成一个线性序列，使得若AOV网中有i-&gt;j的弧存在，则在这个序列中，i一定排在j的前面，具有这种性质的线性序列称为拓扑有序序列，相应的拓扑有序排序的算法称为拓扑排序</p>
+<p>步骤：<br>
+在有向图中选一个没有前驱的顶点且输出之<br>
+从图中删除该顶点和所有以它为尾的弧<br>
+重复上述两步，直至全部顶点均已输出;或者当图中不存在无前驱的顶点为止</p>
+<p>一个AOV网的拓扑排序不是唯一的</p>
+<p>检测AOV网中是否存在环的方法：<br>
+对有向图构造其顶点的拓扑有序序列，若网中所有顶点都在它的拓扑有序序列中，则该AOV 网必定不存在环。</p>
+<!-- ### 关键路径
+
+AOE网：用一个有向图表示一个工程的各子工程及其相互制约的关系，以弧表示活动，以顶点表示活动的开始或结束事件，称这种有向图为边表示活动的网，简称为AOE网，用来解决关键路径  
+
+把工程计划表示为边表示活动的网络，即AOE网，用顶点表示事件，弧表示活动，弧的权表示活动持续时间。  
+
+解决的问题：  
+
+![20230616173730](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616173730.png)  
+
+
+问题：  
+
+1.完成整项工作至少需要多少时间  
+
+2.哪些活动是影响工程进度的关键  
+
+确定关键路径，需要定义四个描述量：  
+
+1.ve（vj）：表示事件j最早发生时间  
+
+2.vl（vj）：表示事件j最迟发生时间  
+
+3.e（i）：表示活动i最早开始时间  
+
+4.l（i）：表示活动i最迟开始时间  
+
+l（i）-e（i）表示完成活动ai的时间余量  
+
+关键活动：关键路径上的活动，即l(i)=e(i)   -->
+<h2 id="查找-1" tabindex="-1"><a class="header-anchor" href="#查找-1" aria-hidden="true">#</a> 查找</h2>
+<p>在查找表里查找数据</p>
+<p>查找表：由同一类型的数据元素（或记录）构成的集合。由于“集合”中的数据元素之间存在着松散的关系，因此查找表是一种应用灵便的结构</p>
+<p>怎么查找？</p>
+<p>根据给定的某个值，在查找表中确定一个其关键字等于给定值的数据元素（或记录）</p>
+<p>关键字：用来标识一个数据元素(或记录) 的某个数据项的值</p>
+<p>主关键字:可唯一地标识一个记录的关键字是主关键字</p>
+<p>次关键字:反之，用以识别若干记录的关键字是次关键字</p>
+<p>查找的目的：</p>
+<p>对查找表经常进行的操作：</p>
+<p>1、查询某个“特定的”数据元素是否在查找表中;<br>
+2、检索某个“特定的”数据元素的各种属性;<br>
+3、在查找表中插入一个数据元素;<br>
+4、删除查找表中的某个数据元素。</p>
+<p>查找表可分为两类:静态查找表和动态查找表</p>
+<p>静态查找表：仅作查询”（检索）操作的查找表</p>
+<p>动态查找表:作“插入”和“删除”操作的查找表。有时在查询之后，还需要将“查询”结果为“不在查找表中”的数据元素插入到查找表中;或者，从查找表中删除其“查询”结果为“在查找表中”的数据元素，此类表为动态查找表。</p>
+<h3 id="平均查找长度asl" tabindex="-1"><a class="header-anchor" href="#平均查找长度asl" aria-hidden="true">#</a> 平均查找长度ASL</h3>
+<p>查找算法的评价指标：关键字的平均比较次数，也称平均查找长度ASL</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616203346.png" alt="20230616203346" loading="lazy"></p>
+<p>n:记录的个数</p>
+<p>pi:查找第i个记录的概率（通常认为pi =1/n）</p>
+<p>ci:找到第i个记录所需的比较次数</p>
+<p>查找的方法取决于查找表的结构，即表中数据元素是依何种关系组织在一起的</p>
+<h3 id="线性表的查找" tabindex="-1"><a class="header-anchor" href="#线性表的查找" aria-hidden="true">#</a> 线性表的查找</h3>
+<h4 id="顺序查找" tabindex="-1"><a class="header-anchor" href="#顺序查找" aria-hidden="true">#</a> 顺序查找</h4>
+<p>应用范围：
+顺序表或线性链表表示的静态查找表<br>
+表内元素之间无序</p>
+<p>查找成功的平均查找长度，设表中各记录查找概率相等：</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>S</mi><mi>L</mi><mo>=</mo><mfrac><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">ASL=\frac{n+1}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>优点:算法简单，逻辑次序无要求，且不同存储结构均适用。</p>
+<p>缺点:ASL太长，时间效率太低。</p>
+<h4 id="折半查找" tabindex="-1"><a class="header-anchor" href="#折半查找" aria-hidden="true">#</a> 折半查找</h4>
+<p>前提是序列必须有序</p>
+<p>假设我们查找x，用l和r分别记录查找的两个端点，起始时l=1，r=n，每次查找的时候取他们的中间点坐标mid：mid=(l+r)/2,每次比较a[mid]和x的大小，如果相等就找到了，否则的话：如果a[mid]&gt;x，那么说明x在前面的位置，r=mid-1；如果a[mid]&lt; x，那么说明x在后面的位置，l=mid+1</p>
+<p>如果l&gt;r说明序列中没有，结束</p>
+<p>假如当前我们查找的是这个数组，ci表示第i个元素的实际查找次数</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230616214503.png" alt="20230616214503" loading="lazy"></p>
+<p>那么次数转换为树就是：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617092401.png" alt="20230617092401" loading="lazy"></p>
+<p>那么平均查找长度就是：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617092436.png" alt="20230617092436" loading="lazy"></p>
+<p>折半查找优点:效率比顺序查找高。</p>
+<p>折半查找缺点:只适用于有序表，且限于顺序存储结构（对线性链表无效）。</p>
+<h4 id="分块查找" tabindex="-1"><a class="header-anchor" href="#分块查找" aria-hidden="true">#</a> 分块查找</h4>
+<p>条件：分块之后的块有序，块内元素可以有序或者无序</p>
+<p>分块查找：先将表分成块，对块进行二分查找，然后再对块内元素进行顺序查找</p>
+<p>分块过程：建立索引表，每个块含有块内最大关键字和指向本块的第一个元素的指针</p>
+<p>块有序表示：当i&lt; j时，第i块里的每个元素都小于j块中最小的元素</p>
+<p>平均查找长度：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617093142.png" alt="20230617093142" loading="lazy"></p>
+<p>优点：插入和删除比较容易，无需进行大量移动。</p>
+<p>缺点:要增加一个索引表的存储空间并对初始索引表进行排序运算。</p>
+<p>适用情况:如果线性表既要快速查找又经常动态变化，则可采用分块查找</p>
+<h3 id="树表的查找" tabindex="-1"><a class="header-anchor" href="#树表的查找" aria-hidden="true">#</a> 树表的查找</h3>
+<p>当表插入、删除操作频繁时，为维护表的有序性，需要移动表中很多记录。</p>
+<p>改用动态查找表——几种特殊的树</p>
+<p>问题：对于给定值key，若表中存在，则成功返回;否则，插入关键字等于key的记录</p>
+<p>那么要用到几种特殊的树：二叉排序树，平衡二叉树,红黑树,B-树,B+树,键树</p>
+<h4 id="二叉排序树" tabindex="-1"><a class="header-anchor" href="#二叉排序树" aria-hidden="true">#</a> 二叉排序树</h4>
+<p>二叉排序树:又称为二叉搜索树、二叉查找树</p>
+<p>二叉排序树或是空树，或是满足如下性质的二叉树:</p>
+<p>(1)若其左子树非空，则左子树上所有结点的值均小于根结点的值;<br>
+(2)若其右子树非空，则右子树上所有结点的值均大于等于根结点的值;<br>
+(3)其左右子树本身又各是一棵二叉排序树</p>
+<p>二叉排序树的性质:</p>
+<p>中序遍历非空的二叉排序树所得到的数据元素序列是一个按关键字排列的递增有序序列。</p>
+<p>二叉排序树的查找：</p>
+<p>从根节点开始查找x，如果当前结点大于x，那么查找他的左子树，如果当前结点小于x，查找右子树，如果等于就返回，如果是空那么就找不到</p>
+<p>比较的关键字次数=此结点所在层次数</p>
+<p>最多的比较次数=树的深度</p>
+<p>平均查找长度：</p>
+<p>最好情况：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617101435.png" alt="20230617101435" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617101540.png" alt="20230617101540" loading="lazy"></p>
+<p>最差情况：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617101507.png" alt="20230617101507" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617101557.png" alt="20230617101557" loading="lazy"></p>
+<p>问题:如何提高形态不均衡的二叉排序树的查找效率?</p>
+<p>解决办法:做“平衡化”处理，即尽量让二叉树的形状均衡!</p>
+<p>二叉排序树的插入：</p>
+<p>从根结点开始，如果当前的根比x小，那么就判断他的右子树；如果当前的根比x大，那么就判断他的左子树；如果当前是空，那么就将x赋给当前结点；如果当前根等于x，那么就不再插入，结束</p>
+<p>从空树出发，经过一系列的查找、插入操作之后，可生成一栋二叉排序树。</p>
+<p>一个无序序列可通过构发二叉排序树而变成一个有序序列。构造树的过程就是对无序序列进行排序的过程。</p>
+<p>关键字的输入顺序不同，建立的不向二叉排序树。</p>
+<p>二叉排序树的删除：</p>
+<p>从二叉排序树中删除一个结点，不能把以该结点为根的子树都删去，只能删掉该结点，并且还应保证删除后所得的二叉树仍然满足二叉排序树的性质不变</p>
+<p>由于中序遍历二叉排序树可以得到一个递增有序的序列。那么，在二叉排序树中删去一个结点相当于删去有序序列中的一个结点</p>
+<p>将因删除结点而断开的二叉链表重新链接起来并防止重新链接后树的高度增加</p>
+<p>(1)被删除的结点是叶子结点:直接删去该结点，将双亲结点中相对应的指针域改为空</p>
+<p>(2)被删除的结点只有左子树或者只有右子树，用其左子树或者右子树替换它(结点替换)</p>
+<p>(3)被删除的结点既有左子树，也有右子树，那么就用他的前驱代替他，递归删除他的前驱结点；或者用他的后继结点替换他，然后删除后继结点</p>
+<p>前驱结点是左子树中最大的点</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617104537.png" alt="20230617104537" loading="lazy"></p>
+<p>50的前驱是40，那么就先将他变为40：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617104626.png" alt="20230617104626" loading="lazy"></p>
+<p>然后再删除40的结点：由于40只有左子树，那么直接将他替换为他的左子树即可</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230617104727.png" alt="20230617104727" loading="lazy"></p>
+<h4 id="平衡二叉树" tabindex="-1"><a class="header-anchor" href="#平衡二叉树" aria-hidden="true">#</a> 平衡二叉树</h4>
+<p>平衡二叉树又称AVL树</p>
+<p>一棵平衡二叉树或者是空树，或者是具有下列性质的二叉排序树:</p>
+<p>1.左子树与右子树的高度之差的绝对值小于等于1</p>
+<p>2.左子树和右子树也是平衡二叉排序树</p>
+<p>为了方便起见，给每个结点附加一个数字，给出该结点左子树一右子树的高度差。这个数字称为结点的平衡因子（BF）</p>
+<p>平衡因子=结点左子树的高度-结点右子树的高度</p>
+<p>根据平衡二叉树的定义，平衡二叉树上所有结点的平衡因子只能是-1、0，或1。</p>
+<p>当我们在一个平衡二叉排序树上插入一个结点时，有可能导致失衡，即出现平衡因子绝对值大于1的结点，如:2、-2.</p>
+<p>如果在一颗AVL树中插入一个新结点后造成失衡，则必须重新调整树的位置，使之恢复平衡</p>
+<p>平衡调整的四种类型：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230618141013.png" alt="20230618141013" loading="lazy"></p>
+<p>就将这四种情况分别调整为下面的类型：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230618141156.png" alt="20230618141156" loading="lazy"></p>
+<p>调整原则：11.降低高度 2.保持二叉排序树性质</p>
+<p>规律：ll型和rr型把中间结点作为根结点，lr型和rl型把最低的结点作为根结点，然后按照二叉排序树的性质变化</p>
+<p>具体实现方式：</p>
+<p>ll型：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230618142252.png" alt="20230618142252" loading="lazy"></p>
+<p>rr型：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/F1F268E04FC2F0D689D8CAA2E973C3E4.png" alt="F1F268E04FC2F0D689D8CAA2E973C3E4" loading="lazy"></p>
+<p>lr型：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/CFD8AC5C4CA3E3263F18E461F2A24C6C.png" alt="CFD8AC5C4CA3E3263F18E461F2A24C6C" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/9A56D7F08401C6C1090D412085685B8F.png" alt="9A56D7F08401C6C1090D412085685B8F" loading="lazy"></p>
+<p>rl型：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/DEE36D55E0AAD209004B7421435FD09A.png" alt="DEE36D55E0AAD209004B7421435FD09A" loading="lazy"></p>
+<p>方法：将A和B分别作为c的左子树和右子树，原来的c的左子树作为A的右子树，原来的c的右子树作为B的左子树</p>
+<h3 id="b-树" tabindex="-1"><a class="header-anchor" href="#b-树" aria-hidden="true">#</a> B-树</h3>
+<p>m阶B树的特性：</p>
+<p>一棵m阶B-树，或为空树，或为满足下列特性的树:</p>
+<p>(1)树中每个结点至多有m棵子树;</p>
+<p>(2)若根结点不是叶子结点，则至少有两棵子树;</p>
+<p>(3)除根之外的所有非终端结点至少有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">⌈</mo><mfrac><mi>m</mi><mn>2</mn></mfrac><mo fence="true">⌉</mo></mrow><annotation encoding="application/x-tex">\left \lceil\frac{m}{2}\right \rceil</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">⌈</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6954em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">⌉</span></span></span></span></span></span> 棵子树;</p>
+<p>(4)所有叶子结点都出现在同一层，且不带信息。</p>
+<p>B树中允许一个结点中包含多个key ,可以是3个、4个、5个甚至更多，并不确定，需要看具体的实现。现在我们选择一个参数M,来构造一个B树，我们可以把它称作是M阶的B树，那么该树会具有如下特点:</p>
+<p>每个结点最少有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo fence="true">⌈</mo><mfrac><mi>m</mi><mn>2</mn></mfrac><mo fence="true">⌉</mo></mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\left\lceil\frac{m}{2}\right\rceil-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">⌈</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6954em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">⌉</span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 个key，最多有M-1个key，M个指针，并且以升序排列</p>
+<p>以五阶b树为例(每个结点最多存储四个key，五个指针)：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619230715.png" alt="20230619230715" loading="lazy"></p>
+<p>在两个key之间的指针所指的结点的所有key范围都在这两个key之间，并且以升序排列</p>
+<p>构建B-树：</p>
+<p>每次插入一个key：如果小于当前结点的最小key并且当前结点有左子树，就找当前结点的左子树；大于当前结点最大key就找当前结点的右子树</p>
+<p>找到应插入的结点之后，当插入这个key之后的结点数据大于m-1，那么我们就将中间的key向上裂变，key左面的小于他的key做他的左子树，右边大于他的key做右子树</p>
+<p>在五阶B树的一个结点key值为：23,234,0345,0899的结点中插入一个1200，那么插入之后的key为23,234,0345,0899,1200，个数大于4，那么就找位于中间的key值为0345的域将他向上裂变，然后就形成：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619231624.png" alt="20230619231624" loading="lazy"></p>
+<p>如果在以下的图中插入一个1000</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619232254.png" alt="20230619232254" loading="lazy"></p>
+<p>从根节点开始，大于0345，找右子树，那么应该插入在0899和1200之间，但是插入之后就变成了0899,1000,1200,1234,1500，那么我们就将中间元素1200向上分裂到0345后面，变成：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619232649.png" alt="20230619232649" loading="lazy"></p>
+<p>将下图插入一个2456：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619232849.png" alt="20230619232849" loading="lazy"></p>
+<p>那么最终会插入到第二层最右边的结点，这个时候1980向上分裂，形成：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619233007.png" alt="20230619233007" loading="lazy"></p>
+<p>那么第一层的结点不符合题意，1200再次向上分裂：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619233102.png" alt="20230619233102" loading="lazy"></p>
+<p>B树的删除：</p>
+<p>如果删除之后，还满足每个结点的key的个数&lt; m并且指针数是key的个数+1，就直接删除</p>
+<p>如果删除之后，他的指针少了一个（一个结点少了一个子树），那么我们就可以用他的根节点或者兄弟结点来代替他</p>
+<p>比如：</p>
+<p>将下图中的4阶B-树删掉39</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230620001042.png" alt="20230620001042" loading="lazy"></p>
+<p>那么删掉之后变为：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230620001106.png" alt="20230620001106" loading="lazy"></p>
+<p>那么第二层最右的子树就少了一个左子树，那么我们需要将这个左子树填上。那么我们可以注意到删除的子树的右边的结点有两个key，那么我们就可以将删掉的结点的根结点的最左边的key填到删除的结点的key，向删除的子树的右边的结点借一个最左边的key当跟结点被删除的key</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230620001428.png" alt="20230620001428" loading="lazy"></p>
+<p>那么如果我们想再删除64，删了之后就会变为</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230620001501.png" alt="20230620001501" loading="lazy"></p>
+<p>那么还是少了一个指针，如果我们想问他的右边的结点借一个key，那么右边的结点就会变成空，还是会少一个结点</p>
+<p>那么我们就可以将他的根结点最左边的key放到他的左子树上或者将根节点的最右边的key放在右子树上，那么这样就会使得根节点少了一个key，也就少了一个指针，满足B-树的要求,下图是将跟结点的最右边key放到右子树</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230620001715.png" alt="20230620001715" loading="lazy"></p>
+<h3 id="b-树-1" tabindex="-1"><a class="header-anchor" href="#b-树-1" aria-hidden="true">#</a> B+树</h3>
+<p>所有元素都会出现在叶子结点，非叶子结点只是起到索引作用，叶子结点是用来存放数据的</p>
+<p>叶子结点形成一个链表，每一个叶子结点都会有一个指针指向下一个结点</p>
+<p>以4阶B+数为例：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619234027.png" alt="20230619234027" loading="lazy"></p>
+<p>B+树的构造：</p>
+<p>在插入一个结点的时候，找寻插入规则和B-树一样，只是在分裂的时候，中间key向上分裂的同时，他的右子树中还含有key，并且建立一个他的左子树到右子树的指针</p>
+<p>比如在下图的5阶B+树中中插入890：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619234418.png" alt="20230619234418" loading="lazy"></p>
+<p>0567向上分裂，他的左子树是0232,0234，右子树是0567,890,1000，并且多出一个左子树到右子树的指针</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619234701.png" alt="20230619234701" loading="lazy"></p>
+<p>相对于B树的区别：1.所有数据都会出现在叶子结点 2.叶子结点形成一个单向列表</p>
+<h3 id="散列表的查找" tabindex="-1"><a class="header-anchor" href="#散列表的查找" aria-hidden="true">#</a> 散列表的查找</h3>
+<p>基本思想：记录的存储位置与关键字之间存在的对应关系</p>
+<p>对应关系：hash函数</p>
+<p>loc[i]=h[keyi]</p>
+<p>优点：查找效率高</p>
+<p>缺点：空间效率低</p>
+<p>散列方法(杂凑法)：选取某个函数，依该函数按关键字计算元素的存储位置，并按此存放;查找时，由同一个函数对给定值k计算地址，将k与地址单元中元素关键码进行比，确定查找是否成功。</p>
+<p>散列函数(杂凑函数):散列方法中使用的转换函数</p>
+<p>冲突:不同的关键码映射到同一个散列地址，key1！=key2，但是h(key1)=h(key2)</p>
+<p>同义词:具有相同函数值的多个关键字</p>
+<p>使用散列表要解决好两个问题:</p>
+<p>1.构造好的散列函数:所选函数尽可能简单，以便提高转换速度;所选函数对关键码计算出的地址，应在散列地址集中致均匀分布，以减少空间浪费。</p>
+<p>2.制定一个好的解决冲突的方案:查找时，如果从散列函数计算出的地址中查不到关键码，则应当依据解决冲突的规则，有规律地查询其它相关单元。</p>
+<p>构造散列函数考虑的因素：</p>
+<p>1.执行速度</p>
+<p>2.关键字长度</p>
+<p>3.散列表的大小</p>
+<p>4.关键字的分布情况</p>
+<p>5.考虑查找频率</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/EA5FE07DAE12003C4F817A9ADE9AF72C.png" alt="EA5FE07DAE12003C4F817A9ADE9AF72C" loading="lazy"></p>
+<p>直接定址法：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230618155141.png" alt="20230618155141" loading="lazy"></p>
+<p>除留余数法：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230618155526.png" alt="20230618155526" loading="lazy"></p>
+<h4 id="处理冲突的方法" tabindex="-1"><a class="header-anchor" href="#处理冲突的方法" aria-hidden="true">#</a> 处理冲突的方法</h4>
+<p>处理冲突的方法有：开放定址法，链地址法，再散列法，建立一个公共溢出区域</p>
+<p>1.开放地址法：有冲突的时候就去寻找下一个空的散列地址，只要散列表足够大，空的散列地址总能找到，并将数据元素存入</p>
+<p>寻找空的地址时，可以用线性探测法，链地址法</p>
+<p>线性探测法：遇到冲突时，依次看冲突位置的后一位，后两位...直到找到符合条件的地址填入</p>
+<p>计算平均查找长度ASL：每个数找到的次数的和除以数的个数</p>
+<p>2.链地址法：</p>
+<p>基本思想:相同散列地址的记录链成单链表</p>
+<p>m个散列地址就设m个单链表（m是取模的数），然后用一个数组将m个单链表的表头指针存储起来，形成一个动态的结构</p>
+<p>链地址法操作步骤：对于关键值key，计算地址，如果地址是空就插入该地址，否则选择解决方法处理冲突，计算下一个储存地址，如果该地址链表不为空，那么利用扦插法或者后插法将元素插入此链表</p>
+<p>查找成功的平均查找次数：</p>
+<p>构造出链之后的每个数的查找次数总和除以数的个数</p>
+<p>查找失败的平均查找次数：</p>
+<p>构造出链后，每个地址所拥有的数的个数+1的总和除以地址总数</p>
+<p>例如下图：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/14F48DF0F97BFD4A1890E821E8AE41D6.png" alt="14F48DF0F97BFD4A1890E821E8AE41D6" loading="lazy"></p>
+<p>每个数查找成功的次数：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/FD7489602102E2011B568D2B63596C12.png" alt="FD7489602102E2011B568D2B63596C12" loading="lazy"></p>
+<p>ASL=（1<em>4+2</em>3+3*1）/8</p>
+<p>查找不成功的次数：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1BCCF819D948FD58ED70A9ABE790E363.png" alt="1BCCF819D948FD58ED70A9ABE790E363" loading="lazy"></p>
+<p>ASL=(3+4+2+1+1+3+1+1+1+1+1)/11</p>
+<p>例题：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/FEBFC9ADCEB827CE9D7F632EAE8E1F26.png" alt="FEBFC9ADCEB827CE9D7F632EAE8E1F26" loading="lazy"></p>
+<p>mod13，那么就将数组设置成0~12，然后再对每个地址加入值</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/9964C178FA5F1453657648A305AF7521.png" alt="9964C178FA5F1453657648A305AF7521" loading="lazy"></p>
+<h2 id="排序" tabindex="-1"><a class="header-anchor" href="#排序" aria-hidden="true">#</a> 排序</h2>
+<h3 id="插入排序" tabindex="-1"><a class="header-anchor" href="#插入排序" aria-hidden="true">#</a> 插入排序</h3>
+<p>基本思想：</p>
+<p>每步将一个待排序的对象，按其关键码大小，插入到前面已经排好序的一组对象的适当位置上，直到对象全部插入为止。</p>
+<p>每插入一个元素，应插入的位置之后的所有元素都右移</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/CD92275F4C8272D3FF1EB252734F7070.png" alt="CD92275F4C8272D3FF1EB252734F7070" loading="lazy"></p>
+<p>那么有几种插入排序：</p>
+<h4 id="_1-直接插入排序-顺序法定位插入位置" tabindex="-1"><a class="header-anchor" href="#_1-直接插入排序-顺序法定位插入位置" aria-hidden="true">#</a> 1.直接插入排序：顺序法定位插入位置</h4>
+<p>在基本有序的序列里效率比较高</p>
+<p>将x加在序列的最后一个位置，每次比较前面的位置上的数，如果比x大就交换</p>
+<h4 id="_2-二分插入排序-二分法定位插入位置" tabindex="-1"><a class="header-anchor" href="#_2-二分插入排序-二分法定位插入位置" aria-hidden="true">#</a> 2.二分插入排序：二分法定位插入位置</h4>
+<p>比直接插入排序时间=快一些</p>
+<p>先将插入的元素x保存到哨兵位置0，然后l=1，r=i-1，当l&lt;=r的时候取mid=(l+r)/2，如果x&lt; a[mid],r=mid-1;如果x&gt;a[mid],l=mid+1。循环结束，插入位置是r+1，那么我们就将r+1到i的元素都往后移动一位，在r+1的位置赋值x</p>
+<h4 id="_3-希尔排序-缩小增量多遍插入排序" tabindex="-1"><a class="header-anchor" href="#_3-希尔排序-缩小增量多遍插入排序" aria-hidden="true">#</a> 3.希尔排序：缩小增量多遍插入排序</h4>
+<p>先将整个待排记录序列分割成若干子序列，分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行一次直接插入排序。</p>
+<p>特点：</p>
+<p>1.一次移动，移动位置较大，跳跃式的接近排序后的最终位置</p>
+<p>2.最后一次只需要少量移动</p>
+<p>3.增量序列必须是递减的，最后一个必须是1</p>
+<p>4.增量序列应该是互质的</p>
+<p>比如下图的序列：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/081E152EC37688970BBDD743D187E95E.png" alt="081E152EC37688970BBDD743D187E95E" loading="lazy"></p>
+<p>先将间隔为5的数进行一次直接插入排序，再将间隔为3的进行一次直接插入排序，最后再对整体直接插入排序</p>
+<p>希尔排序是一种不稳定的排序算法</p>
+<h3 id="交换排序" tabindex="-1"><a class="header-anchor" href="#交换排序" aria-hidden="true">#</a> 交换排序</h3>
+<p>常见的交换排序方法：冒泡排序和快速排序</p>
+<h4 id="冒泡排序" tabindex="-1"><a class="header-anchor" href="#冒泡排序" aria-hidden="true">#</a> 冒泡排序：</h4>
+<p>基本思想：不断将两个相邻的数两两比较，如果不符合排序条件就交换</p>
+<p>进行n-1趟两两比较就可以得到一个有序序列</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/F78803C07D22B729A0FCE57FA5092041.png" alt="F78803C07D22B729A0FCE57FA5092041" loading="lazy"></p>
+<h4 id="快速排序" tabindex="-1"><a class="header-anchor" href="#快速排序" aria-hidden="true">#</a> 快速排序</h4>
+<p>时间复杂度：O(nlogn)</p>
+<p>快速排序不稳定</p>
+<p>不适用于原本有序或者基本有序的记录序列进行排序</p>
+<p>基本思想：任取一个元素(如:第一个)为中心，所有比它小的元素一律前放，比它大的元素一律后放，形成左右两个子表;对各子表重新选择中心元素并依此规则调整，直到每个子表的元素只剩一个</p>
+<p>每次划分选择第一个数x，将他放到0号位置，那么一号位置就空了出来，用两个指针l和r分别从0号和n号位置出发，因为空着的是l，那么我们就将r向前移动，找到一个小于x的数，将他放到l，那么r就空了，我们继续将l向后移动，找到一个大于x的数，将数放到r...以此类推直到l=r，那么l的位置就是x应该放的位置，那么l将区间分成了两段，那么分别再对两段区间进行操作</p>
+<p>例：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/8344B2A4EA8CCEC5530F7F6AEDE418ED.png" alt="8344B2A4EA8CCEC5530F7F6AEDE418ED" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/8327027CB699553C50E485EA9B3EDC5B.png" alt="8327027CB699553C50E485EA9B3EDC5B" loading="lazy"></p>
+<h3 id="选择排序" tabindex="-1"><a class="header-anchor" href="#选择排序" aria-hidden="true">#</a> 选择排序</h3>
+<h4 id="堆排序" tabindex="-1"><a class="header-anchor" href="#堆排序" aria-hidden="true">#</a> 堆排序</h4>
+<p>堆排序不稳定</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/C415E45291A56F7994DA094A5FC11040.png" alt="C415E45291A56F7994DA094A5FC11040" loading="lazy"></p>
+<p>从堆的定义可以看出，堆实质是满足如下性质的完全二叉树:二叉树中任一非叶子结点均小于(大于)它的孩子结点</p>
+<p>若在输出堆顶的最小值(最大值)后使得剩余n-1个元素的序列重又建成一个堆，则得到n个元素的次小值（次大值）…如此反复，便能得到一个有序序列，这个过程称之为堆排序。</p>
+<p>要想使用堆排序，需要先将无序序列变成一个堆</p>
+<p>对一个无序序列反复筛选就可以得到一个堆</p>
+<p>显然：单结点的二叉树是堆，在完全二叉树中所有以叶子结点为根的子树是堆</p>
+<p>那么从完全二叉树的最后一个非叶子结点开始，一直到第一个点进行调整，将每个不是叶节点的点调整为以他为根节点的堆，最后一个非叶子结点是n/2</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619002140.png" alt="20230619002140" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/27BCAEA08AFC15F5A5FEF64A25E9C23A.png" alt="27BCAEA08AFC15F5A5FEF64A25E9C23A" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/AA80A016B2AAE4639ED6494C919B235A.png" alt="AA80A016B2AAE4639ED6494C919B235A" loading="lazy"></p>
+<p>每次取出堆顶元素之后对剩下的元素进行调整成为一个新的堆</p>
+<p>以小根堆为例：</p>
+<p>1．输出堆顶元素之后，以堆中最后一个元素替代之;<br>
+2.然后将根结点值与左、右子树的根结点值进行比较，并与其中小者进行
+交换;<br>
+3．重复上述操作，直至叶子结点，将得到新的堆，称这个从堆顶至叶子的
+调整过程为“筛选”</p>
+<h3 id="归并排序" tabindex="-1"><a class="header-anchor" href="#归并排序" aria-hidden="true">#</a> 归并排序</h3>
+<p>将两个或两个以上的有序子序列归并成一个有序序列</p>
+<p>在内部排序中，通常采用的是2-路归并排序</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/415068911995D53F559B2A744FE90C93.png" alt="415068911995D53F559B2A744FE90C93" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/C467C82D5A271911F5884ED1A6232638.png" alt="C467C82D5A271911F5884ED1A6232638" loading="lazy"></p>
+<h3 id="基数排序" tabindex="-1"><a class="header-anchor" href="#基数排序" aria-hidden="true">#</a> 基数排序</h3>
+<p>时间复杂度O(k*(n+m))，k是关键字数，m关键字取值范围为m个值</p>
+<p>基本思想:分配+收集</p>
+<p>也叫桶排序或箱排序:设置若干个箱子，将关键字为k的记录放入第k个箱子，然后在按序号将非空的连接。</p>
+<p>基数排序:数字是有范围的，均由0-9这十个数字组成，则只需设置十个箱子，相继按个、十、百...进行排序.</p>
+<p>先设置0~9一共十个箱子，然后我们从所有数的最低位到最高位一位一位比，每次比的时候将相应的位数上的数放入相应的桶中，进行完这个操作之后按照顺序收集一次数据，然后再进行下一位的比较，直到比完</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/D5B22AAD65D3686E912E7B1AA50C66CB.png" alt="D5B22AAD65D3686E912E7B1AA50C66CB" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/87A2FE8C73506C4E47CA9A27F7859CE2.png" alt="87A2FE8C73506C4E47CA9A27F7859CE2" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/D45AA465B200B61D00580DBE5A9800C8.png" alt="D45AA465B200B61D00580DBE5A9800C8" loading="lazy"></p>
+<h3 id="小结" tabindex="-1"><a class="header-anchor" href="#小结" aria-hidden="true">#</a> 小结</h3>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/2C0A247CF17730AC14B605FD4C86A788.png" alt="2C0A247CF17730AC14B605FD4C86A788" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/3C69A6E666376DCA818DB2490A4D3B01.png" alt="3C69A6E666376DCA818DB2490A4D3B01" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/E1C2100E6CD1ACDFF816B3465BB30899.png" alt="E1C2100E6CD1ACDFF816B3465BB30899" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/AB3770D7A6E2935132D0FA266D9046BB.png" alt="AB3770D7A6E2935132D0FA266D9046BB" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619004326.png" alt="20230619004326" loading="lazy"></p>
 </div></template>
 
 

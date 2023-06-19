@@ -1,18 +1,63 @@
 <template><div><!-- 因为我是下载到E盘的，所以先转换到E盘，然后再打打开bin的根目录 -->
+<h2 id="数据库概述" tabindex="-1"><a class="header-anchor" href="#数据库概述" aria-hidden="true">#</a> 数据库概述</h2>
+<h3 id="数据独立性" tabindex="-1"><a class="header-anchor" href="#数据独立性" aria-hidden="true">#</a> 数据独立性</h3>
+<p>数据独立性包括两个方面：逻辑独立性和物理独立性</p>
+<p>好处：（1）减轻了应用程序的维护工作量（2）提高数据共享性,使数据库系统有较好的可扩充性</p>
+<h3 id="数据库系统的组成" tabindex="-1"><a class="header-anchor" href="#数据库系统的组成" aria-hidden="true">#</a> 数据库系统的组成</h3>
+<p>1.硬件 2.软件 3.人员</p>
+<h2 id="数据库系统结构" tabindex="-1"><a class="header-anchor" href="#数据库系统结构" aria-hidden="true">#</a> 数据库系统结构</h2>
+<h3 id="数据特征" tabindex="-1"><a class="header-anchor" href="#数据特征" aria-hidden="true">#</a> 数据特征</h3>
+<p>数据库中的数据具有静态和动态两种特征：</p>
+<p>1.静态特征：包括数据的基本结构，数据间的联系以及对数据取值范围的约束</p>
+<p>2.动态特征：指对数据可以进行一些符合一定规矩的操作</p>
+<p>数据模型三要素：包括数据的基本结构，数据的约束条件，和定义在数据上的操作</p>
+<h3 id="数据库的组织模型" tabindex="-1"><a class="header-anchor" href="#数据库的组织模型" aria-hidden="true">#</a> 数据库的组织模型</h3>
+<p>层次模型，网状模型，关系模型，对象-关系模型</p>
+<h3 id="e-r图" tabindex="-1"><a class="header-anchor" href="#e-r图" aria-hidden="true">#</a> E-R图</h3>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619121902.png" alt="20230619121902" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619121927.png" alt="20230619121927" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619122038.png" alt="20230619122038" loading="lazy"></p>
+<p>实体之间的联系：一对一，一对多，多对多</p>
+<p>例子：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619122933.png" alt="20230619122933" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619123000.png" alt="20230619123000" loading="lazy"></p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619123037.png" alt="20230619123037" loading="lazy"></p>
+<p>设计E-R图的步骤：先将所有有关系的实体建立E-R图，然后再合并这些图</p>
+<p>将两个E-R图合并成一个图时，将一个实体在两个图中的所有属性都标注出来，对于一个实体，可以对多种实体有不同的联系，就都列出来</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619172132.png" alt="20230619172132" loading="lazy"></p>
+<h3 id="关系模型" tabindex="-1"><a class="header-anchor" href="#关系模型" aria-hidden="true">#</a> 关系模型</h3>
+<p>一个实体和一些属性构成一张关系表，用括号将多个属性包含在内</p>
+<p>主码：是关系中用于唯一确定一个元组的一个属性或属性最小组（注意：主键可以有多个，根据实体来确定）</p>
+<p>外码：用于表示两个或多个实体之间的关联关系</p>
+<p>主属性：主码所包含的属性称为关系的主属性</p>
+<p>非主属性：其他的非主码属性称为非主属性</p>
+<p>在一个关系模型中，主键用下划线标注</p>
+<p>比如学生有4个属性：学号，姓名，性别，出生日期。可以看出只要知道学号就可以确定一个学生，那么学号就是主键，用下划线标注</p>
+<p>关系模型：学生（<u>学号</u>，姓名，性别，出生日期）</p>
+<p>选课有三个属性：学号，课程号，学分。一个学生可以选很多课程，那么需要学号和课程才能确定选什么课，那么学号和课程号就是主键</p>
+<p>关系模型：选课（<u>学号</u>，<u>课程号</u>，学分）</p>
+<p>关系模型的数据完整性约束：</p>
+<p>1.实体完整性 2.参照完整性 3.用户定义完整性</p>
+<h3 id="三级模式结构" tabindex="-1"><a class="header-anchor" href="#三级模式结构" aria-hidden="true">#</a> 三级模式结构</h3>
+<p>1.内模式：数据的物理存储方式</p>
+<p>2.外模式：用户所看见的数据视图</p>
+<p>3.概念模式：介于内模式和外模式之间的中间层次，也称为模式</p>
+<h2 id="sql语言" tabindex="-1"><a class="header-anchor" href="#sql语言" aria-hidden="true">#</a> SQL语言</h2>
+<p>完整性约束条件的作用对象：表，元素，列</p>
 <p>进入SQL：在cmd中以管理员身份运行，输入用户和密码：</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p
-<span class="token number">1234</span>
+<span class="token number">12342</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>当想退出的时候输出语句：</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">exit</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="通用语法" tabindex="-1"><a class="header-anchor" href="#通用语法" aria-hidden="true">#</a> 通用语法</h2>
-<p>1.可以单行或者多行书写，以分号结尾</p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>通用语法：
+1.可以单行或者多行书写，以分号结尾</p>
 <p>2.SQL语句不区分大小写，关键字建议使用大写</p>
 <p>3.注释<br>
 单行注释：<code v-pre>-- 注释内容</code> 或<code v-pre>#注释内容</code><br>
 多行注释：/<em>注释内容</em>/</p>
 <p>语句：</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">databases</span><span class="token punctuation">;</span><span class="token comment">-- 查询所有数据库名称</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="sql分类" tabindex="-1"><a class="header-anchor" href="#sql分类" aria-hidden="true">#</a> SQL分类</h2>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="分类" tabindex="-1"><a class="header-anchor" href="#分类" aria-hidden="true">#</a> 分类</h2>
 <p>DDL：数据定义语言，用来定义数据库对象，表，列等<br>
 DML：数据操作语言，用来对数据库中表的数据进行增删改<br>
 DQL：数据查询语句，用来查询数据库中表的记录<br>
@@ -74,30 +119,30 @@ varchar:变长字符串<br>
     password <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token comment">-- 最后一行没有逗号</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_3-删除表" tabindex="-1"><a class="header-anchor" href="#_3-删除表" aria-hidden="true">#</a> 3.删除表</h4>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>drop table op<span class="token punctuation">;</span>
-drop table <span class="token keyword">if</span> exists op<span class="token punctuation">;</span>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">drop</span> <span class="token keyword">table</span> op<span class="token punctuation">;</span>
+<span class="token keyword">drop</span> <span class="token keyword">table</span> <span class="token keyword">if</span> <span class="token keyword">exists</span> op<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_4-修改表" tabindex="-1"><a class="header-anchor" href="#_4-修改表" aria-hidden="true">#</a> 4.修改表</h4>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>alter table op rename to op1<span class="token punctuation">;</span><span class="token operator">--</span> 将表op的名字改成op1
-alter table op modify id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span> 将表op中的列id的数据类型改为<span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>
-alter table op change id idx <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span> 将表op的id列改为类型为<span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>的名为idx的列
-alter table op drop password<span class="token punctuation">;</span><span class="token operator">--</span> 删除表op中名为password的列
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">rename</span> <span class="token keyword">to</span> op1<span class="token punctuation">;</span><span class="token comment">-- 将表op的名字改成op1</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">modify</span> id <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 将表op中的列id的数据类型改为varchar(30)</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op change id idx <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 将表op的id列改为类型为varchar(30)的名为idx的列</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">drop</span> password<span class="token punctuation">;</span><span class="token comment">-- 删除表op中名为password的列</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="dml" tabindex="-1"><a class="header-anchor" href="#dml" aria-hidden="true">#</a> DML</h3>
 <p>对数据进行操作</p>
 <h4 id="_1-添加数据" tabindex="-1"><a class="header-anchor" href="#_1-添加数据" aria-hidden="true">#</a> 1.添加数据</h4>
 <p>给指定列添加数据</p>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>insert into <span class="token function">op1</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token function">values</span><span class="token punctuation">(</span><span class="token string">"zyz"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span> 给表名为op1的表中名为name的列添加一个zyz的数据
-insert into <span class="token function">op1</span><span class="token punctuation">(</span>birthday<span class="token punctuation">)</span> <span class="token function">values</span><span class="token punctuation">(</span><span class="token string">"2019-01-10"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span> 给表名为op1的表中名为birthday的列加入一个 <span class="token number">2019</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">10</span>的date数据
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> op1<span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token string">"zyz"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 给表名为op1的表中名为name的列添加一个zyz的数据</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> op1<span class="token punctuation">(</span>birthday<span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token string">"2019-01-10"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 给表名为op1的表中名为birthday的列加入一个 2019-01-10的date数据</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>给全部列添加数据</p>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>insert into op1 <span class="token function">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"zyz"</span><span class="token punctuation">,</span><span class="token string">"zxh"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span> 在op1的表里加上一行数据
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> op1 <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"zyz"</span><span class="token punctuation">,</span><span class="token string">"zxh"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 在op1的表里加上一行数据</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>批量添加数据</p>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>insert into op1 <span class="token function">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"zyz"</span><span class="token punctuation">,</span><span class="token string">"zxh"</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">"zxh"</span><span class="token punctuation">,</span><span class="token string">"zyz"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span> 添加两行数据
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> op1 <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"zyz"</span><span class="token punctuation">,</span><span class="token string">"zxh"</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">"zxh"</span><span class="token punctuation">,</span><span class="token string">"zyz"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 添加两行数据</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_2-修改数据" tabindex="-1"><a class="header-anchor" href="#_2-修改数据" aria-hidden="true">#</a> 2.修改数据</h4>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>update op1 set id<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span>name<span class="token operator">=</span><span class="token string">"zyx"</span> where name<span class="token operator">=</span><span class="token string">"zxh"</span><span class="token punctuation">;</span><span class="token operator">--</span> 将名为op1的表中，名字为zxh的数据，id改为<span class="token number">4</span>，name改为zyx
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">update</span> op1 <span class="token keyword">set</span> id<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span>name<span class="token operator">=</span><span class="token string">"zyx"</span> <span class="token keyword">where</span> name<span class="token operator">=</span><span class="token string">"zxh"</span><span class="token punctuation">;</span><span class="token comment">-- 将名为op1的表中，名字为zxh的数据，id改为4，name改为zyx</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>如果不加上where后面的条件，那么所有的数据的列都会修改</p>
 <h4 id="_3-查询数据" tabindex="-1"><a class="header-anchor" href="#_3-查询数据" aria-hidden="true">#</a> 3.查询数据</h4>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>select <span class="token operator">*</span> from op1<span class="token punctuation">;</span><span class="token operator">--</span> 查询名为op1的表中的数据
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op1<span class="token punctuation">;</span><span class="token comment">-- 查询名为op1的表中的数据</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_4-删除数据" tabindex="-1"><a class="header-anchor" href="#_4-删除数据" aria-hidden="true">#</a> 4，删除数据</h4>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">delete</span> from op1 where name<span class="token operator">=</span><span class="token string">"zyz"</span><span class="token punctuation">;</span><span class="token operator">--</span> 删除名为op1的表中，name是zyz的数据
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">delete</span> <span class="token keyword">from</span> op1 <span class="token keyword">where</span> name<span class="token operator">=</span><span class="token string">"zyz"</span><span class="token punctuation">;</span><span class="token comment">-- 删除名为op1的表中，name是zyz的数据</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="dql" tabindex="-1"><a class="header-anchor" href="#dql" aria-hidden="true">#</a> DQL</h3>
 <p>查询数据</p>
 <p>先group by再where<br>
@@ -292,8 +337,63 @@ desc：降序排列
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="多行多列" tabindex="-1"><a class="header-anchor" href="#多行多列" aria-hidden="true">#</a> 多行多列</h4>
 <p>作为虚拟列表</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> <span class="token punctuation">(</span>子查询<span class="token punctuation">)</span> <span class="token keyword">where</span> 条件<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="事务" tabindex="-1"><a class="header-anchor" href="#事务" aria-hidden="true">#</a> 事务</h2>
-<h3 id="执行语句" tabindex="-1"><a class="header-anchor" href="#执行语句" aria-hidden="true">#</a> 执行语句</h3>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="视图" tabindex="-1"><a class="header-anchor" href="#视图" aria-hidden="true">#</a> 视图</h2>
+<p>视图是由从数据库的基本表中选取出来的数据组成的逻辑窗口，是基本表的部分行和列数据的组合。</p>
+<p>视图的好处：1.简化数据查询语句 2.使用户能从多角度看待同一数据 3.提高了数据的安全性 4.提供了一定程度的逻辑独立性。</p>
+<h2 id="范式" tabindex="-1"><a class="header-anchor" href="#范式" aria-hidden="true">#</a> 范式</h2>
+<p>关系模型中的关系模式至少是：1NF</p>
+<p>任何二元关系模式的最高范式必定是：BCNF</p>
+<h3 id="第一范式-1nf" tabindex="-1"><a class="header-anchor" href="#第一范式-1nf" aria-hidden="true">#</a> 第一范式（1NF）</h3>
+<p>简单的说，第一范式就是每一个属性都不可再分。</p>
+<p>例如：
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619143634.png" alt="20230619143634" loading="lazy"></p>
+<p>图中圈出的两个列中有两个元素，不满足不可再分的性质，那么我们就将两个元素分开再添一列</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619143744.png" alt="20230619143744" loading="lazy"></p>
+<p>下图中的‘高级职称人数’包含两个基本数据项，不是基本的数据项，不满足第一范式，我们需要修改</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619144814.png" alt="20230619144814" loading="lazy"></p>
+<p>分裂成两个基本数据项就行了</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619144913.png" alt="20230619144913" loading="lazy"></p>
+<h3 id="第二范式-2nf" tabindex="-1"><a class="header-anchor" href="#第二范式-2nf" aria-hidden="true">#</a> 第二范式（2NF）</h3>
+<p>首先满足第一范式，并且每个非主属性都完全函数依赖于主码</p>
+<p>如果一个第一范式的关系的主码只有一个列，那么这个关系也一定是第二范式关系</p>
+<p>对于一个关系模式：学生选课（学号，名字，性别，系别，住宿楼层，课程，分数）</p>
+<p>可以得到主码是学号和课程</p>
+<p>但是由于名字和性别等属性是只依赖学号，没有依赖课程，那么他就不满足'每个非主属性都完全函数依赖于主码'这个条件，那么我们就要进行分解</p>
+<p>分解方法：</p>
+<p>1.用组成主码的属性集合的每一个子集作为主码构成一个关系模式</p>
+<p>例如上面的关系模式就可以分为：</p>
+<p>学号（<u>学号</u>，...）</p>
+<p>课程（<u>课程</u>，...）</p>
+<p>学号课程（<u>学号</u>,<u>课程</u>...）</p>
+<p>2.再将依赖于这些主码的属性放进这些关系模式里</p>
+<p>学号（学号，名字，性别，系别，住宿楼层）</p>
+<p>课程（课程）</p>
+<p>学号课程（学号，课程，分数）</p>
+<p>2.然后去掉只由主码的子集构成的关系模式</p>
+<p>也就是去掉上面的：课程（课程），因为他只有主码构成</p>
+<p>那么最终被分解的形式为：</p>
+<p>学号（学号，名字，性别，系别，住宿楼层）</p>
+<p>学号课程（学号，课程，分数）</p>
+<h3 id="第三范式" tabindex="-1"><a class="header-anchor" href="#第三范式" aria-hidden="true">#</a> 第三范式</h3>
+<p>关系满足第二范式，且所有的非主属性都不传递依赖于主码</p>
+<p>假设同一个系都住在一层，那么在：学号（学号，名字，性别，系别，住宿楼层）这个关系模型里，有：</p>
+<p>因为学号-&gt;系别 系别-&gt;住宿楼层，那么学号(传递)-&gt;住宿楼层，就不满足‘所有的非主属性都不传递依赖于主码’的条件，需要分解</p>
+<p>分解过程：</p>
+<p>1.对于不是候选码的每个决定因子，从关系模式中删除依赖于他的所有属性</p>
+<p>那么对于学号（学号，名字，性别，系别，住宿楼层）这个关系模型分解为：</p>
+<p>学号（学号，名字，性别，系别）</p>
+<p>2.新建一个关系模式，新模式中包含在原关系模式中所有依赖于它的所有属性</p>
+<p>系别（系别，住宿楼层）</p>
+<p>3.将决定因子作为新关系模式的主码</p>
+<p>系别（系别，住宿楼层）中系别是主码</p>
+<p>那么最终的关系模式就是：</p>
+<p>学号（学号，名字，性别，系别）（假设称关系模型为XH），其中学号是主码，系别是引用XB关系模型的外码</p>
+<p>系别（系别，住宿楼层）（假设将关系模型称为XB），系别是主码，没有外码</p>
+<p>学号课程（学号，课程，分数）（将关系模型称为XK），学号和课程是主码，学号是引用XH关系模型的外码</p>
+<h2 id="数据库保护" tabindex="-1"><a class="header-anchor" href="#数据库保护" aria-hidden="true">#</a> 数据库保护</h2>
+<h3 id="事务" tabindex="-1"><a class="header-anchor" href="#事务" aria-hidden="true">#</a> 事务</h3>
+<p>事务是一组操作的集合，这组操作，要么全部执行成功，要么全部执行失败</p>
+<h4 id="执行语句" tabindex="-1"><a class="header-anchor" href="#执行语句" aria-hidden="true">#</a> 执行语句</h4>
 <p>概念：一种机制，包含一组数据库操作命令，把所有命令作为一个整体一起向系统提交或撤销操作请求，即这一组数据库命令要么同时成功要么同时失败<br>
 事务是一个不可分割的工作逻辑单元</p>
 <p>事务是多个语句为一个整体，那么我们在开始这多个语句之前需要开启事务，然后再进行这些语句的操作，再结束事务</p>
@@ -304,25 +404,53 @@ desc：降序排列
 <p>在保证这些操作都没有问题的情况下才操作，如果有一环出错就不会操作这个事务</p>
 <p>那么开始操作事务之后，在做的所有语句都是临时操作，当事务完成之后才操作这些语句，即提交事务</p>
 <p>那么当我们操作语句发现错误的时候，回滚事务，就能恢复到没有操作的状态</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token comment">--模拟转账操作</span>
+<p>默认mysql事务是自动提交的，也就是说，当执行一条DML语句，mysql会立刻隐式的提交事务</p>
+<p>那么就需要我们手动开启事务和提交事务</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token comment">-- 方法1：将mysql的默认语句改为手动提交，那么当执行语句报错的时候我们进行回滚，全部语句都完成之后再手动提交</span>
+<span class="token keyword">select</span> @<span class="token variable">@autocommit</span><span class="token punctuation">;</span><span class="token comment">-- 查看事务的默认提交方式：1 自动提交 0手动提交</span>
+<span class="token keyword">set</span> @<span class="token variable">@autocommit</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">-- 修改事务提交方式为手动提交</span>
+<span class="token keyword">rollback</span><span class="token punctuation">;</span><span class="token comment">-- 如果执行过程中报错，那么我们回滚事务</span>
+<span class="token keyword">commit</span><span class="token punctuation">;</span><span class="token comment">-- 执行全部命令之后提交事务</span>
 
-<span class="token comment">-- 开启事务</span>
-<span class="token keyword">begin</span><span class="token punctuation">;</span><span class="token comment">-- 或者start transaction;</span>
-<span class="token comment">-- 回滚事务</span>
-<span class="token keyword">rollback</span><span class="token punctuation">;</span>
-<span class="token comment">-- 提交事务</span>
-<span class="token keyword">commit</span><span class="token punctuation">;</span>
-
-
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="事务四大特征" tabindex="-1"><a class="header-anchor" href="#事务四大特征" aria-hidden="true">#</a> 事务四大特征</h3>
+<span class="token comment">-- 方式2：执行开启事务的操作，在报错的时候回滚，所有语句都执行成功就提交</span>
+<span class="token keyword">begin</span><span class="token punctuation">;</span><span class="token comment">-- 或start transaction;开启事务</span>
+<span class="token keyword">rollback</span><span class="token punctuation">;</span><span class="token comment">-- 回滚事务</span>
+<span class="token keyword">commit</span><span class="token punctuation">;</span><span class="token comment">-- 提交事务</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="四大特征" tabindex="-1"><a class="header-anchor" href="#四大特征" aria-hidden="true">#</a> 四大特征</h4>
 <p>ACID：<br>
-原子性 一致性 隔离性 持久性</p>
-<p>MySQL事务默认自动提交</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token comment">-- 查看事务的默认提交方式</span>
-<span class="token keyword">select</span> @<span class="token variable">@autocommit</span><span class="token punctuation">;</span>
-<span class="token comment">-- 1 自动提交 0手动提交</span>
-<span class="token comment">-- 修改事务提交方式</span>
-<span class="token keyword">set</span> @<span class="token variable">@autocommit</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+1.原子性：事务是不可分割的最小操作单元，要么全部成功，要么全部失败</p>
+<p>2.一致性：事务完成时，必须使所有的数据都保持一致状态</p>
+<p>3.隔离性：数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行</p>
+<p>4.持久性：事务一旦提交或回滚，他对数据库中的数据的改变是永久的</p>
+<h4 id="并发事务问题" tabindex="-1"><a class="header-anchor" href="#并发事务问题" aria-hidden="true">#</a> 并发事务问题</h4>
+<p>问题1：脏读:一个事务读到另外一个事务还没有提交的数据。</p>
+<p>问题2：不可重复读：一个事务先后读取同一条记录，但两次读取的数据不同，称之为不可重复读。</p>
+<p>问题3：幻读：一个事务按照条件查询数据时，没有对应的数据行，但是在插入数据时，又发现这行数据已经存在，好像出现了“幻影”。</p>
+<h4 id="事务隔离级别" tabindex="-1"><a class="header-anchor" href="#事务隔离级别" aria-hidden="true">#</a> 事务隔离级别</h4>
+<p>事务的隔离级别有以下几种：</p>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619224513.png" alt="20230619224513" loading="lazy"></p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> @<span class="token variable">@transaction_isolation</span><span class="token punctuation">;</span><span class="token comment">-- 查看事务隔离级别</span>
+<span class="token keyword">set</span><span class="token punctuation">[</span><span class="token keyword">session</span><span class="token operator">|</span><span class="token keyword">global</span><span class="token punctuation">]</span> <span class="token keyword">transaction</span> <span class="token keyword">isolation</span> <span class="token keyword">level</span>{<span class="token keyword">read</span> <span class="token keyword">uncommitted</span><span class="token operator">|</span><span class="token keyword">read</span> <span class="token keyword">committed</span><span class="token operator">|</span><span class="token keyword">repeatable</span> <span class="token keyword">read</span><span class="token operator">|</span><span class="token keyword">serializable</span>}<span class="token comment">-- 设置事务隔离级别，如果设置session，那么只对于当前客户端的窗口有效，如果设置global，那么对于所有客户端的窗口都有效 </span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="小结" tabindex="-1"><a class="header-anchor" href="#小结" aria-hidden="true">#</a> 小结</h4>
+<p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619225447.png" alt="20230619225447" loading="lazy"></p>
+<h3 id="两段锁协议" tabindex="-1"><a class="header-anchor" href="#两段锁协议" aria-hidden="true">#</a> 两段锁协议</h3>
+<p>两段锁协议是指所有的事物必须分为两个阶段，对数据进行加锁和解锁，具体内容如下：</p>
+<p>1.在对任何数据进行读写操作之前，首先要获得对该数据的封锁。</p>
+<p>2.在释放一个封锁之后，事务不再申请和获得任何其他锁</p>
+<p>意思是可以将每个事务分成两个时期：申请封锁期和释放封锁期</p>
+<h3 id="数据库故障的种类" tabindex="-1"><a class="header-anchor" href="#数据库故障的种类" aria-hidden="true">#</a> 数据库故障的种类</h3>
+<p>1.事务内部的故障 2.系统故障 3.其他故障</p>
+<h3 id="数据库备份" tabindex="-1"><a class="header-anchor" href="#数据库备份" aria-hidden="true">#</a> 数据库备份</h3>
+<p>指定备份策略时考虑以下几个方面：</p>
+<p>1.备份的内容 2.备份频率</p>
+<p>备份的介质可以是磁带也可以是磁盘</p>
+<h3 id="数据库恢复" tabindex="-1"><a class="header-anchor" href="#数据库恢复" aria-hidden="true">#</a> 数据库恢复</h3>
+<p>恢复策略：</p>
+<p>1.事务故障的恢复 2.系统故障的恢复 3.介质故障的恢复</p>
+<h2 id="数据库设计-1" tabindex="-1"><a class="header-anchor" href="#数据库设计-1" aria-hidden="true">#</a> 数据库设计</h2>
+<p>数据库设计的基本步骤：</p>
+<p>需求分析 结构设计 行为设计 数据库实施 数据库运行和维护阶段</p>
+</div></template>
 
 
