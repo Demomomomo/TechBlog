@@ -487,5 +487,233 @@ Fragment是一种可以嵌入在Activity中的UI片段，它可以用来描述Ac
 ![20230623003622](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623003622.png)  
 
 
+## 第五章数据存储
+
+### 数据存储方式
+
+有五种：文件存储，SharePreferences，SQLite数据库，ContentProvider，网络存储  
+
+
+### 文件存储
+
+有两种存储方式：内部存储和外部存储  
+
+![20230623093428](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623093428.png)  
+
+将数据存入文件中：  
+
+1.内部存储：  
+
+```java
+FileOutputStream fos=openFileOutput(String name,int mode)//打开应用程序中对应的输出流，将数据存储到指定的文件中，mode是操作模式
+FileInputStream fis=openFileInput(String name);//打开应用程序对应的输入流，读取指定文件的数据 
+```
+mode取值：  
+
+MODE_PRIVATE:该文件只能被当前程序读写  
+MODE_APPEND:该文件的内容可以追加  
+MODE_WORLD_READABLE:该文件的内容可以被其他程序读  
+MODE_WORLD_WRITEABLE:该文件的内容可以被其他程序写  
+
+![20230623094441](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623094441.png)  
+
+2.外部存储（以存到SD卡为例）：  
+
+![20230623094802](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623094802.png)  
+
+从文件中读取数据：  
+
+1，内部读取：  
+
+![20230623111609](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623111609.png)  
+
+
+2.外部读取：  
+
+![20230623111645](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623111645.png)  
+
+
+### SharePreferences存储
+
+SharedPreferences:是Android平台上一个轻量级的存储类，用于程序中一些少量数据持久化存储。  
+
+将数据存入SharePreferences中：  
+
+![20230623112220](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623112220.png)  
+
+数据的读取和删除：  
+
+![20230623142732](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623142732.png)  
+
+
+### SQLite数据库的存储
+
+SQLite是Android自带的一个轻量级的数据库，他运算速度快，占用资源少，支持基本SQL语法。  
+
+sQLite数据库可以存储应用程序中的大量数据，并对数据进行管理和维护。  
+
+创建数据库：  
+
+![20230623142924](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623142924.png)  
+
+添加数据：  
+
+![20230623143007](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623143007.png)  
+
+删除数据：  
+
+![20230623143205](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623143205.png)  
+
+修改数据：  
+
+![20230623143230](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623143230.png)  
+
+查询数据：  
+
+![20230623143322](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623143322.png)  
+
+使用sql语句进行数据库操作：  
+
+![20230623144132](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623144132.png)  
+
+### SQLite的事务
+
+![20230623144251](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623144251.png)  
+
+
+## 第六章内容提供者
+
+概述：  
+
+![20230623144636](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623144636.png)  
+
+### 查询其他程序的数据
+
+![20230623145545](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623145545.png)  
+
+
+## 第七章广播机制
+
+动态注册网络接受者：  
+
+```java
+public class MainActivity extends AppCompatActivity {
+    private MyBroadcastReceiver receiver;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        receiver = new MyBroadcastReceiver();
+        // 实例化过滤器并设置要过滤的 action
+        String action = "android.provider.Telephony.SMS_RECEIVED";
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(action);
+        // 注册广播
+        registerReceiver(receiver, intentFilter);
+    }
+    @Override
+    protected void onDestroy() {
+    super.onDestroy();
+    // Activity 销毁时注销广播接收者
+    unregisterReceiver(receiver);
+    }
+}
+
+```
+
+
+## 第八章服务
+
+### 创建服务
+```java
+public class MyService extends Service {
+    public MyService() {
+    }
+    @Override
+    public IBinder onBind(Intent intent) {
+    // TODO: Return the communication channel to the service.
+    throw new UnsupportedOperationException("Not yet implemented");
+    }
+}
+```
+
+
+### 服务的启动方式
+
+通过 startService() 方法，带参数  
+
+```java
+Intent intent = new Intent(MainActivity.this, MyService.class);
+startService(intent);
+```
+通过 BindService() 方法  
+
+```java
+BindService(Intent service, ServiceConnection conn, int flag)
+```
+
+## 第九章网络编程
+
+### JSON
+
+使用 JSONObject 类解析对象结构的数据：
+
+```java
+JSONObject jsobObj = new JSONObject(json1);
+String name = jsonObj.optString("name");
+int age = jsonObj.optInt("age");
+boolean married = jsonObj.optBoolean("married");
+```
+
+使用 JSONArray 类解析数组结构的数据  
+
+```java
+JSONArray jsonArray = new JSONArray(json2);
+for (int i = 0; i < jsonArray.length(); i++) {
+    JSONObject jsobObj = jsonArray.getJSONObject(i);
+    String name = jsonObj.optString("name");
+    int age = jsonObj.optInt("age");
+}
+```
+
+
+### Handler消息机制
+
+Handler 是一种异步回调机制，主要负责与子线程进行通信，主要包括四个关键对象：  
+Message：在线程之间传递的消息  
+Handler：处理者，主要负责 Message 的发送以及处理  
+MessageQueue：消息队列，存放 Handler 发送过来的消息，按照先入先出的规则执行  
+Looper：不断的从消息队列中抽取消息并传递到 Handler 对象的 handleMessage() 方法中  
+
+## 第十章图形图像处理
+
+### 绘图类：BitmapFactory类
+
+![20230623151515](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623151515.png)  
+
+调用：  
+
+![20230623151534](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623151534.png)  
+
+## 第十一章多媒体应用开发
+
+### 使用MediaPlayer类播放音频
+
+方法：  
+
+![20230623151715](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230623151715.png)  
+
+播放音频文件：prepare(),start()  
+
+暂停播放：pause()  
+
+重新播放：seekTo(0)  
+
+停止播放：stop()  
+
+
+
+
+
 
 
