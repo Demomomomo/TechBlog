@@ -99,6 +99,8 @@ title: 数据库
 
 完整性约束条件的作用对象：表，元素，列  
 
+SQL语言特点：1.一体化 2.高度自动化 3.简洁 4.能以多种方式使用
+
 进入SQL：在cmd中以管理员身份运行，输入用户和密码：  
 ```sql
 mysql -uroot -p
@@ -199,12 +201,12 @@ double:用来存储小数
 名称 double(总长度[最大值的位数+保留的小数点后面的位数]，保留小数点后的位数)  
 date:用来存储年月日，日期的数据表示为XXXX-XX-XX  
 名称 date  
-char:定长字符串  
+char:定长字符串，存非Unicode字符串，占用空间n字节  
 名称 char(字符串最大长度x，储存的字符串如果小于x，那么少的部分用空格填满)  
 varchar:变长字符串  
 名称 varchar(字符串最大长度)  
-
-
+nchar：定长字符串，存Unicode字符串数据，空间占用为2n字节  
+名称 nchar(字符串最大长度)
 ```sql
 create table 表名(
     字段名1 数据类型,
@@ -236,10 +238,9 @@ drop table if exists op;
 #### 4.修改表  
 
 ```sql
-alter table op rename to op1;-- 将表op的名字改成op1
-alter table op modify id varchar(30);-- 将表op中的列id的数据类型改为varchar(30)
-alter table op change id idx varchar(30);-- 将表op的id列改为类型为varchar(30)的名为idx的列
-alter table op drop password;-- 删除表op中名为password的列
+alter table op drop column password;-- 删除表op中名为password的列
+alter table op add name varchar(30);-- 添加一个名为name的数据类型为字符的列
+alter table op alter column id varchar(30);-- 将列为id的数据类型改为字符
 ```
 
 
@@ -286,8 +287,8 @@ delete from op1 where name="zyz";-- 删除名为op1的表中，name是zyz的数�
 
 查询数据  
 
-先group by再where  
-先where再order by  
+先where再group by  
+先group by再order by  
 
 #### 基础查询：  
 1.查询多个字段  
@@ -297,6 +298,9 @@ select name,age from op2;-- 查找表op2中的name和age两个字段
 
 select * from 表名;-- 查询所有数据
 select * from op2;-- 查询表op2中的所有数据
+
+select name ,"出生年月"，password from op;-- 在op里查找name和password，并且中间显示一个全为'出生年月'的列
+
 ```
 
 2.去除重复记录  
@@ -338,10 +342,23 @@ select * from op2 where age is not null;-- 查询age不是null的列
 _代表单个任意字符
 %代表任意个数字符
 */
+_:查询单个字符
+%：0个或多个字符
+[]:匹配[]里的任何一个字符都可以，比如[a,b,c,d]表示a,b,c,d里任意一个字符出现都可以，简写为[a-d]
+[^]：不匹配[]里的任何一个字符，比如[^a,b,c,d]表示不匹配a,b,c,d里的任意一个字符
 select * from op2 where name like "z%";-- 查询name中首字母是z的字段
 select * from op2 where name like "_z%";-- 查询name中第二个字母是z的字段
 select * from op2 where name like "%z%";-- 查询name中含有z的字段
+select * from op2 where name like "[张李刘]%";--找出姓张或姓李或姓刘的
+
 ```
+
+但是在进行'王__'的查询的时候，查询的应该是三个字的姓王的人名，但是会出现'王X'也出现在里面的情况，实际上是char固定分配字节，不足的用空格顶替，那么就会查到两个字的情况，这时候我们可以用函数'ririm'来进行操作：  
+
+```sql
+select name from op where ririm (name) like '王__';
+```
+
 
 
 
@@ -365,7 +382,7 @@ select * from op6 order by english asc,math asc;-- 按照english升序，math降
 
 ```
 
-#### 分组查询
+#### 使用聚合函数
 
 聚合函数  
 
@@ -390,8 +407,26 @@ count统计数量：
 
 ```sql
 select count(id) from op8;-- 查询op8中有几个id，null不能被查询到
-select avg(english) from op8;-- 查找op8中english的平均值（只算所有不为null的数据的平均值）
+select count(distinct name) from op;--查找op中总共有多少个不同的name值
+select sum(grade) from op;--查找grade列的总和
+select avg(grade) from op;--查找grade的平均值
+select max(grade) ,min(grade) from op;--查找grade的最大值和最小值
 ```
+#### 使用分组查询
+
+使用group by dep 对每个不同的dep进行操作  
+
+```sql
+select dep,sum(name) from op group by dep;--对dep的每个不同的值进行sum(name)的操作
+```
+
+having子句一般用于对分组之后的结果进行再次筛选，例如：  
+
+```sql
+select name ,count(*) from op group by name having count(*)>3;--查找每个个数超过三个的name
+select name,avg(grade) from op group by name having avg(grade)>=60;--查找每个平均分大于60的人的名字和平均分
+```
+
 
 #### 分页查询
 
@@ -411,6 +446,10 @@ select * from op8 limit 6,3;-- 每页3条数据，查询第三页数据
 概念：作用于表中列上的规则，用于限制加入表的数据  
 约束的存在保证了数据库中数据的正确性  
 
+数据完整性是指数据的正确性和相容性  
+
+下面是各个数据完整性约束：  
+
 分类：  
 
 ![20230509162950](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230509162950.png)  
@@ -420,15 +459,21 @@ select * from op8 limit 6,3;-- 每页3条数据，查询第三页数据
 在添加约束的时候，约束条件并列写  
 
 ```sql
+--可以在创建表的时候直接加上
 create table op3(
     id int primary key,-- 主建且增长
     ename varchar(30) not null unique,-- 员工姓名，非空且唯一
     salary double(7,2) not null,-- 工资，非0
-    bonus double(7,2) default 0-- 奖金，如果没有奖金默认值设为0
+    bonus double(7,2) default 0,-- 奖金，如果没有奖金默认值设为0
+    high int,
+    low int,
+    check (high>=low)
 );
-
-
-
+--也可以用后来的语句加上
+alter table op add constraint pk_id  primary key (id);--给名为id的列添加名为pk_id的主码约束
+alter table op add constraint un_id  unique (id);-- 给名为id的列添加名为un_id的唯一约束
+alter table op add constraint de_id default 0 for (bonus);--给名为bonus的列添加名为de_id的默认值为0的约束
+alter table op add constraint ch_hl check (high>=low);--给表添加heigh>=low的名为ch_hl的约束
 ```
 
 ### 外键约束
@@ -515,72 +560,34 @@ alter table 表名 drop foreign key 外键名称;
 ### 连接查询
 
 #### 内连接：相当于查询AB的所有数据和交集  
-```sql
---隐式内连接
-select 字段列表 from 表1，表2... where 条件;
-```
-比如有下列两个表emp和dep：  
-
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684134000805.png" alt="Pulpit rock" width="254" height="108"> 
-
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684133972585.png" alt="Pulpit rock" width="254" height="108"> 
 
 
-我们想显示当emp的depid和dep的id相等时，emp中的id，name，depid，和dep表中的name，那么查询语句就是：  
+先on再where  
 
 ```sql
-select emp.id,emp.name,emp.depid,dep.name from emp,dep where emp.depid=dep.id;
-```
-那么查询的结果就是：  
-
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684134240923.png" alt="Pulpit rock" width="254" height="108"> 
-
-
-
-还可以给emp和dep表起别名，比如分别是t1和t2，那么语句就是  
-```sql
-select t1.id,t1.name,t1.depid,t2.name from emp t1,dep t2 where t1.depid=t2.id;
-```
-
-
-```sql
---显式内连接
-select 字段列表 from 表1 inner join 表2 on 条件;
+select 字段列表 from 表1 join 表2 on 条件;
 ```
 假如还是查询emp表的depid和dep表的id相等的话，语句如下：  
 
 ```sql
-select * from emp inner join dept on emp.depid=dep.id;-- 查询的是所有条件是emp.id=dep.id的emp和dep中全部字段
+select * from op1 join op2 on op1.depid=op2.id;-- 查询的是所有条件是emp.id=dep.id的emp和dep中全部字段
+select op1.name ,op2.grade from op1 join op2 on op1.depid =op2.id;
 ```
 
-#### 外连接：  
+### 用top限制结果集
 
-左外连接：相当于查询A所有数据和交集  
+top n：显示查询结果的前n条  
+
+top n percnet：显示查询结果的前n%条
+
+with ties：表示包括并列的结果  
+
 ```sql
-select 字段列表 from 表1 left join 表2 on 条件;
-```
-假如有下面两张emp和dep的表：  
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684135737972.png" alt="Pulpit rock" width="254" height="158"> 
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230515152959.png" alt="Pulpit rock" width="254" height="158">   
-
-我们想对emp表进行左外连接，条件是找emp的depid和dep的id一样的数据，那么语句是
-```sql
-SELECT * FROM emp LEFT JOIN dep ON emp.depid=dep.id;
-```
-那么我们显示的是emp中的所有数据，其中不满足条件的数据的dep表的字段为null  
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230515153520.png" alt="Pulpit rock" width="354" height="158">   
-
-右外连接：相当于查询B表所有数据和交集  
-```sql
-select 字段列表 from 表1 right join 表2 on 条件;
+select top n name,grade from op order by grade desc;--查询符合条件的前n条
+select top n percnet name,grade from op order by grade desc;--查询符合条件的前n%条
+select top n with ties name,grade from op order by grade desc;--查询符合条件的前n名，包括并列
 ```
 
-对这两个表进行右查询 
-```sql
-select * from emp right join dep on emp.depid=dep.id;
-```
-那么显示dep表里的所有数据，不满足条件的emp表的字段为空  
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230515153818.png" alt="Pulpit rock" width="404" height="158">   
 
 
 ### 子查询
@@ -589,25 +596,9 @@ select * from emp right join dep on emp.depid=dep.id;
 
 子查询根据查询的结果不同，作用不同：  
 
-#### 单行单列
-作为条件值，使用= != > <等条件进行判断  
 ```sql
-select 字段列表 from 表 where 字段名=(子查询);
+select name from op in(select dep from op where name="zyz");--查找所有和zyz在一个部门的人
 ```
-
-
-#### 多行单列
-作为条件值，使用in等关键字进行条件查询
-```sql
-select 字段列表 from 表 where 字段名 in(子查询);
-```
-
-#### 多行多列
-作为虚拟列表
-```sql
-select 字段列表 from (子查询) where 条件;
-```
-
 
 ## 视图
 
