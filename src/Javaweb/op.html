@@ -1,0 +1,18 @@
+public class Circle{
+    private int numble;//圆的编号
+    private double x;//圆的x坐标
+    private double y;//圆的y坐标
+    private double r;//圆的半径
+    private String color;//圆的颜色
+    private boolean fill;//圆是否填充
+    public int getNumble(){return number;}
+    public void setNumber(int number){this.number=number;}
+    public double getX(){return x;}
+    public void setX(double x){this.x=x;}
+    ...//y，r，color的构造方法和x的构造方法一样
+    public boolean isFill(){return fill;}
+    public void setFill(boolean fill){this.fill=fill;}
+    public Circle{}//公共参数无构造方法，使用默认构造方法
+    public double circleArea(){return Math.PI*r*r;}
+    public double circleLength(){return 2*Math.PI*r;}
+}

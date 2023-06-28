@@ -2,16 +2,124 @@
 title: javaweb
 ---
 
+## *概念
+
+### 组件
+
+组件指在应用程序中发挥特定功能的软件单位  
+
+三类javaEE组件：客户端组件，Web组件，EJB组件  
+
+### html
+
+即超文本链接标记语言，使用html可以设计静态网页  
+
+### CSS
+
+层叠样式表，是一种美化网页的技术，主要完成字体，颜色，布局等方面的各种设置  
+
+CSS由三个部分：对象（选择器），属性和值组成的  
+
+选择器通常是指希望定义的html元素或者标签，分为以下三种类型：  
+标签选择器：通过html标签定义选择器  
+类别选择器：使用class定义选择器  
+ID选择器：使用id定义选择器  
+
+属性是希望要设置的属性，并且每个属性都有一个值，属性和值被冒号分开，属性之前用分号分隔，并由花括号包围  
+
+```css
+p{background-color:blue;color:red;}//定义标签p的选择器
+.csl{color:red;}//定义类别选择器.csl
+#cs2{color:red;}//定义id选择器
+```
+
+在样式表中使用CSS有四种方式：  
+行内式，内嵌式，链接式，导入式  
 
 
-## HTML
+
+### JavaScript
+
+一种简单的脚本语言，在浏览器中直接运行，无需服务器的支持  
+
+### 安装Tomcat
+
+默认值：端口号：8080，用户名：空，密码：空  
+
+测试Tomcat：在地址栏输入：`http://localhost:8080`或`http://127.0.0.1:8080`  
 
 
-1.新建一个文本文件，后缀名改为`.html  `
+### jsp
 
-2.编写`HTML`结构标签  
+jsp页面由html代码和嵌入其中的java代码组成  
 
-3.在`<body>`中定义文字  
+有四个内置对象：page，request，session，application  
+
+作用域：  
+
+page：对象只能在创建它的JSP页面中被访问  
+
+request：对象可以在与创建它的JSP页面监听HTTP请求相同的任意一个JSP中被访问  
+
+session：对象可以在与创建它的JSP页面共享相同的HTTP会话的任意一个JSP中被访问  
+
+application：对象可以在与创建它的JSP页面属于相同的Web应用程序的任意一个JSP中被访问  
+
+### 传递参数的三种方式  
+
+1.用`jsp`的`forward`或`include`操作，利用传递参数子动作实现传递参数  
+
+2.用表单传输数据  
+
+当向页面2传输表单时，页面1应该这样写：  
+```jsp
+<form action="页面2的名字" method="post">
+    姓名：<input name="mz"><br>
+    电话：<input name="dh"><br>
+    <input type="submit" value="提交">
+</form>
+```
+
+3.追加在网址后的参数传递或追加在超链接后面的参数  
+
+### JDBC
+
+JDBC访问数据库流程：
+
+1.注册驱动  
+2.建立连接  
+3.创建数据库操作对象用于执行SQL语句  
+4.执行语句  
+5.处理执行结果  
+6.释放资源  
+
+访问结果集接口ResultSet：`java.sql.ResultSet`接口相当于一个数据表，通过该接口的实例可以获得检索结果表，以及对应数据表的相关信息。ResultSet具有指向当前数据行的指针  
+
+释放资源的时候是逆序释放，先释放查询的结果集，再释放操作对象，最后释放链接对象  
+
+### javabean
+
+设计Javabean就是编写java类，但与普通类不同，有其特殊的设计规则和要求  
+
+设计规则：  
+1.Javabean是一个公众类  
+2.javabean类具有一个公共的无参构造方法  
+3.JavaBean所有的属性定义为私有的。  
+4.在 JavaBean中，需要对每个属性提供两个公共方法。假设属性名字是xxx，要提供的两个方法如下:
+setXxx():用来设置属性xxx的值。  
+getXxx(:用来获取属性xxx的值（若属性类型是boolean，则方法名为isXxx())。  
+
+### jsp+Servet开发模式
+
+在JSP+JavaBean编程模式中，JavaBean 提供了业务处理,而JSP却具有两种职责:一是，调用执行业务逻辑并负责流程的控制;二是信息的显示和提交。  
+
+
+
+## *HTML
+
+
+1.拓展名为`.html`  
+
 
 ```html
 <html>
@@ -42,7 +150,7 @@ title: javaweb
 
 ## 超链接标签和列表标签
 
-### 超链接  
+### *超链接  
 ```html
 <a href="网址" target="设置超链接的页面跳转"></a><!--设置_self是默认值，在当前页面打开，_blank是在空白页面打开-->
 ```
@@ -73,7 +181,7 @@ title: javaweb
 ## 表格和布局
 
 
-### 表格
+### *表格
 ```html
 
 table:定义表格
@@ -122,7 +230,7 @@ td：定义单元格
 ```
 
 
-## 表单
+## *表单
 
 表单：在网页中主要负责数据采集功能，使用`<form>`标签定义表单  
 
@@ -163,7 +271,7 @@ checkbox:定义复选框，和单选框同理，用name定义同一类复选框�
 
 ```
 
-## 框架标签
+## *框架标签
 
 用`<frameset>`定义框架标签，框架标签可以将几个页面显示在一个浏览器标签中  
 
@@ -206,9 +314,6 @@ op3:
 
 
 
-## CSS
-
-CSS是一门语言，用于控制页面表现  
 
 ## CSS导入方式
 
@@ -329,7 +434,9 @@ id选择器只能选择一个元素
 
 ### 1.内部脚本：将js代码定义在html页面中  
 
-在html中，JavaScript代码必须位于`<script>`与`</script>`之间  
+在html中，JavaScript代码必须位于`<script>`与`</script>`之间，且`<script`必须在`<head>`之间  
+
+
 
 ```html
 
@@ -367,9 +474,25 @@ alert("hello js");
 
 ### 书写语法
 
-1.区分大小写
+数据类型：`int,float,String,boolean,null`  
 
-2.每行结尾的分号可有可无
+变量：用var声明变量  
+```Java
+var x;
+var a=new Array(10);//声明一个大小为10的数组
+```
+
+函数的声明：先在`<script>`里定义函数，再使用  
+
+```javascript
+function test(){//函数实现弹出窗口
+    window.alert("hello");
+}
+```
+
+1.区分大小写  
+
+2.每行结尾的分号可有可无  
 
 3.注释：  
 单行注释：//注释内容  
@@ -546,9 +669,8 @@ person.eat();
 
 ```
 
-### DOM
+### 浏览器对象模型
 
-定义：浏览器对象模型  
 
 #### window
 
@@ -595,36 +717,12 @@ setInterval(function(){
 
 ```
 
-#### history
-
-历史记录
-
-获取：使用`window.history`获取，window.可以省略  
-
-```js
-window.history.方法();
-history.方法();
-//方法：
-back():加载history列表中的前一个URL
-forward():加载history列表中的下一个URL
-```
 
 
-#### location
 
-地址栏对象
 
-获取：使用`windows.location`获取，其中`window.`可以忽略  
 
-```js
-windows.location.方法();
-location.方法();
-//属性： 
-href:设置或返回完整的URL
-location.href="https://demooo.top/";//跳转到指定网页的地址
-```
-
-### DOM
+<!-- ### DOM
 
 文档对象模型  
 
@@ -633,7 +731,7 @@ JavaScript通过DOM，能对HTML进行操作：
 1.改变html元素的内容  
 2.改变html元素的样式  
 3.对html DOM事件做出反应  
-4.添加和删除html元素  
+4.添加和删除html元素   -->
 
 #### Element对象
 
@@ -660,7 +758,7 @@ img.src="新的图片的地址";
 
 
 事件：  
-```js
+
 onblur:元素失去焦点
 onfocus:元素获得焦点
 onchange:内容被改变
@@ -669,7 +767,7 @@ onmouseover:鼠标移到某个元素之上
 onreset:重置按钮被点击
 onselect:文本被选中
 onsubmit:确认按钮被点击
-```
+
 
 
 事件监听：JavaScript可以在事件被侦测到的时候执行代码  
@@ -802,9 +900,9 @@ java代码用`<%%>`包含
 属性：  
 
 ```jsp
-<%page language="java"%>//指定用到的脚本语言，默认是java
-<%page import="java.until.Date"%>//需要显示当前时间时，导入java.until.Date类
-<%page contentType="text/html" pageEncoding="UTF-8"%>//页面使用汉字的时候，采用UTF-8编码
+<%@page language="java"%>//指定用到的脚本语言，默认是java
+<%@page import="java.until.Date"%>//需要显示当前时间时，导入java.until.Date类
+<%@page contentType="text/html" pageEncoding="UTF-8"%>//页面使用汉字的时候，采用UTF-8编码
 ```
 ### include指令
 
@@ -825,6 +923,13 @@ java代码用`<%%>`包含
 ```jsp
 Date day=new Date();
 <%=day%>
+```
+
+表达式：直接嵌入html页面  
+
+格式：
+```jsp
+<%=表达式%>
 ```
 
 
@@ -863,9 +968,9 @@ Date day=new Date();
 
 语法格式：  
 ```jsp
-<jsp:include page="文件的名字">
-    <jsp:param name="变量名字1" value="变量值1"/>
-    <jsp:param name="变量名字2" value="变量值2"/>
+<jsp:include page="接收数据的文件的名字">
+    <jsp:param name="要传递的变量名字1" value="变量值1"/>
+    <jsp:param name="要传递的变量名字2" value="变量值2"/>
     ...
 </jsp:include>
 ```
@@ -878,42 +983,39 @@ Date day=new Date();
     ...
 </jsp:forward>
 ```
-
-### 传递参数的三种方式  
-
-1.用`jsp`的`forward`或`include`操作  
-
-2.用表单传输数据  
-
-当向页面2传输表单时，页面1应该这样写：  
-```jsp
-<form action="页面2的名字" method="post">
-    姓名：<input name="mz"><br>
-    电话：<input name="dh"><br>
-    <input type="submit" value="提交">
-</form>
-```
-
-3.追加在网址后的参数传递或追加在超链接后面的参数  
-
-
-在上面的`<form>`的标签，也可以转换为超链接传输：  
+比如在op1中需要传递数据到op2，那么我们就需要在op1中定义：  
 
 ```jsp
-<a href="文件2地址?mz=姓名&dh=123456">传递参数</a>
+<jsp:include page="op2.jsp">
+    <jsp:param name="x" value="1">
+</jsp:include>
 ```
 
+## jsp内置对象
 
-## request对象
+有四个对象：page，request，session，application  
 
-作用域:在同一次请求中的所有页面和资源共享  
+作用域：  
 
-### 获取数据
+page：对象只能在创建它的JSP页面中被访问  
+
+request：对象可以在与创建它的JSP页面监听HTTP请求相同的任意一个JSP中被访问  
+
+session：对象可以在与创建它的JSP页面共享相同的HTTP会话的任意一个JSP中被访问  
+
+application：对象可以在与创建它的JSP页面属于相同的Web应用程序的任意一个JSP中被访问  
+
+### request对象
+
+
+#### 获取数据
 
 `request`对象的`getParameter("name")`的方法，可以将数据获取  
 
+比如说获取变量x
+
 ```jsp
-String str1=request.getParameter("获取的数据的name");
+int str1=request.getParameter("x");
 ```
 
 字符串变为数字：  
@@ -929,7 +1031,7 @@ double n=Double.parseDouble(字符串变量名);
 ```jsp
 request.setCharacterEncoding("UTF-8");
 ```
-### 新属性的设置和获取
+#### 新属性的设置和获取
 
 使用`request`对象的`setAttribute("name",obj)`的方法，把数据设置在`request`范围内，请求转发之后的页面用`getAttribute("name")`就可以获取obj的值  
 
@@ -946,13 +1048,12 @@ request.setAttribute("m",op2);
 文件2：获取n和m
 
 ```jsp
-double a1=(Double)request.getAttribute("n");
-double a2=(Double)request.getAttribute("m");
+double a1=(Double)request.getParameter("n");
+double a2=(Double)request.getParameter("m");
 ```
-## response对象
+### response对象
 
-
-### 重定向网页
+#### 重定向网页
 
 用`response`中的,`sendRedirect`方法重定位到另一个页面  
 
@@ -960,10 +1061,13 @@ double a2=(Double)request.getAttribute("m");
 response.sendRedirect("要跳转的网址");
 ```
 
-与`forward`不同的是，`<jsp:forward>`会带`request`中的信息跳转，而本句不会带任何信息  
+与`<jsp:forward>`不同点：  
+1.`<jsp:forward>`会带`request`中的信息跳转，而本句不会带任何信息  
+2.只能使用`<jsp:forward>`在本网站内跳转，而使用本句可以跳转到任意一个地址的页面  
 
 
-### 定时刷新以及自动跳转
+
+#### 定时刷新以及自动跳转
 
 采用`response`对象的`setHeader`方法  
 
@@ -971,7 +1075,7 @@ response.sendRedirect("要跳转的网址");
 response.setHeader("refresh",5);//每隔五秒自动刷新
 response.setHeader("refresh","10;url=要跳转的地址");//延迟10秒之后自动重定向到网页
 ```
-## session对象
+### session对象
 
 会话：用户在浏览某个网站的时候，从进入网站到浏览器关闭所经过的这段时间称为一次会话  
 
@@ -1009,16 +1113,77 @@ application.setAttribute("name",值);
 out.print("<br/>");//输出回车
 out.print(op1);//输出变量op1
 out.print("abc");//直接输出abc
+out.print(j+" ");//输出j的值和空格
+out.print(j+"<br>");//输出j的值和空格
 ```
 
 
 ## JDBC
 
-JDBC访问数据库流程：
+## javabean
 
-1.注册驱动  
-2.建立连接  
-3.创建数据库操作对象用于执行SQL语句  
-4.执行语句  
-5.处理执行结果  
-6.释放资源  
+根据设计规则设计：  
+
+设计一个圆的javabean类Circle.java，并且该圆中有计算圆周长和面积的方法
+
+```java
+public class Circle{
+    private int numble;//圆的编号
+    private double x;//圆的x坐标
+    private double y;//圆的y坐标
+    private double r;//圆的半径
+    private String color;//圆的颜色
+    private boolean fill;//圆是否填充
+    public int getNumble(){return number;}
+    public void setNumber(int number){this.number=number;}
+    public double getX(){return x;}
+    public void setX(double x){this.x=x;}
+    ...//y，r，color的构造方法和x的构造方法一样
+    public boolean isFill(){return fill;}
+    public void setFill(boolean fill){this.fill=fill;}
+    public Circle{}//公共参数无构造方法，使用默认构造方法
+    public double circleArea(){return Math.PI*r*r;}
+    public double circleLength(){return 2*Math.PI*r;}
+}
+```
+
+### 声明Javabean对象
+
+使用'<jsp:useBean>'标签
+
+```jsp
+<jsp:useBean id="对象名" class="类名" scope="有效范围">
+
+</jsp:useBean>
+```
+
+### 访问Javabean的属性
+
+Javabean属性的设置：  
+
+```jsp
+<jsp:setProperty name="id名字" property="要设置的类型名字" value="要设置的值">
+```
+
+例如，将c的两个属性值shuju1和shuju2设置值为10和20  
+
+```jsp
+<jsp:useBean id="c" class="c.jsp"/>
+<jsp:setProperty name="c" property="shuju1" value="10"/>
+<jsp:setProperty name="c" property="shuju2" value="20"/>
+
+```
+
+### 获取Javabean的属性值并显示
+
+使用`<jsp:getProperty>`标签  
+
+```jsp
+<jsp:getProperty name="id名字" property="属性名字">
+```
+
+
+
+
+
+
