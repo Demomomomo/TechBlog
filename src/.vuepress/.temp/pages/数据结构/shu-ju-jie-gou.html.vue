@@ -11,9 +11,9 @@
 <p>但是由于会有删除增加的操作使得表的长度可变，那么我们就用一个变量表示顺序表的长度属性</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">N</span> <span class="token expression"><span class="token number">100</span></span><span class="token comment">//线性表储存空间的初始分配量</span></span>
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
-    Elemtype elem<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    Elemtype <span class="token operator">*</span>elem<span class="token punctuation">;</span>
     <span class="token keyword">int</span> length<span class="token punctuation">;</span><span class="token comment">//当前长度</span>
-<span class="token punctuation">}</span>sqllist<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>list<span class="token punctuation">;</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>那么我们想存储一个包含系数和指数的线性表，代码如下</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">N</span> <span class="token expression"><span class="token number">1000</span></span></span>
@@ -170,7 +170,7 @@ l<span class="token punctuation">.</span>elem<span class="token operator">=</spa
 <p>缺点：<br>
 1.存储密度小，每个结点的指针域需要额外占用储存空间<br>
 <img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230608211316.png" alt="20230608211316" loading="lazy"></p>
-<p>2.链式结构是非随机存储结构，对任意一点的操作都需要从头指针链查找到该节点，增加了算法的复杂度</p>
+<p>2.对任意一点的操作都需要从头指针链查找到该节点，增加了算法的复杂度</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230608211856.png" alt="20230608211856" loading="lazy"></p>
 <p>结构：</p>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">list</span><span class="token punctuation">{</span><span class="token comment">//声明结点的类型和指向结点的指针类型</span>
@@ -335,7 +335,7 @@ a q<span class="token punctuation">[</span>N<span class="token punctuation">]</s
         <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>q<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     nlist h<span class="token operator">=</span><span class="token keyword">new</span> list<span class="token punctuation">;</span>
-    h<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    h<span class="token operator">-></span>next<span class="token operator">=</span>NUL<span class="token punctuation">;</span>
     nlist r<span class="token operator">=</span>h<span class="token punctuation">;</span>
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
         nlist op<span class="token operator">=</span><span class="token keyword">new</span> list<span class="token punctuation">;</span>
@@ -1437,9 +1437,9 @@ l（i）-e（i）表示完成活动ai的时间余量
 <p>调整原则：11.降低高度 2.保持二叉排序树性质</p>
 <p>规律：ll型和rr型把中间结点作为根结点，lr型和rl型把最低的结点作为根结点，然后按照二叉排序树的性质变化</p>
 <p>具体实现方式：</p>
-<p>ll型：</p>
+<p>ll型变化后：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230618142252.png" alt="20230618142252" loading="lazy"></p>
-<p>rr型：</p>
+<p>rr型变化后：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/F1F268E04FC2F0D689D8CAA2E973C3E4.png" alt="F1F268E04FC2F0D689D8CAA2E973C3E4" loading="lazy"></p>
 <p>lr型：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/CFD8AC5C4CA3E3263F18E461F2A24C6C.png" alt="CFD8AC5C4CA3E3263F18E461F2A24C6C" loading="lazy"></p>
@@ -1543,7 +1543,7 @@ l（i）-e（i）表示完成活动ai的时间余量
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/14F48DF0F97BFD4A1890E821E8AE41D6.png" alt="14F48DF0F97BFD4A1890E821E8AE41D6" loading="lazy"></p>
 <p>每个数查找成功的次数：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/FD7489602102E2011B568D2B63596C12.png" alt="FD7489602102E2011B568D2B63596C12" loading="lazy"></p>
-<p>ASL=（1<em>4+2</em>3+3*1）/8</p>
+<p>ASL=（1* 4+2* 3+3* 1）/8</p>
 <p>查找不成功的次数：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1BCCF819D948FD58ED70A9ABE790E363.png" alt="1BCCF819D948FD58ED70A9ABE790E363" loading="lazy"></p>
 <p>ASL=(3+4+2+1+1+3+1+1+1+1+1)/11</p>

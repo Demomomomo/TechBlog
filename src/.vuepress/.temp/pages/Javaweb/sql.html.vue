@@ -4,7 +4,7 @@
 <p>数据独立性包括两个方面：逻辑独立性和物理独立性</p>
 <p>好处：（1）减轻了应用程序的维护工作量（2）提高数据共享性,使数据库系统有较好的可扩充性</p>
 <h3 id="数据库系统的组成" tabindex="-1"><a class="header-anchor" href="#数据库系统的组成" aria-hidden="true">#</a> 数据库系统的组成</h3>
-<p>1.硬件 2.软件 3.人员</p>
+<p>数据库系统一般由数据库、数据库管理系统、应用程序和数据库管理员四个部分。数据库系统的核心和大脑是数据库管理系统。</p>
 <h2 id="数据库系统结构" tabindex="-1"><a class="header-anchor" href="#数据库系统结构" aria-hidden="true">#</a> 数据库系统结构</h2>
 <h3 id="数据特征" tabindex="-1"><a class="header-anchor" href="#数据特征" aria-hidden="true">#</a> 数据特征</h3>
 <p>数据库中的数据具有静态和动态两种特征：</p>
@@ -44,6 +44,7 @@
 <p>3.概念模式：介于内模式和外模式之间的中间层次，也称为模式</p>
 <h2 id="sql语言" tabindex="-1"><a class="header-anchor" href="#sql语言" aria-hidden="true">#</a> SQL语言</h2>
 <p>完整性约束条件的作用对象：表，元素，列</p>
+<p>SQL语言特点：1.一体化 2.高度自动化 3.简洁 4.能以多种方式使用</p>
 <p>进入SQL：在cmd中以管理员身份运行，输入用户和密码：</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p
 <span class="token number">12342</span>
@@ -99,10 +100,12 @@ double:用来存储小数<br>
 名称 double(总长度[最大值的位数+保留的小数点后面的位数]，保留小数点后的位数)<br>
 date:用来存储年月日，日期的数据表示为XXXX-XX-XX<br>
 名称 date<br>
-char:定长字符串<br>
+char:定长字符串，存非Unicode字符串，占用空间n字节<br>
 名称 char(字符串最大长度x，储存的字符串如果小于x，那么少的部分用空格填满)<br>
 varchar:变长字符串<br>
-名称 varchar(字符串最大长度)</p>
+名称 varchar(字符串最大长度)<br>
+nchar：定长字符串，存Unicode字符串数据，空间占用为2n字节<br>
+名称 nchar(字符串最大长度)</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名<span class="token punctuation">(</span>
     字段名<span class="token number">1</span> 数据类型<span class="token punctuation">,</span>
     字段名<span class="token number">2</span> 数据类型<span class="token punctuation">,</span>
@@ -122,11 +125,10 @@ varchar:变长字符串<br>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">drop</span> <span class="token keyword">table</span> op<span class="token punctuation">;</span>
 <span class="token keyword">drop</span> <span class="token keyword">table</span> <span class="token keyword">if</span> <span class="token keyword">exists</span> op<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_4-修改表" tabindex="-1"><a class="header-anchor" href="#_4-修改表" aria-hidden="true">#</a> 4.修改表</h4>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">rename</span> <span class="token keyword">to</span> op1<span class="token punctuation">;</span><span class="token comment">-- 将表op的名字改成op1</span>
-<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">modify</span> id <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 将表op中的列id的数据类型改为varchar(30)</span>
-<span class="token keyword">alter</span> <span class="token keyword">table</span> op change id idx <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 将表op的id列改为类型为varchar(30)的名为idx的列</span>
-<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">drop</span> password<span class="token punctuation">;</span><span class="token comment">-- 删除表op中名为password的列</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="dml" tabindex="-1"><a class="header-anchor" href="#dml" aria-hidden="true">#</a> DML</h3>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">drop</span> <span class="token keyword">column</span> password<span class="token punctuation">;</span><span class="token comment">-- 删除表op中名为password的列</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">add</span> name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 添加一个名为name的数据类型为字符的列</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">alter</span> <span class="token keyword">column</span> id <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 将列为id的数据类型改为字符</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="dml" tabindex="-1"><a class="header-anchor" href="#dml" aria-hidden="true">#</a> DML</h3>
 <p>对数据进行操作</p>
 <h4 id="_1-添加数据" tabindex="-1"><a class="header-anchor" href="#_1-添加数据" aria-hidden="true">#</a> 1.添加数据</h4>
 <p>给指定列添加数据</p>
@@ -145,8 +147,8 @@ varchar:变长字符串<br>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">delete</span> <span class="token keyword">from</span> op1 <span class="token keyword">where</span> name<span class="token operator">=</span><span class="token string">"zyz"</span><span class="token punctuation">;</span><span class="token comment">-- 删除名为op1的表中，name是zyz的数据</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="dql" tabindex="-1"><a class="header-anchor" href="#dql" aria-hidden="true">#</a> DQL</h3>
 <p>查询数据</p>
-<p>先group by再where<br>
-先where再order by</p>
+<p>先where再group by<br>
+先group by再order by</p>
 <h4 id="基础查询" tabindex="-1"><a class="header-anchor" href="#基础查询" aria-hidden="true">#</a> 基础查询：</h4>
 <p>1.查询多个字段</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表名<span class="token punctuation">;</span>
@@ -154,7 +156,10 @@ varchar:变长字符串<br>
 
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> 表名<span class="token punctuation">;</span><span class="token comment">-- 查询所有数据</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op2<span class="token punctuation">;</span><span class="token comment">-- 查询表op2中的所有数据</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>2.去除重复记录</p>
+
+<span class="token keyword">select</span> name <span class="token punctuation">,</span><span class="token string">"出生年月"</span>，password <span class="token keyword">from</span> op<span class="token punctuation">;</span><span class="token comment">-- 在op里查找name和password，并且中间显示一个全为'出生年月'的列</span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>2.去除重复记录</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token keyword">distinct</span> 字段列表 <span class="token keyword">from</span> 表名<span class="token punctuation">;</span><span class="token comment">-- 查询到的就是这个字段内所有不重复的字段</span>
 <span class="token keyword">select</span> <span class="token keyword">distinct</span> sex <span class="token keyword">from</span> op2<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>3.起别名</p>
@@ -179,10 +184,18 @@ varchar:变长字符串<br>
 _代表单个任意字符
 %代表任意个数字符
 */</span>
+_:查询单个字符
+<span class="token operator">%</span>：<span class="token number">0</span>个或多个字符
+<span class="token punctuation">[</span><span class="token punctuation">]</span>:匹配<span class="token punctuation">[</span><span class="token punctuation">]</span>里的任何一个字符都可以，比如<span class="token punctuation">[</span>a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>d<span class="token punctuation">]</span>表示a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>d里任意一个字符出现都可以，简写为<span class="token punctuation">[</span>a<span class="token operator">-</span>d<span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token operator">^</span><span class="token punctuation">]</span>：不匹配<span class="token punctuation">[</span><span class="token punctuation">]</span>里的任何一个字符，比如<span class="token punctuation">[</span><span class="token operator">^</span>a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>d<span class="token punctuation">]</span>表示不匹配a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>d里的任意一个字符
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op2 <span class="token keyword">where</span> name <span class="token operator">like</span> <span class="token string">"z%"</span><span class="token punctuation">;</span><span class="token comment">-- 查询name中首字母是z的字段</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op2 <span class="token keyword">where</span> name <span class="token operator">like</span> <span class="token string">"_z%"</span><span class="token punctuation">;</span><span class="token comment">-- 查询name中第二个字母是z的字段</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op2 <span class="token keyword">where</span> name <span class="token operator">like</span> <span class="token string">"%z%"</span><span class="token punctuation">;</span><span class="token comment">-- 查询name中含有z的字段</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="排序查询" tabindex="-1"><a class="header-anchor" href="#排序查询" aria-hidden="true">#</a> 排序查询</h4>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op2 <span class="token keyword">where</span> name <span class="token operator">like</span> <span class="token string">"[张李刘]%"</span><span class="token punctuation">;</span><span class="token comment">--找出姓张或姓李或姓刘的</span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>但是在进行'王__'的查询的时候，查询的应该是三个字的姓王的人名，但是会出现'王X'也出现在里面的情况，实际上是char固定分配字节，不足的用空格顶替，那么就会查到两个字的情况，这时候我们可以用函数'ririm'来进行操作：</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> name <span class="token keyword">from</span> op <span class="token keyword">where</span> ririm <span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">like</span> <span class="token string">'王__'</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="排序查询" tabindex="-1"><a class="header-anchor" href="#排序查询" aria-hidden="true">#</a> 排序查询</h4>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code>
 <span class="token comment">/*
 排序方式：  
@@ -197,7 +210,7 @@ desc：降序排列
 
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op6 <span class="token keyword">order</span> <span class="token keyword">by</span> english <span class="token keyword">asc</span><span class="token punctuation">,</span>math <span class="token keyword">asc</span><span class="token punctuation">;</span><span class="token comment">-- 按照english升序，math降序的方法询问输出</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="分组查询" tabindex="-1"><a class="header-anchor" href="#分组查询" aria-hidden="true">#</a> 分组查询</h4>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="使用聚合函数" tabindex="-1"><a class="header-anchor" href="#使用聚合函数" aria-hidden="true">#</a> 使用聚合函数</h4>
 <p>聚合函数</p>
 <p>数据为null的不参与聚合函数的运算</p>
 <p>1.概念：将一列数据作为一个整体进行纵向运算</p>
@@ -211,7 +224,16 @@ desc：降序排列
 <p>count统计数量：<br>
 取值：1.主键 2.*（只要一列有数据就会被统计到）</p>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword">from</span> op8<span class="token punctuation">;</span><span class="token comment">-- 查询op8中有几个id，null不能被查询到</span>
-<span class="token keyword">select</span> <span class="token function">avg</span><span class="token punctuation">(</span>english<span class="token punctuation">)</span> <span class="token keyword">from</span> op8<span class="token punctuation">;</span><span class="token comment">-- 查找op8中english的平均值（只算所有不为null的数据的平均值）</span>
+<span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> name<span class="token punctuation">)</span> <span class="token keyword">from</span> op<span class="token punctuation">;</span><span class="token comment">--查找op中总共有多少个不同的name值</span>
+<span class="token keyword">select</span> <span class="token function">sum</span><span class="token punctuation">(</span>grade<span class="token punctuation">)</span> <span class="token keyword">from</span> op<span class="token punctuation">;</span><span class="token comment">--查找grade列的总和</span>
+<span class="token keyword">select</span> <span class="token function">avg</span><span class="token punctuation">(</span>grade<span class="token punctuation">)</span> <span class="token keyword">from</span> op<span class="token punctuation">;</span><span class="token comment">--查找grade的平均值</span>
+<span class="token keyword">select</span> <span class="token function">max</span><span class="token punctuation">(</span>grade<span class="token punctuation">)</span> <span class="token punctuation">,</span><span class="token function">min</span><span class="token punctuation">(</span>grade<span class="token punctuation">)</span> <span class="token keyword">from</span> op<span class="token punctuation">;</span><span class="token comment">--查找grade的最大值和最小值</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="使用分组查询" tabindex="-1"><a class="header-anchor" href="#使用分组查询" aria-hidden="true">#</a> 使用分组查询</h4>
+<p>使用group by dep 对每个不同的dep进行操作</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> dep<span class="token punctuation">,</span><span class="token function">sum</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token keyword">from</span> op <span class="token keyword">group</span> <span class="token keyword">by</span> dep<span class="token punctuation">;</span><span class="token comment">--对dep的每个不同的值进行sum(name)的操作</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>having子句一般用于对分组之后的结果进行再次筛选，例如：</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> name <span class="token punctuation">,</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">from</span> op <span class="token keyword">group</span> <span class="token keyword">by</span> name <span class="token keyword">having</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">3</span><span class="token punctuation">;</span><span class="token comment">--查找每个个数超过三个的name</span>
+<span class="token keyword">select</span> name<span class="token punctuation">,</span><span class="token function">avg</span><span class="token punctuation">(</span>grade<span class="token punctuation">)</span> <span class="token keyword">from</span> op <span class="token keyword">group</span> <span class="token keyword">by</span> name <span class="token keyword">having</span> <span class="token function">avg</span><span class="token punctuation">(</span>grade<span class="token punctuation">)</span><span class="token operator">>=</span><span class="token number">60</span><span class="token punctuation">;</span><span class="token comment">--查找每个平均分大于60的人的名字和平均分</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="分页查询" tabindex="-1"><a class="header-anchor" href="#分页查询" aria-hidden="true">#</a> 分页查询</h4>
 <div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表名 <span class="token keyword">limit</span> 起始索引<span class="token punctuation">,</span>查询目录数<span class="token punctuation">;</span>
 <span class="token comment">-- 起始索引：从0开始  </span>
@@ -224,20 +246,28 @@ desc：降序排列
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="约束" tabindex="-1"><a class="header-anchor" href="#约束" aria-hidden="true">#</a> 约束</h2>
 <p>概念：作用于表中列上的规则，用于限制加入表的数据<br>
 约束的存在保证了数据库中数据的正确性</p>
+<p>数据完整性是指数据的正确性和相容性</p>
+<p>下面是各个数据完整性约束：</p>
 <p>分类：</p>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230509162950.png" alt="20230509162950" loading="lazy"></p>
 <p>主建约束：非空且唯一</p>
 <p>在添加约束的时候，约束条件并列写</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> op3<span class="token punctuation">(</span>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token comment">--可以在创建表的时候直接加上</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> op3<span class="token punctuation">(</span>
     id <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span><span class="token comment">-- 主建且增长</span>
     ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">unique</span><span class="token punctuation">,</span><span class="token comment">-- 员工姓名，非空且唯一</span>
     salary <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">,</span><span class="token comment">-- 工资，非0</span>
-    bonus <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token number">0</span><span class="token comment">-- 奖金，如果没有奖金默认值设为0</span>
+    bonus <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token comment">-- 奖金，如果没有奖金默认值设为0</span>
+    high <span class="token keyword">int</span><span class="token punctuation">,</span>
+    low <span class="token keyword">int</span><span class="token punctuation">,</span>
+    <span class="token keyword">check</span> <span class="token punctuation">(</span>high<span class="token operator">>=</span>low<span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-
-
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="外键约束" tabindex="-1"><a class="header-anchor" href="#外键约束" aria-hidden="true">#</a> 外键约束</h3>
+<span class="token comment">--也可以用后来的语句加上</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">add</span> <span class="token keyword">constraint</span> pk_id  <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">--给名为id的列添加名为pk_id的主码约束</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">add</span> <span class="token keyword">constraint</span> un_id  <span class="token keyword">unique</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">-- 给名为id的列添加名为un_id的唯一约束</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">add</span> <span class="token keyword">constraint</span> de_id <span class="token keyword">default</span> <span class="token number">0</span> <span class="token keyword">for</span> <span class="token punctuation">(</span>bonus<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">--给名为bonus的列添加名为de_id的默认值为0的约束</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> op <span class="token keyword">add</span> <span class="token keyword">constraint</span> ch_hl <span class="token keyword">check</span> <span class="token punctuation">(</span>high<span class="token operator">>=</span>low<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">--给表添加heigh>=low的名为ch_hl的约束</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="外键约束" tabindex="-1"><a class="header-anchor" href="#外键约束" aria-hidden="true">#</a> 外键约束</h3>
 <p>概念：用来让两个表的数据之间建立链接，保证数据的一致性和完整性</p>
 <p>例如下图中的两个表：</p>
 <img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/4C4C2AC5B27B03ADDB76E4E325453DFE.png" alt="Pulpit rock" width="454" height="208">  
@@ -294,49 +324,22 @@ desc：降序排列
 <p>假如a表有x个数据，b表有y个数据，我们如果直接查他们两个表的所有的数据，会出现x*y个数据，因为他会枚举出两个表所有数据的组合情况</p>
 <h3 id="连接查询" tabindex="-1"><a class="header-anchor" href="#连接查询" aria-hidden="true">#</a> 连接查询</h3>
 <h4 id="内连接-相当于查询ab的所有数据和交集" tabindex="-1"><a class="header-anchor" href="#内连接-相当于查询ab的所有数据和交集" aria-hidden="true">#</a> 内连接：相当于查询AB的所有数据和交集</h4>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token comment">--隐式内连接</span>
-<span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表<span class="token number">1</span>，表<span class="token number">2.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">where</span> 条件<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>比如有下列两个表emp和dep：</p>
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684134000805.png" alt="Pulpit rock" width="254" height="108"> 
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684133972585.png" alt="Pulpit rock" width="254" height="108"> 
-<p>我们想显示当emp的depid和dep的id相等时，emp中的id，name，depid，和dep表中的name，那么查询语句就是：</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> emp<span class="token punctuation">.</span>id<span class="token punctuation">,</span>emp<span class="token punctuation">.</span>name<span class="token punctuation">,</span>emp<span class="token punctuation">.</span>depid<span class="token punctuation">,</span>dep<span class="token punctuation">.</span>name <span class="token keyword">from</span> emp<span class="token punctuation">,</span>dep <span class="token keyword">where</span> emp<span class="token punctuation">.</span>depid<span class="token operator">=</span>dep<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>那么查询的结果就是：</p>
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684134240923.png" alt="Pulpit rock" width="254" height="108"> 
-<p>还可以给emp和dep表起别名，比如分别是t1和t2，那么语句就是</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> t1<span class="token punctuation">.</span>id<span class="token punctuation">,</span>t1<span class="token punctuation">.</span>name<span class="token punctuation">,</span>t1<span class="token punctuation">.</span>depid<span class="token punctuation">,</span>t2<span class="token punctuation">.</span>name <span class="token keyword">from</span> emp t1<span class="token punctuation">,</span>dep t2 <span class="token keyword">where</span> t1<span class="token punctuation">.</span>depid<span class="token operator">=</span>t2<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token comment">--显式内连接</span>
-<span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表<span class="token number">1</span> <span class="token keyword">inner</span> <span class="token keyword">join</span> 表<span class="token number">2</span> <span class="token keyword">on</span> 条件<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>假如还是查询emp表的depid和dep表的id相等的话，语句如下：</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">inner</span> <span class="token keyword">join</span> dept <span class="token keyword">on</span> emp<span class="token punctuation">.</span>depid<span class="token operator">=</span>dep<span class="token punctuation">.</span>id<span class="token punctuation">;</span><span class="token comment">-- 查询的是所有条件是emp.id=dep.id的emp和dep中全部字段</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="外连接" tabindex="-1"><a class="header-anchor" href="#外连接" aria-hidden="true">#</a> 外连接：</h4>
-<p>左外连接：相当于查询A所有数据和交集</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表<span class="token number">1</span> <span class="token keyword">left</span> <span class="token keyword">join</span> 表<span class="token number">2</span> <span class="token keyword">on</span> 条件<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>假如有下面两张emp和dep的表：<br>
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/1684135737972.png" alt="Pulpit rock" width="254" height="158">
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230515152959.png" alt="Pulpit rock" width="254" height="158"></p>
-<p>我们想对emp表进行左外连接，条件是找emp的depid和dep的id一样的数据，那么语句是</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> emp <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> dep <span class="token keyword">ON</span> emp<span class="token punctuation">.</span>depid<span class="token operator">=</span>dep<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>那么我们显示的是emp中的所有数据，其中不满足条件的数据的dep表的字段为null<br>
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230515153520.png" alt="Pulpit rock" width="354" height="158"></p>
-<p>右外连接：相当于查询B表所有数据和交集</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表<span class="token number">1</span> <span class="token keyword">right</span> <span class="token keyword">join</span> 表<span class="token number">2</span> <span class="token keyword">on</span> 条件<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>对这两个表进行右查询</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">right</span> <span class="token keyword">join</span> dep <span class="token keyword">on</span> emp<span class="token punctuation">.</span>depid<span class="token operator">=</span>dep<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>那么显示dep表里的所有数据，不满足条件的emp表的字段为空<br>
-<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230515153818.png" alt="Pulpit rock" width="404" height="158"></p>
-<h3 id="子查询" tabindex="-1"><a class="header-anchor" href="#子查询" aria-hidden="true">#</a> 子查询</h3>
+<p>先on再where</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表<span class="token number">1</span> <span class="token keyword">join</span> 表<span class="token number">2</span> <span class="token keyword">on</span> 条件<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>假如还是查询emp表的depid和dep表的id相等的话，语句如下：</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> op1 <span class="token keyword">join</span> op2 <span class="token keyword">on</span> op1<span class="token punctuation">.</span>depid<span class="token operator">=</span>op2<span class="token punctuation">.</span>id<span class="token punctuation">;</span><span class="token comment">-- 查询的是所有条件是emp.id=dep.id的emp和dep中全部字段</span>
+<span class="token keyword">select</span> op1<span class="token punctuation">.</span>name <span class="token punctuation">,</span>op2<span class="token punctuation">.</span>grade <span class="token keyword">from</span> op1 <span class="token keyword">join</span> op2 <span class="token keyword">on</span> op1<span class="token punctuation">.</span>depid <span class="token operator">=</span>op2<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="用top限制结果集" tabindex="-1"><a class="header-anchor" href="#用top限制结果集" aria-hidden="true">#</a> 用top限制结果集</h3>
+<p>top n：显示查询结果的前n条</p>
+<p>top n percnet：显示查询结果的前n%条</p>
+<p>with ties：表示包括并列的结果</p>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token keyword">top</span> n name<span class="token punctuation">,</span>grade <span class="token keyword">from</span> op <span class="token keyword">order</span> <span class="token keyword">by</span> grade <span class="token keyword">desc</span><span class="token punctuation">;</span><span class="token comment">--查询符合条件的前n条</span>
+<span class="token keyword">select</span> <span class="token keyword">top</span> n percnet name<span class="token punctuation">,</span>grade <span class="token keyword">from</span> op <span class="token keyword">order</span> <span class="token keyword">by</span> grade <span class="token keyword">desc</span><span class="token punctuation">;</span><span class="token comment">--查询符合条件的前n%条</span>
+<span class="token keyword">select</span> <span class="token keyword">top</span> n <span class="token keyword">with</span> ties name<span class="token punctuation">,</span>grade <span class="token keyword">from</span> op <span class="token keyword">order</span> <span class="token keyword">by</span> grade <span class="token keyword">desc</span><span class="token punctuation">;</span><span class="token comment">--查询符合条件的前n名，包括并列</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="子查询" tabindex="-1"><a class="header-anchor" href="#子查询" aria-hidden="true">#</a> 子查询</h3>
 <p>查询中嵌套查询，称嵌套查询为子查询</p>
 <p>子查询根据查询的结果不同，作用不同：</p>
-<h4 id="单行单列" tabindex="-1"><a class="header-anchor" href="#单行单列" aria-hidden="true">#</a> 单行单列</h4>
-<p>作为条件值，使用= != &gt; &lt;等条件进行判断</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表 <span class="token keyword">where</span> 字段名<span class="token operator">=</span><span class="token punctuation">(</span>子查询<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="多行单列" tabindex="-1"><a class="header-anchor" href="#多行单列" aria-hidden="true">#</a> 多行单列</h4>
-<p>作为条件值，使用in等关键字进行条件查询</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表 <span class="token keyword">where</span> 字段名 <span class="token operator">in</span><span class="token punctuation">(</span>子查询<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="多行多列" tabindex="-1"><a class="header-anchor" href="#多行多列" aria-hidden="true">#</a> 多行多列</h4>
-<p>作为虚拟列表</p>
-<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> <span class="token punctuation">(</span>子查询<span class="token punctuation">)</span> <span class="token keyword">where</span> 条件<span class="token punctuation">;</span>
+<div class="language-sql line-numbers-mode" data-ext="sql"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> name <span class="token keyword">from</span> op <span class="token operator">in</span><span class="token punctuation">(</span><span class="token keyword">select</span> dep <span class="token keyword">from</span> op <span class="token keyword">where</span> name<span class="token operator">=</span><span class="token string">"zyz"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">--查找所有和zyz在一个部门的人</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="视图" tabindex="-1"><a class="header-anchor" href="#视图" aria-hidden="true">#</a> 视图</h2>
 <p>视图是由从数据库的基本表中选取出来的数据组成的逻辑窗口，是基本表的部分行和列数据的组合。</p>
 <p>视图的好处：1.简化数据查询语句 2.使用户能从多角度看待同一数据 3.提高了数据的安全性 4.提供了一定程度的逻辑独立性。</p>
@@ -434,6 +437,8 @@ desc：降序排列
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="小结" tabindex="-1"><a class="header-anchor" href="#小结" aria-hidden="true">#</a> 小结</h4>
 <p><img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230619225447.png" alt="20230619225447" loading="lazy"></p>
+<h3 id="死锁" tabindex="-1"><a class="header-anchor" href="#死锁" aria-hidden="true">#</a> 死锁</h3>
+<p>死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去；</p>
 <h3 id="两段锁协议" tabindex="-1"><a class="header-anchor" href="#两段锁协议" aria-hidden="true">#</a> 两段锁协议</h3>
 <p>两段锁协议是指所有的事物必须分为两个阶段，对数据进行加锁和解锁，具体内容如下：</p>
 <p>1.在对任何数据进行读写操作之前，首先要获得对该数据的封锁。</p>
@@ -446,11 +451,26 @@ desc：降序排列
 <p>1.备份的内容 2.备份频率</p>
 <p>备份的介质可以是磁带也可以是磁盘</p>
 <h3 id="数据库恢复" tabindex="-1"><a class="header-anchor" href="#数据库恢复" aria-hidden="true">#</a> 数据库恢复</h3>
+<p>数据库恢复的基本原理就是增加数据冗余。即数据库中任何一部分的数据可以利用存储在系统其他存储器上的冗余数据来重建，即恢复。</p>
 <p>恢复策略：</p>
-<p>1.事务故障的恢复 2.系统故障的恢复 3.介质故障的恢复</p>
+<p>1.事务故障的恢复</p>
+<p>2.系统故障的恢复</p>
+<p>3.介质故障的恢复</p>
+<p>在发生介质故障时，磁盘上的物理数据库被破坏，恢复措施为：</p>
+<p>首先重装数据库，使数据库管理系统能正常运行，然后利用介质损坏前对数据库已做的备份或利用镜像设备恢复数据库</p>
 <h2 id="数据库设计-1" tabindex="-1"><a class="header-anchor" href="#数据库设计-1" aria-hidden="true">#</a> 数据库设计</h2>
 <p>数据库设计的基本步骤：</p>
-<p>需求分析 结构设计 行为设计 数据库实施 数据库运行和维护阶段</p>
+<p>1.需求分析</p>
+<p>2.结构设计：包括概念设计，逻辑结构设计和物理结构设计</p>
+<p>3.行为设计：包括功能设计，事务设计和程序设计</p>
+<p>4.数据库实施：包括加载数据库数据和调试运行应用程序</p>
+<p>5.数据库运行和维护阶段</p>
+<p>与 DBMS 无关的是需求分析、概念结构设计和逻辑结构设计；</p>
+<p>安全性措施：</p>
+<p>a.对数据字段命名的规范性<br>
+b.一些业内常用的术语，在设计数据库存储时，把数据转化为 int 类型存储而不是采用 nvarchar、varchar等类型存储；<br>
+c.在数据库设计中，对于业务与业务中的逻辑联系，采用外键关系进行连接；不要再逻辑联系中采用视图实现，会让人很容易解密数据库数据；<br>
+d.在数据库设计中，数据字段最好不要设定为空，因为为空的数据字段存储为空，无形中为数据的窃取者提供了进入数据库接口。</p>
 </div></template>
 
 

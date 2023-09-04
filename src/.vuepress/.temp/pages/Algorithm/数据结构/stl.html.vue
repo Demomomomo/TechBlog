@@ -110,7 +110,46 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>yy<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>yy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="map" tabindex="-1"><a class="header-anchor" href="#map" aria-hidden="true">#</a> map</h2>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="bitset" tabindex="-1"><a class="header-anchor" href="#bitset" aria-hidden="true">#</a> bitset</h2>
+<p>在头文件<code v-pre>include&lt;bitset&gt;</code><br>
+它是一种类似数组的结构，它的每一个元素只能是０或１，每个元素仅用１bit空间，每八位占用一个字节，可用于状态压缩，n位的bitset执行一次运算时间复杂度为n/32<br>
+定义：<code v-pre>bitset &lt;n&gt; op</code>//长度为n的默认都是0的串<br>
+数字转换为bitset：先转换为二进制，如果变成的二进制的位数小于n，那么前面的部分用0补充完整；如果位数大于n，那么我们只取最低位的n位<br>
+<code v-pre>bitset &lt;4&gt; op(4)</code>,4变为二进制是100，但是有4位，那么前面多的位就用0补上，即<code v-pre>op=0100</code><br>
+<code v-pre>bitset &lt;4&gt; op(17)</code>，17变为二进制是10001，但是我们只要最低的四位，即<code v-pre>op=0001</code><br>
+字符串转换为bitset：字符串只能含有0和1，否则会报错。当字符串的长度小于n的时候，前面多的部分用0补齐；小于n的时候只取前面n位<br>
+<code v-pre>bitset &lt;4&gt; op(&quot;001&quot;)</code>,长度小前面用0补齐，即<code v-pre>op=0001</code><br>
+<code v-pre>bitset &lt;4&gt; op(&quot;110001&quot;)</code>,长度大只取前面4位，即<code v-pre>op=1100</code><br>
+可用的运算符：<code v-pre>^,|,&amp;,&lt;&lt;,&gt;&gt;,==,!=,~</code></p>
+<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>	bitset <span class="token operator">&lt;</span><span class="token number">4</span><span class="token operator">></span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token string">"0011"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	bitset <span class="token operator">&lt;</span><span class="token number">4</span><span class="token operator">></span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token string">"1100"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>a<span class="token operator">|</span>b<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//输出的是1111</span>
+	cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>a<span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//输出的是0000</span>
+	cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>a<span class="token operator">^</span>b<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//输出的是1111</span>
+	cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>a<span class="token operator">&lt;&lt;</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//a左移两位，低位补0，输出1100</span>
+	cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>b<span class="token operator">>></span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//b右移两位，高位补0，输出0011</span>
+	cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span><span class="token operator">~</span>a<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span><span class="token comment">//将a取反，输出1100</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>也可以通过[]访问元素（类似数组，最低位下标从0开始），也可以给某一个元素赋值<br>
+<code v-pre>bitset &lt;4&gt; op(&quot;1100&quot;)</code>,<code v-pre>op[2]</code>就是1，注意，从最右边开始起始坐标为0<br>
+函数：<br>
+<code v-pre>bitset &lt;5&gt; op(&quot;11100&quot;)</code><br>
+<code v-pre>op.count()</code>:求op中1的个数，为3<br>
+<code v-pre>op.size()</code>:求op的大小，有5位<br>
+<code v-pre>op.test(1)</code>:查找下标为1的元素，op[1]是0<br>
+<code v-pre>op.any()</code>:检查op里是否有1<br>
+<code v-pre>op.none()</code>：检查op里是否无1<br>
+<code v-pre>op.all()</code>:检查op里是否全为1<br>
+<code v-pre>op.flip()</code>:将op全部取反<br>
+<code v-pre>op.flip(x)</code>:将op[x]取反<br>
+<code v-pre>op.set()</code>:将op的全部元素变为1<br>
+<code v-pre>op.set(x,0)</code>：只将op[x]置为0<br>
+<code v-pre>op.set(x)</code>:只将op[x]置为1<br>
+<code v-pre>op.reset()</code>：将op全部元素置为0<br>
+<code v-pre>op.reset(x)</code>：只将op[x]置为0<br>
+<code v-pre>op.to_string()</code>:将op转为string类型<br>
+<code v-pre>op.to_ulong</code>:将op转为unsigned long 类型<br>
+<code v-pre>op.to_ullong</code>:将op转为unsigned long long 类型</p>
+<h2 id="map" tabindex="-1"><a class="header-anchor" href="#map" aria-hidden="true">#</a> map</h2>
 <p>定义：映射数组//前面的映射出后面的，就是输出后面的<br>
 如果存数组那么按字典序递增的方式储存
 map查找一个数的时间复杂度是logn，unordered_map是O（1）</p>

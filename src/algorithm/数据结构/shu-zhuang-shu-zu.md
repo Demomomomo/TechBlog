@@ -37,15 +37,15 @@ void add(int x,int c){
 
 ## 区间修改，单点查询
 有一个大小为n的a数组，每次将下标为l~r的数加上一个数，最后再查询每一个数最终的结果  
-利用差分数组，设b是a的差分数组，对a的操作相当于b[l]+c,b[r+1]+c,b[1]+b[2]+...+b[i]就是变化之后a[i]的值。  
+利用差分数组，设b是a的差分数组，对a的操作相当于b[l]+c,b[r+1]-c,b[1]+b[2]+...+b[i]就是变化之后a[i]的值。  
 
 ## 区间修改，区间查询
 有一个大小为n的数组，m条指令，每条指令有两种：  
 1.C l r d，表示把a[l]~a[r]都加上d  
 2.Q l r，表示询问数列中第l~r的和。  
 
-<img src="https://img-blog.csdnimg.cn/44aa91a695424c7f9c976fe7d11a1901.png#pic_center" alt="Pulpit rock" width="454" height="100">  
-<img src="https://img-blog.csdnimg.cn/45fb0c656cb24482b7707c584b0680c7.png#pic_center" alt="Pulpit rock" width="454" height="128">  
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230807180938.png" alt="Pulpit rock" width="454" height="100">  
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230807181038.png" alt="Pulpit rock" width="454" height="128">  
 
 那么要求a[i]的前缀和我们只需要维护两个树状数组：差分数组d和i*d就可以了。  
 
@@ -108,62 +108,70 @@ signed main(){
 ## 约瑟夫问题
 有n个人按顺序围成一圈，编号为1的人从1开始喊，喊到m的人出局，直至没有人，求出局的顺序。  
 
-思路：我们用now记录一下要找的位置，从1开始，op表示现在还有几个人，正常情况下要喊的应该是now+m-1，但是因为围成了一圈，然后我们就需要取模把他映射到0~op-1，即now=(now+m-1-1)%op+1，找到之后删除这个人  
-然后再用二分找到这个位置就可以了。找到之后op需要--。  
+思路：其实就是存在的人从1喊到m，存在且喊到m的人出局  
 
+假设下标从1开始，从now开始喊，那么下一个喊到的人应该是now+m-1  
 
+但是由于喊出的人要出局，当前人数会有变化，假设当前人数为op，那么我们就得将now映射到1~op序号里  
+
+那么我们先将now+m-1减去1，将他映射到0~n-1的序号里，再%op将他映射到0~op-1的序号里，最后加上1将他映射到1~op的序号里，即下次喊到m的人的序号x是：x=(now+m-1-1)%op+1  
+
+上面我们算的是当人都存在的时候，喊到的人的序号，那么随着出局会有人不存在，那么我们就用树状数组来记录每个人存在与否，每个人的位置刚开始都为1表示都存在，当他喊到的时候将他位置上的数-1，并且将记录当前人数的op--。由于x算的是从存在的人里算出的序号，那么我们最终算的人的真实序号id其实是满足sum(id）==x的id，id用二分求出，然后直接输出即可  
 
 ```cpp
 #include<bits/stdc++.h>
 #define int long long
 using namespace std;
-const int N=2e5+10;
+const int N=200;
 int n,m;
-int tr[N*4];
 int a[N];
-
+int tr[4*N];
 int lowbit(int x){
 	return x&(-x);
 }
 int sum(int x){
 	int res=0;
-	for(int i=x;i;i-=lowbit(i)){
-		res+=tr[i];
-	}
+	for(int i=x;i;i-=lowbit(i))res+=tr[i];
 	return res;
 }
 void add(int x,int c){
-	for(int i=x;i<=n;i+=lowbit(i)){
-		tr[i]+=c;
-	}
+	for(int i=x;i<=n;i+=lowbit(i))tr[i]+=c;
 }
-bool st[N];
-int ans[N];
-bool cheek(int mid,int x){
-	if(sum(mid)>=x)return true;
+bool cheek(int x,int s){
+	if(sum(x)>=s)return true;
 	else return false;
 }
-signed main(){
+void sove(){
 	cin>>n>>m;
-	for(int i=1;i<=n;i++) add(i,1);
-	int now=1,op=n;
-	vector<int> yy;
+	int now=1;
+	int op=n;
+	for(int i=1;i<=n;i++)add(i,1);
 	while(op){
 		now=(now+m-1-1)%op+1;
 		int l=1,r=n;
 		while(l<r){
-			int mid=(l+r)>>1;
-			if(cheek(mid,now)) r=mid;
+			int mid=l+r>>1;
+			if(cheek(mid,now))r=mid;
 			else l=mid+1;
 		}
-		yy.push_back(l);
+		cout<<l<<" ";
 		add(l,-1);
-		op--; 
+		op--;
 	}
-	for(int i=0;i<yy.size() ;i++) cout<<yy[i]<<" ";
+	
+}
+signed main(){
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	int t=1;
+//	cin>>t;
+	while(t--){
+		sove();
+	}
 	return 0;
 }
 ```
+
 ## 二维树状数组
 
 例题：红色的幻想乡  
