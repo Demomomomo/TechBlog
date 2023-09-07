@@ -208,37 +208,51 @@ int main(){
 
 ```cpp
 #include<bits/stdc++.h>
-using namespace std;
 #include<vector>
-#define  v first
-#define w  second
-const int N=70,M=32005;
+using namespace std;
 typedef pair<int,int> pii;
+const int N=32005;
+int f[N];
+vector<int> ma;
+vector<pii> son[70];
 int n,m;
-int f[M];
-pii ma[N];
-vector <pii> son[N];
 int main(){
 	cin>>m>>n;
 	for(int i=1;i<=n;i++){
-		int v,w,p;
-		cin>>v>>w>>p;
-		if(p==0) ma[i]={v,v*w};
-		else son[p].push_back({v,v*w});
+		int v,p,q;
+		cin>>v>>p>>q;
+		if(q==0){
+			ma.push_back(i);
+			son[i].push_back({v,p});  
+		}else{
+			son[q].push_back({v,p}); 
+		}
 	}
-	for(int i=1;i<=n;i++){
-		if(ma[i].v){
-			for(int j=m;j>=0;j--){
-				for(int k=0;k<(1<<son[i].size());k++){
-					int v=ma[i].v,w=ma[i].w;
-					for(int u=0;u<son[i].size();u++){
-						if(k>>u&1){
-							v+=son[i][u].v;
-							w+=son[i][u].w;
-						}
-					}
-				if(j>=v) f[j]=max(f[j],f[j-v]+w);
-				}
+	for(int i=0;i<ma.size() ;i++){
+		int id=ma[i];
+		for(int j=m;j>=son[id][0].first;j--){
+			if(son[id].size() ==1){
+				int v=son[id][0].first;
+				int w=son[id][0].second;
+				if(v<=j)f[j]=max(f[j],f[j-v]+v*w);
+			}else if(son[id].size() ==2){
+				int v=son[id][0].first;
+				int w=son[id][0].second;
+				int v1=son[id][1].first;
+				int w1=son[id][1].second;
+				if(v<=j)f[j]=max(f[j],f[j-v]+v*w);
+				if(v+v1<=j)f[j]=max(f[j],f[j-v-v1]+v*w+v1*w1);
+			}else{
+				int v=son[id][0].first;
+				int w=son[id][0].second;
+				int v1=son[id][1].first;
+				int w1=son[id][1].second;
+				int v2=son[id][2].first;
+				int w2=son[id][2].second;
+				if(v<=j)f[j]=max(f[j],f[j-v]+v*w);
+				if(v+v1<=j)f[j]=max(f[j],f[j-v-v1]+v*w+v1*w1);
+				if(v+v2<=j)f[j]=max(f[j],f[j-v-v2]+v*w+v2*w2);
+				if(v+v2+v1<=j)f[j]=max(f[j],f[j-v-v2-v1]+v*w+v2*w2+v1*w1);							
 			}
 		}
 	}
@@ -304,7 +318,7 @@ int main(){
 ## 有依赖的背包问题
 原题链接：https://www.acwing.com/problem/content/10/  
 题意：  
-有n个物品和容量为m的背包，物品之间有依赖关系，依赖关系组成一个数的形状，如果选择一个物品，那么必须选择他的父节点。  
+有n个物品和容量为m的背包，物品之间有依赖关系，依赖关系组成一个树的形状，如果选择一个物品，那么必须选择他的父节点。  
 第i件物品体积是vi，价值是wi，依赖的父节点编号是pi。  
 求解将哪些物品放入背包中可以满足题意且总价值最大。  
 思路：  

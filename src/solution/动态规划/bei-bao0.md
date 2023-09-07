@@ -8,7 +8,9 @@ title: 背包
 有几种限制条件就有几维，先枚举物品再枚举其他的限制条件，对于01背包来讲剩下的限制条件需要从大到小枚举以防重复选择  
 
 
-## 质数拆分
+## 01背包求方案数
+
+### 质数拆分
 原题链接：  
 https://www.lanqiao.cn/problems/809/learning/?page=1&first_category_id=1&sort=students_count&tags=2019&status=2  
 
@@ -58,7 +60,9 @@ int main(){
 }
 ```
 
-## 倍数问题
+## 01背包
+
+### 倍数问题
 原题链接：  
 https://www.lanqiao.cn/problems/168/learning/?page=1&first_category_id=1&sort=students_count&name=%E5%80%8D%E6%95%B0%E9%97%AE%E9%A2%98  
 
@@ -117,7 +121,7 @@ signed main(){
 
 
 
-## 清楚姐姐学01背包(Hard Version)（必选蝴蝶结
+### 清楚姐姐学01背包(Hard Version)（必选蝴蝶结
 原题链接：  
 https://ac.nowcoder.com/acm/contest/46812/D  
 
@@ -207,7 +211,7 @@ signed main(){
 }
 ```
 
-## B_GlassHalfSpilled
+### B_GlassHalfSpilled
 原题链接：  
 https://codeforces.com/contest/1458/problem/B  
 题意：  
@@ -266,7 +270,7 @@ signed main(){
 }
 ```
 
-## 分仙贝
+### 分仙贝
 
 
 原题链接：  
@@ -304,7 +308,7 @@ signed main(){
 
 
 
-## 小沙の抱团 hard
+### 小沙の抱团 hard
 原题链接：  
 https://ac.nowcoder.com/acm/contest/46813/L  
 
@@ -362,7 +366,7 @@ signed main(){
 
 
 
-## i love exam
+### i love exam
 原题链接：  
 https://vjudge.net/contest/541856#problem/H  
 题意：  
@@ -459,7 +463,7 @@ int main(){
 
 
 
-## 九小时九个人九扇门
+### 九小时九个人九扇门
 
 原题链接：  
 https://ac.nowcoder.com/acm/contest/23106/A  
@@ -523,7 +527,7 @@ signed main(){
 
 ```
 
-## 费用报销
+### 费用报销
 
 题目链接：  
 
@@ -610,4 +614,75 @@ signed main(){
 }
 
 ```
+
+## 分组背包
+
+### M-二手物品回收
+
+原题链接：https://ac.nowcoder.com/acm/contest/58860/M?&headNav=acm  
+
+题意：  
+
+有n个物品需要出售，m个商家来买，需要出售k个物品，对于第i个物品有ai和bi，ai表示卖出的价格，bi表示愿意回收的商家。对于每个商家i，还有xi的快递费，如果卖给商家i物品（个数大于0）就需要支付xi的费用，且只用支付一次，求卖出的最大价格。  
+
+思路：  
+
+因为卖给同一个商家若干个物品的话有一个快递费需要减去，那么我们就按照商家分组，每个商家能买的物品分为一组，然后枚举每组商家买多少物品。对于每个商家，当然是能买的物品的价值越大越好，那么我们对于每组商家的物品价值再从大到小排序
+
+f[i][j]表示卖给前i个商家j个物品卖出的最大价值  
+
+定义`vector<int> w[i]`为第i组商家能买的物品的价值  
+
+对于第i个商家，枚举买的物品的个数kk，那么状态转移方程就是f[i][j]=max(f[i][j],f[i-1][j-kk]+w总-x[i])  
+
+由于我们需要恰好出售物品k个，所以我们要初始化所有不能恰好出售的状态为-INF，f[i][0]表示在前i个里挑0个的最大价值，最大是0，那么赋值f[i][0]为0
+
+```cpp
+#include<bits/stdc++.h>
+#include<vector>
+#define int long long
+using namespace std;
+typedef pair<int,int> pii;
+const int N=1005,INF=2e9;
+int f[N][N];
+int x[N];
+vector<int> w[N];
+int n,m,k;
+signed main(){
+	cin>>n>>m>>k;
+	for(int i=1;i<=m;i++)cin>>x[i];
+	for(int i=1;i<=n;i++){
+		int a,b;
+		cin>>a>>b;
+		w[b].push_back(a); 
+	}
+	for(int i=1;i<=m;i++){
+		sort(w[i].begin() ,w[i].end() ,greater<int>());
+	}
+	for(int i=0;i<=m;i++){
+		for(int j=0;j<=k;j++){
+			f[i][j]=-INF;
+		}
+	}
+	for(int i=0;i<=m;i++)f[i][0]=0;
+	for(int i=1;i<=m;i++){
+		for(int j=1;j<=k;j++){
+			f[i][j]=f[i-1][j];
+			int op=-x[i];
+			for(int kk=0;kk<w[i].size()&&kk<j;kk++){
+				op+=w[i][kk];
+				f[i][j]=max(f[i][j],f[i-1][j-kk-1]+op);
+			}
+		}
+	}
+	cout<<f[m][k]<<endl;
+	return 0;
+}
+```
+
+
+
+
+
+
 
