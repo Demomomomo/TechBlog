@@ -62,65 +62,6 @@ int main(){
 
 ## 01背包
 
-### 倍数问题
-原题链接：  
-https://www.lanqiao.cn/problems/168/learning/?page=1&first_category_id=1&sort=students_count&name=%E5%80%8D%E6%95%B0%E9%97%AE%E9%A2%98  
-
-题意：  
-有n个数，从中选三个数，使得三个数的和是m的倍数，求满足条件的和的最大值。  
-思路：  
-f[i][j][k]表示从前i个数中选，已经选了j个数，总和膜m之后余数是k的和的最大值。  
-不选i：f[i-1][j][k]  
-选i:f[i-1][j-1][(k-a[i]%m+m)%m]  
-但是时间复杂度是3nk，会超时，所以我们考虑优化  
-(a+b+c)%d==a%d+b%d+c%d  
-那么和是不是m的倍数就只和所有数%m之后的余数有关  
-那么%m之后余数相等的数我们可以分为一类  
-要求和最大，那么我们贪心的取最大，对于每类余数来说，最多就是取3个，就是取余数为0的一类的三个最大。那么我们就对于每一类余数从大到小排序，只用看取不取前三大就可以了。  
-那么我们就将他优化成了K*Klogn（对每一类里的数进行排序）  
-f[j][k]表示已经选了j个数，且选的数的和%m之后的余数是k的和的最大值。  
-
-那么我们先循环每个余数是0~k-1的类，每个类只看前三大的数就可以了。  
-然后我们再对于每个数看他选或者不选。  
-设看的数是x，选的话是f[j][k]=max(f[j][k],f[j-1][k-x%m+m]+x)  
-```cpp
-#include<bits/stdc++.h>
-#define int long long
-using namespace std;
-const int N=1005;
-typedef long long ll;
-int n,m;
-int f[5][N];
-vector<int> v[N];
-signed main(){
-	cin>>n>>m;
-	for(int i=1;i<=n;i++){
-		int x;
-		cin>>x;
-		v[x%m].push_back(x); 
-	}
-	memset(f,-0x3f,sizeof f);
-	f[0][0]=0;
-	for(int i=0;i<m;i++){//枚举每个余数类的组
-		sort(v[i].begin() ,v[i].end() );
-		reverse(v[i].begin() ,v[i].end() );
-		for(int u=0;u<3&&u<v[i].size() ;u++){//选前三大的数
-			int x=v[i][u];
-			for(int j=3;j>=1;j--){//只能选3个数，那么我们需要从大到小来枚举j，防止被重复选择更新过后的数据
-				for(int k=0;k<m;k++){
-					f[j][k]=max(f[j][k],f[j-1][(k-x%m+m)%m]+x);
-				}
-			}
-		}
-	}
-	cout<<f[3][0];
-	return 0;
-}
-
-```
-
-
-
 ### 清楚姐姐学01背包(Hard Version)（必选蝴蝶结
 原题链接：  
 https://ac.nowcoder.com/acm/contest/46812/D  
@@ -153,7 +94,7 @@ for(int i=1;i<=n;i++){
     }
 }
 ```
-g[i]表示必选第i个蝴蝶结，最大体积不超过m的最大好看程度  
+g[i]表示必选第i个蝴蝶结，其他背包的体积最大体积不超过m-vi的最大好看程度  
 状态转移：
 ```cpp
 for(int i=1;i<=n;i++){

@@ -130,31 +130,32 @@ f[0]=0;
 对于一种背包，我们可以拿0 ~ si个，我们把他分成1,2,4...这种二进制个捆在一起作为一组，那么我们可以用这几组凑出0 ~ si中所有的数，然后对这几组进行01背包问题的拿取就可以了  
 
 ```cpp
-cin>>n>>m;
-	int cnt=0;
+#include<bits/stdc++.h>
+using namespace std;
+const int N=2005;
+int f[N];
+int n,m;
+
+int main(){
+	cin>>n>>m;
 	for(int i=1;i<=n;i++){
-		int a,b,s;
-		cin>>a>>b>>s;
-		int k=1;
-		while(k<=s){
-			cnt++;
-			v[cnt]=a*k;
-			w[cnt]=b*k;
+		int v,w,s;
+		cin>>v>>w>>s;
+		for(int k=1;k<=s;k*=2){//将si个分成二进制个背包
+			for(int j=m;j>=k*v;j--){//然后对每个背包讨论选还是不选
+				f[j]=max(f[j],f[j-k*v]+k*w);
+			}
 			s-=k;
-			k*=2;
 		}
 		if(s>0){
-			cnt++;
-			v[cnt]=s*a;
-			w[cnt]=s*b;
+			for(int j=m;j>=s*v;j--){
+					f[j]=max(f[j],f[j-s*v]+s*w);
+			}
 		}
 	}
-	for(int i=1;i<=cnt;i++){
-		for(int j=m;j>=v[i];j--){
-			f[j]=max(f[j],f[j-v[i]]+w[i]);
-		}
-	}
-	cout<<f[m]<<endl;
+	cout<<f[m];
+	return 0;
+}
 ```
 
 
@@ -268,48 +269,63 @@ int main(){
 例题：机器分配  
 原题链接：https://www.acwing.com/problem/content/1015/  
 题意：  
-有n个公司，一共有m个机器。现在要把这m个机器分给n个公司，每个公司可以分配任意数量的机器，但是所有分配给公司的机器总和不能超过m。当第i个公司分配j台设备的时候，会有w[i][j]的盈利。那么求满足条件的分配方案，并且输出最大盈利。  
+有n个公司，一共有m个机器。现在要把这m个机器分给n个公司，每个公司可以分配任意数量的机器，但是所有分配给公司的机器总和不能超过m。当第i个公司分配j台设备的时候，会有w[i][j]的盈利。那么求满足条件的任意一个分配方案，并且输出最大盈利。  
 思路：  
-f[i][j]表示分配给前i个公司不超过j台的机器，那么我们就对第i个公司分配的机器数k遍历一遍，取最大值。  
-转移方程:f[i][j]=max(f[i][j],f[i-1][j-k]+w[i][k])  
-那么我们再求具体方案的时候，设剩余可以分配的机器数j为m，从最后一个公司往前遍历，遍历每个公司分配机器的数量，得到取到最大价值分配的机器数id，那么我们就将这个公司分配的机器数定为id，然后再将j减去id，继续按同样的方法遍历剩下的公司即可。  
+f[i][j]表示分配给前i个公司恰好m个机器的最大价值  
+对于每个公司枚举分配的个数k，那么转移方程:f[i][j]=max(f[i][j],f[i-1][j-k]+w[i][k])  
+那么最大价值其实是在前n个公司之中恰好分配0~m个机器的最打价值，那么最大价值=max(f[n][i]),并且记录取最大价值的时候恰好取的总机器数cnt  
+那么我们在求具体方案的时候，由于f[i][j]是由f[i-1][j-k]+w[i][k]转换而来，我们就可以从n开始向1枚举前i个公司，再从0~m枚举第i个公司分配的机器数j，当f[i][cnt]=f[i-1][cnt-j]+w[i][j]的时候，说明当i公司取到j个机器的时候可以转换到最大值，那么记录一下j，cnt(表示前i个公司取得最大价值的时候恰好取的总共机器数)再减去j，由此可得出具体方案  
 
 ```cpp
 #include<bits/stdc++.h>
+#define int long long
 using namespace std;
-int n,m;
-const int N=105;
+const int N=20,INF=1e9;
 int f[N][N];
-int s[N];
-int v[N][N],w[N][N];
-int g[N];
-int main(){
+int mp[N];
+int n,m;
+int w[N][N];
+signed main(){
 	cin>>n>>m;
 	for(int i=1;i<=n;i++){
 		for(int j=1;j<=m;j++){
 			cin>>w[i][j];
 		}
 	}
+	for(int i=0;i<=n;i++){
+		for(int j=0;j<=m;j++){
+			f[i][j]=-INF;
+		}
+	}
+	for(int i=0;i<=n;i++){
+		f[i][0]=0;
+	}
 	for(int i=1;i<=n;i++){
 		for(int j=0;j<=m;j++){
-			f[i][j]=f[i-1][j];
 			for(int k=0;k<=j;k++){
 				f[i][j]=max(f[i][j],f[i-1][j-k]+w[i][k]);
 			}
 		}
 	}
-	cout<<f[n][m]<<endl;
-	int j=m;
-	for(int i=n;i>=1;i--){
-		int id=0;
-		for(int k=0;k<=j;k++){
-			if(f[i-1][j-k]+w[i][k]>f[i-1][j-id]+w[i][id]) id=k;
+	int cnt=0,ww=0;
+	for(int i=0;i<=m;i++){
+		if(f[n][i]>=ww){
+			ww=f[n][i];
+			cnt=i;
 		}
-		g[i]=id;
-		j-=id;
 	}
+	for(int i=n;i>=1;i--){
+		for(int j=0;j<=m;j++){
+			if(f[i-1][cnt-j]+w[i][j]==f[i][cnt]){
+				mp[i]=j;
+				cnt-=j;
+				break;
+			}
+		}
+	}
+	cout<<ww<<endl;
 	for(int i=1;i<=n;i++){
-		cout<<i<<" "<<g[i]<<endl;
+		cout<<i<<" "<<mp[i]<<endl;
 	}
 	return 0;
 }
@@ -591,7 +607,7 @@ signed main(){
 完全背包的转移公式：f[i][j]=max(f[i][j],f[i][j-v[i]]+w[i])  
 多重背包的转移公式：f[i][j]=max(f[i][j],f[i-1][j-k*v[i]]+k*w[i])  
 01背包是特殊的多重背包，将si设为1即可  
-那么对于多重背包，我们将他进行一个二进制优化，将他分成多个背包之后再进行01背包的转换。  
+那么对于多重背包，我们将他进行一个二进制优化，将他分成多个背包之后，再对每个背包进行01背包的转换。  
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -629,13 +645,6 @@ int main(){
 ```
 
 
-<!-- ## 有依赖的背包问题
-原题链接：https://www.acwing.com/problem/content/10/  
-题意：  
-有n个物品和容量是v的背包，物品之间有依赖关系，如果选择一个物品，则必须选择他的父节点。  
-每件物品编号是i，体积是vi，价值是wi，依赖的父节点编号是pi，下标范围1~n。  
-求将哪些物品装入背包，使物品总体积不超过背包容量且总价值最大。   -->
-
 
 ## 背包问题求方案数
 原题链接：https://www.acwing.com/problem/content/11/  
@@ -650,7 +659,6 @@ g[i][j]表示当f[i][j]取到最大值时的方案数。
 如果f[i-1][j]大，那么方案数就加上g[i-1][j]  
 如果f[i-1][j-vi]大，那么方案数就加上g[i-1][j-vi]  
 如果一样大，那么就加上g[i-1][j]和g[i-1][j-vi]  
-
 注意：对于每个选择来说，不选择也是一种方案，所以我们在初始化的时候将所有不选择的方案数都初始化为1：  
 g[i][0]：前i个物品中选体积不超过0的方案就是不选  
 g[0][i]：前0个物品中体积不超过i的方案也是不选  

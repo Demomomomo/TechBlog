@@ -372,8 +372,68 @@ signed main(){
 ```
 
 
+## 倍数问题
 
+原题链接：  
+https://www.lanqiao.cn/problems/168/learning/?page=1  
 
+题意：  
+
+有n个数，从中取三个满足和是m的倍数的和的最大值  
+
+思路：  
+(a+b+c)%m=a%m+b%m+c%m  
+所以我们可以将余数相同的归为一类，枚举a和b的余数i和j，算出c的余数k，然后取ijk这三类中最大的数。由于ijk可能相等导致我们取到同一个数，那么我们可以用栈来存每一类，当找到某一类的时候就将他的最大值出栈，然后再继续往下找。找完之后再将他的最大值放回去即可。  
+
+```cpp
+#include<bits/stdc++.h>
+#include<stack>
+using namespace std;
+const int N=1005;
+stack<int> st[N];
+int n,m;
+int a[100005];
+int main(){
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    sort(a+1,a+1+n);
+    for(int i=1;i<=n;i++){
+        st[a[i]%m].push(a[i]); 
+    }
+    int ans=0;
+    for(int i=0;i<m;i++){
+        if(!st[i].size() )continue;
+        for(int j=0;j<m;j++){
+            if(!st[j].size() )continue;
+            int k=(2*m-i-j)%m;
+            if(!st[k].size() )continue;
+            int num1,num2,num3,con=0;
+            if(st[i].size() ){
+                num1=st[i].top() ;
+                con+=num1;
+                st[i].pop() ;
+                if(st[j].size() ){
+                    num2=st[j].top() ;
+                    con+=num2;
+                    st[j].pop() ;
+                    if(st[k].size() ){
+                        num3=st[k].top() ;
+                        con+=num3;
+                        st[k].pop() ;
+                        ans=max(ans,con);
+                        st[k].push(num3); 
+                    }
+                    st[j].push(num2); 
+                }
+                st[i].push(num1); 
+            }
+        }
+    }
+    cout<<ans;
+    return 0;
+}
+
+```
 
 
 
