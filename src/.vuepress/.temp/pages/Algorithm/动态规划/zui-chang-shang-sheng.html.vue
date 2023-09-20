@@ -38,10 +38,10 @@
 南北两岸各有n个城市，每个城市都有唯一一个与之相连的城市的道路。有n个关系，分别表示南岸位置在x的城市和北岸位置在y城市之间有条道路，求最多的不交叉的道路。</p>
 <p>思路：<br>
 可以发现：如果想让两个路不交叉的话，在南岸位置靠前的岛连接的对应的北岸的岛的位置肯定小于南岸位置靠后的岛连接的对应的北岸的岛的位置，那么我们将南岸的岛位置从小到大排序。将次序赋值给每条路，如图：<br>
-绿色的是北岸的城市按南岸位置大小顺序排序得出的序号，红色是我们选出的一个合法的方案<br>
-<img src="https://img-blog.csdnimg.cn/be215301c6254d299fa3c99fef118985.jpeg#pic_center" alt="Pulpit rock" width="304" height="228"><br>
-然后我们按北岸的位置从小到大选合法方案的时候，需要选序号上升的道路才合法。<br>
-那么我们可以发现，合法的方案就是北岸的城市位置从左到右序号的最长上升子序列</p>
+绿色的是北岸的城市按南岸位置大小顺序排序得出的序号，红色是我们选出的一个合法的方案</p>
+<img src="https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/20230910173006.png" alt="Pulpit rock" width="304" height="228">  
+然后我们按北岸的位置从小到大选合法方案的时候，需要选序号上升的道路才合法。  
+那么我们可以发现，合法的方案就是北岸的城市位置从左到右序号的最长上升子序列  
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token operator">=</span><span class="token number">5005</span><span class="token punctuation">;</span>
