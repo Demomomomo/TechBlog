@@ -13,9 +13,10 @@ title: 状态压缩dp
 滚动数组优化：在转移第i维的时候我们只用到了第i-1维，那么我们就可以用两维相互转化。优化方式：1.将i&1 2.每次用i-1&1维转化完i&1维的时候，要将第i-1&1维清空  
 
 
-## 例题
 
-类型一：在一个n* m的网格上，用一个图形填网格，有一些限制，求方案数/放的图形的最大最小值  
+
+
+## 类型一：在一个n* m的网格上，用一个图形填网格，有一些限制，求方案数/放的图形的最大最小值  
 
 ### 蒙德里安的梦想
 
@@ -93,73 +94,7 @@ signed main(){
 }
 ```
 
-类型二：每个点不重不漏走一次，求最短路  
-
-## 最短哈曼顿路径
-
-原题链接：
-https://www.acwing.com/problem/content/93/  
-
-题意：  
-
-有n个点，编号0~n-1，求0到n-1的最短哈曼顿路径  
-
-哈曼顿路径：每个点不重不漏的走一次  
-
-思路：  
-
-每个点都走一遍，那么所有的路径的方法数就是n！  
-
-用状压dp优化，f[i][j]表示从0走到点j，所有点的状态是i的路径的最小值  
-
-状态转移：枚举倒数第二个到达的点k，那么到达点k的所有点的状态就是i-(1<< j),从0到j所有点状态是i的最短路径就是：  
-f[i][j]=min(f[i][j],f[i-(1<<j)][k]+d[k][j]);  
-
-符合状态的条件是：i的第j位为1，i去掉j之后的第k位为1  
-
-初始化：求最小值，f初始化为极大值。最初的状态是从0开始走到0，所以f[1][0]=0  
-
-
-
-```cpp
-#include<bits/stdc++.h>
-using namespace std;
-#define int long long
-const int N=22,M=1<<N;
-int n;
-int g[N][N];
-int f[M][N];
-signed main(){
-	cin>>n;
-	for(int i=0;i<n;i++){
-		for(int j=0;j<n;j++){
-			cin>>g[i][j];
-		}
-	}
-	for(int i=0;i<(1<<n);i++){
-		for(int j=0;j<n;j++){
-			f[i][j]=1e16;
-		}
-	}
-	f[1][0]=0;
-	for(int i=0;i<(1<<n);i++){
-		for(int j=0;j<n;j++){
-			if(i>>j&1){
-				for(int k=0;k<n;k++){
-					int op=i-(1<<j);
-					if((op>>k)&1){
-						f[i][j]=min(f[i][j],f[i-(1<<j)][k]+g[k][j]);
-					}			
-				}
-			}
-		}
-	}
-	cout<<f[(1<<n)-1][n-1];
-	return 0;
-}
-```
-
-## 炮兵阵地
+### 炮兵阵地
 
 原题链接：https://www.acwing.com/problem/content/294/  
 
@@ -288,10 +223,81 @@ signed main(){
 
 ```
 
-## I Pa?sWorD 
+
+
+
+## 类型二：每个点不重不漏走一次，求最短路  
+
+### 最短哈曼顿路径
+
+原题链接：
+https://www.acwing.com/problem/content/93/  
+
+题意：  
+
+有n个点，编号0~n-1，求0到n-1的最短哈曼顿路径  
+
+哈曼顿路径：每个点不重不漏的走一次  
+
+思路：  
+
+每个点都走一遍，那么所有的路径的方法数就是n！  
+
+用状压dp优化，f[i][j]表示从0走到点j，所有点的状态是i的路径的最小值  
+
+状态转移：枚举倒数第二个到达的点k，那么到达点k的所有点的状态就是i-(1<< j),从0到j所有点状态是i的最短路径就是：  
+f[i][j]=min(f[i][j],f[i-(1<<j)][k]+d[k][j]);  
+
+符合状态的条件是：i的第j位为1，i去掉j之后的第k位为1  
+
+初始化：求最小值，f初始化为极大值。最初的状态是从0开始走到0，所以f[1][0]=0  
+
+
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+const int N=22,M=1<<N;
+int n;
+int g[N][N];
+int f[M][N];
+signed main(){
+	cin>>n;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			cin>>g[i][j];
+		}
+	}
+	for(int i=0;i<(1<<n);i++){
+		for(int j=0;j<n;j++){
+			f[i][j]=1e16;
+		}
+	}
+	f[1][0]=0;
+	for(int i=0;i<(1<<n);i++){
+		for(int j=0;j<n;j++){
+			if(i>>j&1){
+				for(int k=0;k<n;k++){
+					int op=i-(1<<j);
+					if((op>>k)&1){
+						f[i][j]=min(f[i][j],f[i-(1<<j)][k]+g[k][j]);
+					}			
+				}
+			}
+		}
+	}
+	cout<<f[(1<<n)-1][n-1];
+	return 0;
+}
+```
+
+## 类型三：要求必须有某些状态，求方案数
+
+### I Pa?sWorD 
 
 原题链接：  
-
+ 
 https://pintia.cn/problem-sets/1703372159713652736/exam/problems/1703372337216602120?type=7&page=0  
 
 题意：  
