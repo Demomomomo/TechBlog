@@ -5,14 +5,13 @@ dp[l][r]表示将[l,r]这段的字符变成回文串所需要添加的最小字�
 <p>初始化dp[i][i]=0</p>
 <p>那么对于[l,r]这一段：<br>
 如果s[l]==s[r]：如果长度大于2，那么dp[l][r]=dp[l+1][r-1],如果长度等于2，那么直接赋值为0<br>
-如果s[l]!=s[r]，那么可以让他的左边除了s[r]的部分全都变成回文串，然后再加一个和s[r]相同的字符，使得s[l]<sub>s[r]变成回文串；也可以将右边除了s[l]的部分都变成回文串之后，再加一个和s[l]相同的字符，使得s[l]</sub>s[r]都变成回文串</p>
+如果s[l]!=s[r]，那么可以让他的左边除了s[r]的部分全都变成回文串，然后再加一个和s[r]相同的字符，使得s[l] ~ s[r]变成回文串；也可以将右边除了s[l]的部分都变成回文串之后，再加一个和s[l]相同的字符，使得s[l] ~ s[r]都变成回文串</p>
 <p>转移方程：<br>
 s[l]==s[r]:<br>
 if(r-l+1&gt;=3) dp[l][r]=dp[l+1][r-1]<br>
 else dp[l][r]=0</p>
 <p>s[l]!=s[r]:<br>
 dp[l][r]=min(dp[l+1][r]+1,dp[l][r-1]+1)</p>
-<div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
+</div></template>
 
 
