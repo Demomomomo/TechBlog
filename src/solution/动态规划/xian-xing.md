@@ -239,3 +239,97 @@ signed main(){
 }
 ```
 
+## I - 宠物对战 
+
+原题链接：  
+https://vjudge.net/contest/532518#problem/I  
+
+题意：  
+A类字符串有n个，B类字符串有m个，给定一个字符串S，问S是否能被A类B类字符串交替表示，即ababa...或bababa...（ab分别为A类和B类中的字符串），如果不能输出-1，如果能就输出能这样表示所需要的最少的字符串的个数  
+
+思路：  
+
+用到tire树和dp  
+
+查询某串字符串是否在集合中，就用tire树来存储和查询  
+
+f[i][0/1]表示到第i个字符为止，最后一部分是A类/B类字符串所需要的最小字符串的个数  
+
+那么我们就枚举前面满足在A或B字符串中的子串的最后一个字母的下标i，从i开始往后看，假设前面的子串在A字符串中，那么我们就枚举j从i+1开始往后的字符s[j]有无在B字符串中，如果在B字符串中并且s[i+1]~s[j]为B的子串，那么就用f[i][0]更新f[j][1]:f[j][1]=min(f[j][1],f[i][0]+1)  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int tr[2][1000010][26];
+const int INF =2e9+7;
+int n,m,idx;
+int cnt[2][1000010];
+int f[5005][2];
+void insert(int x,string s){
+    int p=0;
+    for(int i=0;i<s.size();i++){
+        int u=s[i]-'a';
+        if(tr[x][p][u]==0){
+            tr[x][p][u]=++idx;
+        }
+        p=tr[x][p][u];
+    }
+    cnt[x][p]++;//这个在字符串最后一个字符的结点编号处记录这个字符串有几个
+}
+
+int main(){
+	string s;
+	int len;
+	cin>>n;
+	for(int i=1;i<=n;i++){
+		string op;
+		cin>>op;
+		insert(0,op);
+	}
+	cin>>m;
+	for(int i=1;i<=m;i++){
+		string op;
+		cin>>op;
+		insert(1,op);
+	}
+	cin>>s;
+	len=s.size();
+	s=" "+s;
+	for(int i=0;i<=len;i++){
+		for(int j=0;j<=1;j++){
+			f[i][j]=INF;
+		}
+	}
+	f[0][0]=f[0][1]=0;
+	for(int i=0;i<=len;i++){
+		if(f[i][0]<INF){
+			int p=0;
+			for(int j=i+1;j<=len;j++){
+				int u=s[j]-'a';
+				if(tr[1][p][u]){
+					p=tr[1][p][u];
+					if(cnt[1][p]>0) f[j][1]=min(f[j][1],f[i][0]+1);
+				}else break;
+			}
+		}
+		
+		if(f[i][1]<INF){
+			int p=0;
+			for(int j=i+1;j<=len;j++){
+				int u=s[j]-'a';
+				if(tr[0][p][u]){
+					p=tr[0][p][u];
+					if(cnt[0][p]>0)f[j][0]=min(f[j][0],f[i][1]+1);
+				}else break;
+			}
+		}
+	}
+	
+	int ans=min(f[len][0],f[len][1]);
+	if(ans>=INF)ans=-1;
+	cout<<ans;
+	return 0;
+}
+```
+
+
