@@ -77,4 +77,74 @@ int main(){
 }
 ```
 
+## H - 提瓦特之旅
 
+原题链接：  
+
+https://vjudge.net/contest/532518#problem/H  
+
+题意：  
+一个有n个点，m条边的无向图，从u点到v点花费的时间和从v到u花费的时间都是C（u，v），并且当经过路上的第i个点的时候再加上额外花费的时间wi。给出q个询问，每个询问给出t，w1,w2,w3...wn-1：询问从1到t，走到第i个点额外花费的时间是wi的时候花费的最短时间  
+
+思路：  
+
+求从第1个点走到第t个点经过i条边的最短距离，那么经过了i条边额外的时间花费就是w1~wi  
+
+那么我们分别枚举从1到t这个点在经过i条边的条件下的最短路取最小  
+
+用bellman-Ford算法来预处理从1出发，经过i条边到j的最短距离，用d[i][j]表示  
+
+那么当进行每次操作的时候枚举i，对d[i][t]+w1+...wi取最小就可以了  
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+int d[505][505],ba[505][505];
+const int INF=1e16;
+struct name{
+	int a,b,w;
+}q[100005];
+int t,n,m;
+int a[505],s[505];
+void bellman(){
+	for(int i=0;i<=n;i++){
+		for(int j=0;j<=n;j++){
+			d[i][j]=INF;
+		}
+	}
+	d[0][1]=0;
+	for(int i=1;i<=n-1;i++){
+		memcpy(ba,d,sizeof d);
+		for(int j=1;j<=m;j++){
+			int a=q[j].a ,b=q[j].b ,w=q[j].w;
+			d[i][a]=min(d[i][a],d[i-1][b]+w);
+			d[i][b]=min(d[i][b],d[i-1][a]+w);
+		}
+	}
+}
+signed main(){
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	cin>>n>>m;
+	for(int i=1;i<=m;i++){
+		cin>>q[i].a >>q[i].b >>q[i].w;
+	}
+	bellman();
+	cin>>t;
+	while(t--){
+		int x;
+		cin>>x;
+		for(int i=1;i<=n-1;i++){
+			cin>>a[i];
+			s[i]=s[i-1]+a[i];
+		}
+		int ans=INF;
+		for(int i=0;i<=n-1;i++){
+			ans=min(ans,d[i][x]+s[i]);
+		}
+		cout<<ans<<endl;
+	}
+	return 0;
+}
+```
