@@ -185,95 +185,93 @@ void pushdown(int u){
 
 可以发现，扫描线的长度是一直在变化的  
 
-可以把扫描线视为一个无限长的与y轴平行的数轴，并赋予每个坐标一个属性cover代表在这个坐标上数轴被矩形覆盖的长度。每次碰到一个矩形的左边后，我们就将这个矩形覆盖的区间的cover++，碰到一个矩形的右边后就让这个矩形覆盖的坐标的cover--  
+可以把扫描线视为一个无限长的与y轴平行的数轴，并赋予每个坐标一个属性cover代表在这个坐标上数轴被矩形覆盖的次数。每次碰到一个矩形的左边后，我们就将这个矩形覆盖的区间的cover++，碰到一个矩形的右边后就让这个矩形覆盖的坐标的cover--，那么当一个区间的cover值大于0的话就说明这个区间还被矩形覆盖，就需要算这个区间的长度    
 
 那么对y轴建立一个线段树来维护扫描线，每次碰一个边就对线段树进行一次操作，并且对于较大的坐标范围需要进行离散化操作  
+
+由于查询的时候直接查询整个区间的sum值，所以不需要pushdown分裂操作，每次修改子区间之后将子区间pushup更新一下父节点一直更新到根节点的sum就可以了  
+
+小细节：y有两个，所以线段树要开到数据的两倍*N  
 
 例题：https://www.luogu.com.cn/problem/P8648
 
 
 
 ```cpp
-#include<iostream>
-#include<algorithm>
-#include<string.h>
-#define ls (rt<<1)
-#define rs (rt<<1|1)
+#include<bits/stdc++.h>
 using namespace std;
-const int maxn = 40005;
-
-int cover[maxn];//存放i节点对应覆盖情况的值
-double length[maxn];//存放区间i下的总长度
-double yy[maxn];//存放离散后的y值，下标用lowerbound进行查找
-
-struct ScanLine
-{
-    double x;//边的x坐标
-    double upy,downy;//边的y坐标上，y坐标下
-    int inout;//入边为1，出边为-1
-    ScanLine(){}
-    ScanLine(double x,double y1,double y2,int io):x(x),upy(y1),downy(y2),inout(io){}
-}line[maxn];
-bool cmp(ScanLine &a,ScanLine &b)//x排序函数
-{
-    return a.x<b.x;
-}
-void pushup(int l,int r,int rt)//pushup其实主要就思考在什么情况，需要更新哪些信息来维护线段树
-{
-    if(cover[rt]) length[rt] = yy[r]-yy[l];//如果某个节点的cover为正，那么这个点的长度
-    else if(l+1==r) length[rt] = 0;//到了叶子节点
-    else length[rt] = length[ls]+length[rs];
-}
-void update(int yl,int yr,int io,int l,int r,int rt)
-{
-    if(yl>r||yr<l) return ;//极端情况？
-    if(yl<=l&&yr>=r)
-    {
-        cover[rt] += io;//根据出边入边，加上相应的值
-        pushup(l,r,rt);
-        return ;
-    }
-    if(l+1==r)return ;//到子节点
-    int m = (l+r)>>1;
-    if(yl<=m)
-        update(yl,yr,io,l,m,ls);
-    if(yr>m)
-        update(yl,yr,io,m,r,rs);//这里不再是m+1,因为要进入类似[1,2][2,3]的叶子节点
-    pushup(l,r,rt);
+int n;
+const int N=3e5+10;
+typedef long long ll;
+struct name{
+	int l,r,cover;
+	ll sum;
+}tr[N*4];
+vector<int> y;
+struct name1{
+	int x,y1,y2,d;
+}q[N*4];
+bool cmp(name1 a,name1 b){
+	return a.x <b.x ;
 }
 
-int main()
-{
-    int n;
-    scanf("%d",&n);
-        int cnt = 0;
-        double x1,x2,y1,y2;
-        int yr,yl;
-        int io;
-        for(int i = 1;i<=n;++i)
-        {
-            scanf("%lf%lf%lf%lf",&x1,&y1,&x2,&y2);//输入数值
-            line[++cnt] = ScanLine(x1,y2,y1,1);//给入边赋值
-            yy[cnt] = y1;//获得y值
-            line[++cnt] = ScanLine(x2,y2,y1,-1);//给出边赋值
-            yy[cnt] = y2;//获得y的值
-        }
-        sort(yy+1,yy+cnt+1);//给yy排个序
-        sort(line+1,line+cnt+1,cmp);//给line按照x轴方向从左到右排序
-        int len = unique(yy+1,yy+cnt+1)-(yy+1);//进行离散化操作，unique返回重复位置指针，减去（头指针+1）是数组开始的地方得到数组长度
-        memset(cover,0,sizeof(cover));
-        memset(length,0,sizeof(length));
-        double ans = 0;
-        for(int i = 1;i<=cnt;++i)
-        {
-            ans += length[1]*(line[i].x-line[i-1].x);
-            yl = lower_bound(yy+1,yy+len+1,line[i].downy)-yy;//基本和上同理
-            yr = lower_bound(yy+1,yy+len+1,line[i].upy)-yy;
-            io = line[i].inout;
-            update(yl,yr,io,1,len,1);
-        }
-        printf("%.0lf",ans);
-    return 0;
+int findy(int xx){
+	return lower_bound(y.begin(),y.end(),xx)-y.begin();
+}
+void build(int u,int l,int r){
+	tr[u].l =l,tr[u].r =r;
+	tr[u].cover =0;
+	tr[u].sum =0;
+	if(r-l==1)return ;
+	int mid=l+r>>1;
+	build(u<<1,l,mid);
+	build(u<<1|1,mid,r);
+}
+void pushup(int u){
+	if(tr[u].cover >0) tr[u].sum =y[tr[u].r ]-y[tr[u].l ];
+	else tr[u].sum =tr[u<<1].sum +tr[u<<1|1].sum ;
+}
+
+void modify(int u,int l,int r,int d){
+	if(l==r)return ;
+	if(l<=tr[u].l &&r>=tr[u].r ){
+		tr[u].cover +=d;
+		pushup(u);
+	}else{
+		int mid=tr[u].l +tr[u].r >>1;
+		if(l<mid)modify(u<<1,l,r,d);
+		if(r>mid)modify(u<<1|1,l,r,d);
+		pushup(u);
+	}
+}
+int main(){
+	cin>>n;
+	int con=0;
+	for(int i=1;i<=n;i++){
+		int x1,x2,y1,y2;
+		cin>>x1>>y1>>x2>>y2;
+		int mix=min(x1,x2);
+		int mxx=max(x1,x2);
+		int miy=min(y1,y2);
+		int mxy=max(y1,y2);
+		q[++con]={mix,miy,mxy,1};
+		q[++con]={mxx,miy,mxy,-1};
+		y.push_back(y1);
+		y.push_back(y2);    
+	}
+	sort(y.begin() ,y.end() );
+	y.erase(unique(y.begin() ,y.end() ),y.end() );	 
+	sort(q+1,q+1+con,cmp);
+	int op=y.size();
+	build(1,0,op-1);
+	modify(1,findy(q[1].y1) ,findy(q[1].y2) ,q[1].d );
+	ll ans=0;
+	for(int i=2;i<=con;i++){
+		ans+=(q[i].x -q[i-1].x )*tr[1].sum ;
+		modify(1,findy(q[i].y1) ,findy(q[i].y2) ,q[i].d );
+	}
+	cout<<ans;
+	return 0;
 }
 
 ```

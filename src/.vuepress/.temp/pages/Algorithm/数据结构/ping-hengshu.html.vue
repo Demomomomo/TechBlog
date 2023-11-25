@@ -25,6 +25,13 @@ BST的中序遍历一定是从大到小。</p>
 如果我们发现一个题中只要求上述几个操作的话，我们不需要手写平衡树，直接用set做就可以了。</p>
 <p>对一个BST进行询问，每次询问的时间与树的高度有关，一个随机的BST的高度是logn，但是最坏情况下是一条链，那么时间复杂度就是n，那么我们就需要把他变成treap，来让他的结构变得随机。</p>
 <h2 id="treap" tabindex="-1"><a class="header-anchor" href="#treap" aria-hidden="true">#</a> treap</h2>
+<h2 id="作用" tabindex="-1"><a class="header-anchor" href="#作用" aria-hidden="true">#</a> 作用</h2>
+<p>1.插入一个数<br>
+2.删除一个数<br>
+3.求某个值key的排名<br>
+4.求排名是rank的数值<br>
+5.比某个数小的最大值<br>
+6.比某个数大的最小值</p>
 <h3 id="结构" tabindex="-1"><a class="header-anchor" href="#结构" aria-hidden="true">#</a> 结构</h3>
 <div class="language-cpp line-numbers-mode" data-ext="cpp"><pre v-pre class="language-cpp"><code><span class="token keyword">struct</span> <span class="token class-name">name</span><span class="token punctuation">{</span>
     <span class="token keyword">int</span> l<span class="token punctuation">,</span>r<span class="token punctuation">;</span><span class="token comment">//左右子树</span>

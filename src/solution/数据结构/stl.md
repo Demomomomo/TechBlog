@@ -437,10 +437,124 @@ int main(){
 
 
 
+## B. Building Company  
+
+原题链接：https://codeforces.com/gym/104417/problem/B?mobile=true  
+
+题意：  
+公司有g类职位（1<=g<=1e5），第i个职位编号为ai（1<=ai<=1e9），人数为bi（1<=bi<=1e9）。有n个项目(1<=n<=1e5)，满足第i个项目需要满足mi个条件(0<=mi<=1e5)，其中第j个条件是：编号为cij的职位人数大于等于dij,在完成一个项目之后，会有ti类职业的员工加入公司(0<=ki<=1e5)，其中第j类的编号是eij，人数为hij，求最多能完成的项目数。  
 
 
+思路：  
 
+看能否满足一个项目的所有条件，如果都满足了就将新加的人加入，之后再判断新加入的人数加入之后是否能满足更多的项目，直到不能满足更多的为止。  
 
+那么我们可以用po[i]记录第i个项目还需要满足多少个条件，当最后po[i]为0的时候，就可以完成这个项目  
+
+对每个职业op建立一个优先队列q[op]，存储满足第i个项目的一个条件需要j个人。当职业人数大于等于j的时候，我们将po[i]--，将ij弹出q[op]。直到最小的j大于当前职业的人数停止。那么当po[i]=0的时候，我们也需要把新加入的人加入，然后对更新的职业的优先队列再判断。  
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+const int N=2e5+10;
+#define int long long
+typedef pair<int,int> pii;
+map<int,int> st;//记录每个职业的编号
+int stnum;//记录当前职业有几个
+int g,n,m,k;
+int con[N];
+int po[N];//记录每个职业还需要满足几个条件
+vector<pii> t[N];//记录完成第i个项目之后，新加入的职业人数
+queue<int> ti,sy;//记录完成之后未加入的项目序号以及新加入的职业
+priority_queue<pii,vector<pii>,greater<pii>> q[N];
+signed main(){
+	ios::sync_with_stdio(false);
+	cin.tie(),cout.tie();
+	cin>>g;
+	stnum=0;
+	for(int i=1;i<=g;i++){
+		int a,b;
+		cin>>a>>b;
+		if(st[a]==0){
+			stnum++;
+			st[a]=stnum;
+		}
+		con[st[a]]+=b;
+	}
+	cin>>n;
+	for(int i=1;i<=n;i++){
+		cin>>m;
+		po[i]=m;
+		for(int j=1;j<=m;j++){
+			int a,b;
+			cin>>a>>b;
+			if(st[a]==0){
+				stnum++;
+				st[a]=stnum;
+			}
+			q[st[a]].push({b,i}); 
+		}
+		cin>>k;
+		for(int j=1;j<=k;j++){
+			int a,b;
+			cin>>a>>b;
+			if(st[a]==0){
+				stnum++;
+				st[a]=stnum;
+			}
+			t[i].push_back({a,b}); 
+		}
+	}
+	for(int i=1;i<=n;i++){
+		if(po[i]==0){
+			ti.push(i); 
+		}
+	}
+	for(int i=1;i<=200005;i++){
+		while(q[i].size() &&q[i].top() .first<=con[i]){
+			int id=q[i].top() .second;
+			po[id]--;
+			if(po[id]==0) ti.push(id);
+			q[i].pop() ;
+		}
+	}
+	
+	while(ti.size() ||sy.size() ){
+		while(ti.size() ){
+			int id=ti.front() ;
+			ti.pop() ;
+			for(int i=0;i<t[id].size() ;i++){
+				int a=t[id][i].first;
+				int b=t[id][i].second;
+				if(st[a]==0){
+					stnum++;
+					st[a]=stnum;
+				}
+				con[st[a]]+=b;
+				sy.push(st[a]); 
+			}
+		}
+		while(sy.size() ){
+			int i=sy.front() ;
+			sy.pop() ;
+			while(q[i].size() &&q[i].top().first<=con[i]){
+				int id=q[i].top() .second ;
+				po[id]--;
+				if(po[id]==0){
+					ti.push(id); 
+				}
+				q[i].pop() ;
+			}
+		}
+	}
+	int ans=0;
+	for(int i=1;i<=n;i++){
+		if(po[i]==0)ans++;
+	}
+	cout<<ans;
+	return 0;
+}
+```
 
 
 
