@@ -12,7 +12,7 @@ export default hopeTheme({
 
   iconAssets: "iconfont",
 
-  logo: "/logo.svg",
+  logo: "/logo.jpg",
 
   repo: "https://github.com/Chivas-Regal/Tech", // todo: 待填写（用zyz的补充备用）
 

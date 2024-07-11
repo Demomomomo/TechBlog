@@ -1,4 +1,4 @@
-<template><div><h2 id="概念" tabindex="-1"><a class="header-anchor" href="#概念" aria-hidden="true">#</a> 概念</h2>
+<template><div><h2 id="多源最短路" tabindex="-1"><a class="header-anchor" href="#多源最短路" aria-hidden="true">#</a> 多源最短路</h2>
 <p>起点和终点都不确定的最短路<br>
 时间复杂度O（n* n *n）<br>
 思路：
