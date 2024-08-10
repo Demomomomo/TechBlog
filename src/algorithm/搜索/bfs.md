@@ -2,6 +2,11 @@
 title: BFS
 ---
 
+宽度优先遍历：先遍历同一深度的所有点，再遍历下一层深度的所有点  
+
+![2fccca3178d2377489f6503e859251fe](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/2fccca3178d2377489f6503e859251fe.jpg)  
+
+
 一般求最小距离  
 数组d记录第一次到达这个点的最短距离。  
 初始状态加入队列，将初始状态的距离设为0  

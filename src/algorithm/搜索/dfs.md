@@ -1,45 +1,142 @@
 ---
 title: DFS
 ---
+
+深度优先遍历：对于每次搜索，都像深度更深的点搜，如果没有更深的点回溯一步回到上一步所在节点，再看有没有没有遍历过的更深的点，如果有就遍历，没有就继续回溯。  
+
+![97c154261b59ded49cb73749dd9c9d4e](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/97c154261b59ded49cb73749dd9c9d4e.jpg)  
+
+
+
+
+
+
 ## 普通dfs
 ### 求全排列
 原题链接：  
 https://www.acwing.com/problem/content/844/  
+
 题意：  
 给定一个数字n，按照字典序求出他的全排列  
+
+
 思路：  
-因为变化是对于整个数组来说的，一个位置我们可以填许多数，但是每个数只能填一次，那么我们就得用一个数组额外记录一个数是否被用过。在每次dfs的时候从1~n遍历，如果i没有被遍历过，那么我们就将它标记，放入答案序列，再搜下个位置。直到搜完最后一个位置，我们将答案序列输出即可。  
+由于排列有n个位置，那么我们就分别枚举每个位置应该填什么数，由于字典序需要从小到大，那么我们将数从小到大枚举。  
+由于排列中一个数只能用一次，那么需要额外一个数组来记录数是否被使用，并且还需要一个数组来记录排列的数。  
+那么当我们从第1个位置开始枚举，枚举到第n个位置的时候，输出里面的数即可。  
+对于每个位置：从小到大枚举每个数，如果一个数x没有被用过，那么我们就将这个位置填上x，再深搜下一个位置直至每个位置都填上数。当递归完成，说明当前位置填x的所有排列情况已经看完，那么我们就该枚举下一个数y在这个位置的所有情况了，那么在将y填到这个位置之前，我们需要将x占用这个位置的所有状态都复原，这个位置就可以存放y，再进行深搜了  
+
+
+
+
+
 ```cpp
-#include<bits/stdc++.h>
+#include<iostream>
+#include<algorithm>
 using namespace std;
-const int N=400;
-#define int long long
 int n;
-int path[20];
-bool st[20];
+int path[10];
+int v[10];
 void dfs(int u){
-	if(u==n){
-		for(int i=0;i<n;i++){
-			cout<<path[i]<<" ";
-		}
-		cout<<endl;
-		return ;
-	}
-	for(int i=1;i<=n;i++){
-		if(!st[i]){
-			st[i]=true;
-			path[u]=i;
-			dfs(u+1);
-			st[i]=false;
-		}
-	}
+    if(u==n){
+        for(int i=0;i<n;i++){
+            cout<<path[i]<<" ";
+        }
+        cout<<endl;
+        return ;
+    }
+    for(int i=1;i<=n;i++){
+        if(v[i]==0){
+            path[u]=i;
+            v[i]=1;
+            dfs(u+1);
+            v[i]=0;
+        }
+    }
 }
-signed main(){
-	cin>>n;
-	dfs(0);
-	return 0;
+int main(){
+    cin>>n;
+    dfs(0);
+    return 0;
 }
 ```
+
+### n皇后问题
+
+题意：有一个n*n的棋盘，往上放n个棋子，使得满足任意两个棋子的每行，每列以及每个对角线都只有一个棋子，输出所有方案  
+
+思路：从第一行开始，枚举该行放棋子的列数，在放之前判断所在列和对角线是否有棋子，如果没有就放，放完向下一行深搜。那么就需要数组来存储列和正反对角线的状态。  
+正反对角线所在的直线如下图：  
+![15edf11102e9f00589896447a7d36584](https://cr-demo-blog-1308117710.cos.ap-nanjing.myqcloud.com/demo/15edf11102e9f00589896447a7d36584.jpg)  
+那么可以用截距b来记录对角线的编号：反对角线：b=x+y，正对角线b=y-x+n(y-x可能为负)  
+
+
+```cpp
+#include<iostream>
+#include<algorithm>
+using namespace std;
+const int N=20;
+int x[N];
+int y[N];
+int z1[N];
+int z2[N];
+char s[N][N];
+int n;
+int con;
+void dfs(int x1){
+    if(x1==n){
+        if(con==n){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    cout<<s[i][j];
+                }
+                cout<<endl;
+            }
+            cout<<endl;
+        }
+        return ;
+    }
+    for(int j=0;j<n;j++){
+        if(y[j]==0){
+            if(z1[j-x1+n]==0&&z2[j+x1]==0){
+                y[j]=1;
+                z1[j-x1+n]=1;
+                z2[j+x1]=1;
+                x[x1]=1;
+                con++;
+                s[x1][j]='Q';
+                dfs(x1+1);
+                y[j]=0;
+                z1[j-x1+n]=0;
+                z2[j+x1]=0;
+                x[x1]=0;
+                con--;
+                s[x1][j]='.';
+            }
+        }
+    }
+}
+int main(){
+    cin>>n;
+    con=0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            s[i][j]='.';
+        }
+    }
+    dfs(0);
+    return 0;
+}
+
+```
+
+
+
+
+
+
+
+
 
 ### 爆搜
 分成互质组  
