@@ -74,30 +74,8 @@ f[i][j]表示前i个物品中选j对
 不选第i件：那么就从前i-1个里面选j对，那么就是f[i-1][j]  
 那么这两种状态取最大即可。  
 注意将a数组排序。  
-<!-- ```cpp
-#include<bits/stdc++.h>
-using namespace std;
-int n,m;
-const int N=2005;
-int f[N][N];
-int a[N];
-int main(){
-	cin>>n>>m;
-	for(int i=1;i<=n;i++)cin>>a[i];
-	sort(a+1,a+1+n);
-	memset(f,0x3f,sizeof f);
-	for(int i=0;i<=n;i++)f[i][0]=0;
-	for(int i=1;i<=n;i++){
-		for(int j=1;j<=m&&j*2<=i;j++){
-			f[i][j]=min(f[i-1][j],f[i-1][j-1]+(a[i]-a[i-1])*(a[i]-a[i-1]));
-		}
-	}
-	cout<<f[n][m]<<endl;
-	return 0;
-}
 
 
-``` -->
 
 
 
