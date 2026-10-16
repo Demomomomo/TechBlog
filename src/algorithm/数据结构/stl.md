@@ -30,7 +30,7 @@ for(it=a.begin();it!=a.end();it++)cout<<*it;
 `a.push_back(4) `是往a数组的最后边加一个元素4  
 `a.pop_back( ) `是删除a数组的最后一个元素  
 `vector`还能支持比较运算，按照字典序比大小，比如：  
-`vector<int> a(4,2),b(1,3)`，那么就可以得出b>a  
+`vector<int> a(4,2),b(1,3)`，那么就可以得出a > b    
 创建一个n行m列的二维数组a，可以这样：
 ```cpp
 vector<vector<int> > a;
@@ -96,7 +96,96 @@ while（!a.empty( )）{
 `a.clear（）`清除一个队列 
 
 ## set
-定义：`set<int> a;`//不包含重复元素,而且按从小到大排序  
+set是 C++ STL 中基于红黑树实现的有序集合容器，是竞赛中处理"去重 + 有序 + 快速查找"问题的利器。
+问题：维护一个集合，支持以下操作：  
+- 插入一个元素  
+- 删除一个元素  
+- 查询某个元素是否存在  
+- 查询最小值 / 最大值  
+- 查询某个元素的前驱 / 后继  
+- 按顺序遍历所有元素  
+
+暴力做法：用数组存储，插入 O(1)，但查找 O(n)、删除 O(n)、维护有序需要 O(n log n) 排序。
+
+set 做法：所有操作都是 O(log n)，且元素自动去重、自动排序。  
+
+特性	        说明  
+自动去重	    相同元素只保留一个  
+自动排序	    默认升序，可自定义  
+底层结构	    红黑树（平衡二叉搜索树）  
+操作复杂度	    插入/删除/查找均为 O(log n)  
+不支持随机访问	不能用 s[i] 访问  
+不支持修改元素	只能删除再插入  
+
+基本操作：  
+1. 定义与初始化  
+
+```cpp
+#include <set>
+
+set<int> s;                          // 空集合，默认升序
+set<int> s2 = {3, 1, 2};             // 初始化，自动排序为 {1, 2, 3}
+set<int, greater<int>> s3;           // 降序集合
+```
+2. 插入元素  
+```cpp
+s.insert(1); //插入1
+```
+insert 返回一个 pair<iterator, bool>：  
+```cpp
+auto [it, ok] = s.insert(1);
+if (ok) cout << "插入成功";
+else cout << "已存在";
+```
+
+3. 删除元素
+```cpp
+s.erase(1); //删除元素1
+s.erase(it);//删除迭代器
+s.clear();  //清空
+```
+
+4. 查找元素  
+```cpp
+auto it = find(5);
+if (it != s.end()) cout << "找到了";
+else cout << "不存在";
+```
+注意：find 返回的是迭代器，如果元素存在返回所在迭代器，否则返回s.end()  
+
+5. 判断是否存在  
+```cpp
+if (s.count(5)) cout << "存在";
+else cout << "不存在";
+```
+s.count(x) 表示返回x的个数，对 set 只返回 0 或 1（因为去重）。
+
+6. 大小与空判断  
+```cpp
+s.size();
+s.empty();
+```
+
+迭代器与遍历:  
+1. 正向遍历（升序）  
+```cpp
+for (auto it = s.begin(); it != s.end(); it++) {
+	cout << *it << " ";
+}
+for (auto x : s) cout << x << " ";
+```
+
+2. 反向遍历（降序）  
+```cpp
+for (auto it = s.rbegin(); it != s.rend(); it++) {
+	cout << *it << " ";
+}
+```
+3. 迭代器性质
+set 的迭代器是双向迭代器，支持 ++ 和 --，不支持 +n。  
+不能修改 *it 的值（会破坏红黑树结构）。  
+begin() 指向最小值，end() 是尾后位置.  
+
 `multiset<int> a;`//可以包含重复元素  
 函数： `a.size( )`返回长度  
 `a.empty( )`是否为空  
