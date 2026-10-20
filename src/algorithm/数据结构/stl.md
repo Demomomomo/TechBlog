@@ -186,38 +186,72 @@ set 的迭代器是双向迭代器，支持 ++ 和 --，不支持 +n。
 不能修改 *it 的值（会破坏红黑树结构）。  
 begin() 指向最小值，end() 是尾后位置.  
 
-`multiset<int> a;`//可以包含重复元素  
-函数： `a.size( )`返回长度  
-`a.empty( )`是否为空  
-`a.clear( )`清除队列  
-`a.end( )`返回最后一个元素的后一个位置（set中的最大值的迭代器）  
-`a.insert(1)`表示插入一个元素1  
-`a.find(2)`表示查找一个元素2，返回的是元素2的迭代器（指针），如果数组中没有这个元素则返回`a.end( )`  
-`if(a.find(x)==a.end())`判断x在a中是否存在  
-`a.lower_bound(x)`找到大于等于x的最小迭代器  
-`a.upper_bound(x)`找到大于x的最小元素的迭代器  
-`s.erase(it)`把it这个迭代器指向的元素删掉  
-`s.erase(x)`把容器中所有等于x的数都删掉（在multiset中也是将所有的x的数都删掉）  
-`s.erase(s.find(x))`找到x所在的迭代器，删掉这个迭代器（与上一行操作不同的是只删除了一个x）  
-`a.count (x)` 表示x在a里的个数（因为set不存重复元素，所以存在x就返回1，不存在就返回0，`multiset`则返回个数）  
-访问set：
-```cpp
-set<int> st;
-for(auto i=st.begin();i!=st.end();i++){
-    int op=*i;
-    cout<<op<<" ";
-}
-//注意：如果要对set里删除数的话，我们需要先把数存一下然后遍历set完之后再从set里删除
-//比如删除set里所有大于4的数
+核心进阶操作：  
 
-vector<int> yy;
-for(auto i=st.begin();i!=st.end();i++){
-    if(*i>4){
-        yy.push_back(*i);
-    }
+1. 前驱与后继  
+
+```cpp
+auto it = s.find(5);
+
+// 前驱：小于 5 的最大元素
+if (it != s.begin()) {
+    auto pre = prev(it);//prev不是set的成员函数，是全局函数，不要写成s.prev(it)
+    cout << "前驱：" << *pre;
 }
-for(int i=0;i<yy.size();i++) st.erase(yy[i]);
+
+// 后继：大于 5 的最小元素
+auto nxt = next(it);//next不是set的成员函数，是全局函数，不要写成s.next(it)
+if (nxt != s.end()) {
+    cout << "后继：" << *nxt;
+}
 ```
+
+2. lower_bound 与 upper_bound  
+
+这是 set 最强大的功能之一：
+
+```cpp
+// lower_bound(x)：第一个 >= x 的元素
+auto it1 = s.lower_bound(5);
+
+// upper_bound(x)：第一个 > x 的元素
+auto it2 = s.upper_bound(5);
+```
+应用：快速找到"第一个不小于 x 的数"或"第一个大于 x 的数"，返回的是指针，如果找不到返回s.end()。
+
+3. 删除区间  
+
+```cpp
+auto l = s.lower_bound(3);
+auto r = s.upper_bound(7);
+s.erase(l, r);   // 删除 [3, 7] 范围内的所有元素
+```
+
+multiset 与 set 的唯一区别：允许重复元素。  
+
+删除单个元素  
+```cpp
+multiset<int> ms;
+auto it = ms.find(3);
+ms.erase(it);   // 只删除一个 3
+```
+删除所有相同元素  
+
+```cpp
+ms.erase(3);    // 删除所有值为 3 的元素
+```
+易错点：erase(value) 删除所有相同值，erase(iterator) 只删一个。  
+
+set 与 priority_queue 的区别  
+对比项	set	priority_queue  
+有序性	完全有序，可遍历	只保证堆顶最优  
+查找任意元素	O(log n)	不支持  
+删除任意元素	O(log n)	不支持  
+前驱后继	支持	不支持  
+去重	自动	不去重  
+常数	较大	较小  
+选择原则：只需要堆顶 → priority_queue；需要查找/删除/前驱后继 → set。  
+
 ## bitset
 在头文件`include<bitset>`  
 它是一种类似数组的结构，它的每一个元素只能是０或１，每个元素仅用１bit空间，每八位占用一个字节，可用于状态压缩，n位的bitset执行一次运算时间复杂度为n/32    
@@ -262,7 +296,29 @@ for(int i=0;i<yy.size();i++) st.erase(yy[i]);
 
 
 ## map
-定义：映射数组//前面的映射出后面的，就是输出后面的  
+map 是 C++ STL 中基于红黑树实现的有序键值对容器，是竞赛中处理"映射关系 + 有序性"问题的核心工具。  
+
+一、解决什么问题  
+
+1. 核心需求  
+
+问题：需要把"键"映射到"值"，并且键要保持有序。  
+
+典型场景：  
+
+- 计数：统计每个字符串/数字出现的次数  
+
+- 映射：学号 → 姓名，单词 → 释义  
+
+- 离散化：把大范围的值映射到小范围的下标  
+
+- 有序遍历：按 key 从小到大处理数据  
+
+- 查找前驱/后继：找比某个 key 大的最小 key  
+
+
+
+
 如果存数组那么按字典序递增的方式储存 
 map查找一个数的时间复杂度是logn，unordered_map是O（1） 
 ```cpp
