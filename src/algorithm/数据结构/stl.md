@@ -58,7 +58,7 @@ for(int i=0;i<n;i++){
 对队列`queue`:  
 `q.push(1) `在队尾插入1；  
 `q.pop( )` 弹出队头元素//删除队头元素  
-只能从队头插入，从队尾弹出  
+只能从队尾插入，从队头弹出  
 `q.front( )`返回队头元素  
 `q.back( ) `返回队尾元素  
 对优先队列`priority_queue`:   
@@ -316,66 +316,222 @@ map 是 C++ STL 中基于红黑树实现的有序键值对容器，是竞赛中�
 
 - 查找前驱/后继：找比某个 key 大的最小 key  
 
+2. map 的特点  
+
+特性	               说明  
+键值对存储	    每个元素是 pair<const Key, T>  
+
+自动排序	    按 key 升序（默认），可自定义  
+
+键唯一	        每个 key 只出现一次  
+
+底层结构	    红黑树（平衡二叉搜索树）  
+
+操作复杂度	    插入/删除/查找均为 O(log n)  
+
+支持迭代器遍历	按 key 顺序遍历  
+
+不支持随机访问	不能用 m[i] 按位置访问  
 
 
+3. 与相关容器对比  
 
-如果存数组那么按字典序递增的方式储存 
-map查找一个数的时间复杂度是logn，unordered_map是O（1） 
+容器	        键唯一	       有序	  底层	     查找  
+
+map	            是	          是	红黑树	   O(log n)  
+
+multimap	    否	          是	红黑树	   O(log n)  
+
+unordered_map	是	          否	哈希表	   平均 O(1) ,最坏O(n) 
+
+set	            是（只有 key） 是	 红黑树	    O(log n)  
+
+选择原则：  
+
+- 需要有序 → map  
+
+- 只需要快速查找、不关心顺序 → unordered_map  
+
+- 允许重复 key → multimap  
+
+
+二、基本操作  
+
+1. 定义与初始化  
+
 ```cpp
-map<int,int> a;
-a[1]=2;`
-a[1000000]=3;
-printf("%d",a[10000000])---输出3
+#include <map>
+
+map<string, int> m;                          // 空 map
+map<string, int> m2 = {{"Tom", 90}, {"Amy", 85}};
+map<int, string, greater<int>> m3;           // 按 key 降序
 ```
-`<>`里面的两个类型可以自己定义，比如字符串和数字：  
+2. 插入元素  
+
+方法一：[] 运算符（最常用）  
+
 ```cpp
-map<string,int> a;
-a[“zxh”]=2;
-printf("%d",a[“zxh”])--输出2
+m["Tom"] = 90;      // 不存在则插入，存在则覆盖
+m["Amy"] = 85;
 ```
-也可以定义字符串和vector数组：  
+
+方法二：insert  
 ```cpp
-map<string,vector<int> > a;
-a[“zxh”]=({2,5,4,3});
-printf(“%d”,a[“zxh”][2])--输出5（vector的第二个元素）
-//遍历map里的字符串和数组的话
-	for(auto [x,v] :mp){
-		string s=x;
-        cout<<s<<endl;
-		for(int j=0;j<v.size();j++)cout<<v[j]<<" ";
-	}
+m.insert({"Tom", 90});              // 不存在才插入，存在则忽略
+m.insert(make_pair("Amy", 85));
+m.insert(pair<string,int>("Bob", 70));
+```
+
+方法三：emplace（C++11，原地构造，效率略高）  
+
+```cpp
+m.emplace("Tom", 90);
+```
+
+[] 和 insert 的关键区别：  
+
+```cpp
+map<string, int> m;
+m["Tom"] = 90;
+m["Tom"] = 95;          // 覆盖，m["Tom"] == 95
+
+m.insert({"Tom", 80});  // 无效，已存在，m["Tom"] 仍为 95
+```
+
+3. 访问元素  
+```cpp
+m["Tom"];               // 返回值的引用；key 不存在时会自动插入默认值！
+m.at("Tom");            // 返回值的引用；key 不存在时抛异常
+```
+重要陷阱：m[key] 在 key 不存在时会自动插入一个默认值（int 为 0，string 为空串）。如果只想查询不想插入，用 find 或 count。  
+
+```cpp
+map<string, int> m;
+cout << m["unknown"];   // 输出 0，同时 m 中多了一个 {"unknown", 0}
+cout << m.size();       // 1
+```
+
+4. 查找元素  
+
+```cpp
+auto it = m.find("Tom");
+if (it != m.end()) {
+    cout << it->first << " " << it->second;   // Tom 90
+} else {
+    cout << "不存在";
+}
+```
+5. 判断是否存在  
+
+```cpp
+if (m.count("Tom")) cout << "存在";
+if (m.find("Tom") != m.end()) cout << "存在";
+```
+count 对 map 只返回 0 或 1。  
+
+6. 删除元素  
+
+```cpp
+m.erase("Tom");          // 按 key 删除，返回删除个数
+m.erase(it);             // 按迭代器删除
+m.erase(m.begin(), m.end());  // 删除区间
+m.clear();               // 清空
+```
+7. 大小与空判断  
+
+```cpp
+m.size();     // 元素个数
+m.empty();    // 是否为空
+```
+
+8. 遍历  
+
+```cpp
+//正向遍历，按key升序
+
+for (auto it = m.begin(); it != m.end(); it++)
+    cout << it->first << " " << it->second << "\n";
+// 范围 for（C++17 结构化绑定）
+for (auto& [key, val] : m)
+    cout << key << " " << val << "\n";
+
+//反向遍历，按key降序
+for (auto it = m.rbegin(); it != m.rend(); it++)
+    cout << it->first << " " << it->second << "\n";
 
 ```
-函数：`a.size( )`
-`a.empty( );`  
-`a.clear( );`  
-`a.begin( );`  
-`a.end( );`  
-`a.erase(val);`删除一个值，时间复杂度是logn  
-`a.erase(it);`删除一个下标，时间复杂度是1  
-`a.insert()`插入一个二元组：`a.insert({“a”,{5}})`  
-输入字符串然后来记录他出现的次数的话用  
+9. lower_bound 与 upper_bound
 ```cpp
-map<string,int> a;
-String x;
-Cin<<x;
-A[x]++;
+// lower_bound(k)：第一个 key >= k 的元素
+auto it1 = m.lower_bound("Tom");
+
+// upper_bound(k)：第一个 key > k 的元素
+auto it2 = m.upper_bound("Tom");
 ```
-遍历map：使用迭代器`map<string,string> ::iterator it;`  
+应用：找"第一个不小于 k 的键"或"第一个大于 k 的键"。  
+
 ```cpp
-map<string,int> a;
-	map<string,int>::iterator it;
-	int n;
-	scanf("%d",&n);
-	for(int i=0;i<n;i++){
-		string s;
-		cin>>s;
-		a[s]++;
-	}
-	for(it=a.begin();it!=a.end();it++){
-		cout<<it->first<<' '<<it->second<<endl;
-	}
+map<int, string> m = {{1,"a"}, {3,"b"}, {5,"c"}, {7,"d"}};
+
+auto it = m.lower_bound(4);   // 指向 key=5
+auto it2 = m.upper_bound(5);  // 指向 key=7
 ```
+
+10. 前驱与后继  
+```cpp
+auto it = m.find(5);
+
+// 前驱：key 小于 5 的最大元素
+if (it != m.begin()) {
+    auto pre = prev(it);
+    cout << pre->first;
+}
+
+// 后继：key 大于 5 的最小元素
+auto nxt = next(it);
+if (nxt != m.end()) {
+    cout << nxt->first;
+}
+```
+11. 删除区间  
+```cpp
+auto l = m.lower_bound(3);
+auto r = m.upper_bound(7);
+m.erase(l, r);   // 删除 key 在 [3, 7] 内的所有元素
+```
+
+12. 降序  
+```cpp
+map<int, string, greater<int>> m;
+m[3] = "c"; m[1] = "a"; m[2] = "b";
+// 遍历顺序：3, 2, 1
+```
+
+## multimap
+
+multimap 与 map 的唯一区别：允许重复 key.  
+```cpp
+multimap<string, int> mm;
+mm.insert({"Tom", 90});
+mm.insert({"Tom", 85});
+mm.insert({"Tom", 95});
+
+// 查找所有 Tom 的成绩
+auto range = mm.equal_range("Tom");
+for (auto it = range.first; it != range.second; it++)
+    cout << it->second << " ";   // 90 85 95
+```
+
+注意：multimap 不支持 [] 运算符，因为一个 key 可能对应多个 value。  
+
+删除 multimap 中的元素  
+
+```cpp
+mm.erase("Tom");          // 删除所有 key 为 "Tom" 的元素
+auto it = mm.find("Tom");
+mm.erase(it);             // 只删除一个
+```
+
 
 ## pair<int,int>
 是个二元组，取第一个数就是`p.first`,取第二个数就是`p.second`  
