@@ -294,6 +294,126 @@ set 与 priority_queue 的区别
 `op.to_ulong`:将op转为unsigned long 类型  
 `op.to_ullong`:将op转为unsigned long long 类型  
 
+## pair
+
+pair 是 C++ STL 中最简单的二元组容器，把两个任意类型的值捆绑成一个整体。  
+
+一、解决什么问题  
+
+1. 核心需求：把两个值捆绑成一个整体  
+很多场景需要"成对"处理数据：  
+
+坐标：(x, y)  
+
+键值对：(key, value)  
+
+边：(终点, 边权)  
+
+区间：(左端点, 右端点)  
+
+返回值：函数需要返回两个值  
+
+如果分开存，排序、传参、存容器都很麻烦。pair 把它们打包成一个整体，可以直接比较、排序、作为容器的元素。  
+
+2. pair 的特点  
+
+特性	          说明  
+
+存储两个值	 first 和 second，类型可不同  
+
+字典序比较	 先比 first，再比 second  
+
+轻量	     本质是结构体，无额外开销  
+
+可直接排序	 无需自定义比较函数  
+
+二、基本操作  
+
+1. 定义与初始化  
+
+```cpp
+#include <utility>   // pair 定义在这里
+
+pair<int, int> p1;                    // 默认初始化，值为 (0, 0)
+pair<int, int> p2(1, 2);              // 直接初始化
+pair<int, int> p3 = {1, 2};           // 列表初始化
+pair<int, string> p4 = {1, "Tom"};    // 类型可以不同
+pair<int, int> p5 = make_pair(3, 4);  // make_pair 函数
+```
+
+2. 访问成员  
+
+```cpp
+pair<int, string> p = {1, "Tom"};
+cout << p.first;    // 1
+cout << p.second;   // Tom
+
+p.first = 2;        // 可以修改
+p.second = "Amy";
+```
+
+3. 比较运算  
+
+pair 重载了全部六个比较运算符，规则是字典序：  
+
+先比较 first，谁小谁就小。  
+
+first 相等时，比较 second。  
+
+```cpp
+pair<int, int> a = {1, 2};
+pair<int, int> b = {1, 3};
+pair<int, int> c = {2, 1};
+
+a < b;    // true，first 相等，2 < 3
+a < c;    // true，1 < 2，second 不再比较
+a == b;   // false
+```
+
+4. 交换  
+
+```cpp
+pair<int, int> a = {1, 2}, b = {3, 4};
+swap(a, b);
+// a = {3, 4}, b = {1, 2}
+```
+
+三、pair 的排序  
+
+1. 直接 sort  
+
+因为 pair 天然支持 <，可以直接排序：  
+
+```cpp
+vector<pair<int, int>> v = {{3, 1}, {1, 2}, {1, 1}, {2, 0}};
+sort(v.begin(), v.end());
+// 结果：{1,1}, {1,2}, {2,0}, {3,1}
+```
+排序规则：先按 first 升序，first 相同按 second 升序。
+
+2. 降序  
+
+```cpp
+// 整体降序
+sort(v.begin(), v.end(), greater<pair<int,int>>());
+
+// 只按 first 降序，second 升序
+sort(v.begin(), v.end(), [](auto& a, auto& b) {
+    if (a.first != b.first) return a.first > b.first;
+    return a.second < b.second;
+});
+
+```
+3. 只按 second 排序  
+
+```cpp
+sort(v.begin(), v.end(), [](auto& a, auto& b) {
+    return a.second < b.second;
+});
+```
+
+
+
 
 ## map
 map 是 C++ STL 中基于红黑树实现的有序键值对容器，是竞赛中处理"映射关系 + 有序性"问题的核心工具。  
@@ -533,17 +653,31 @@ mm.erase(it);             // 只删除一个
 ```
 
 
-## pair<int,int>
-是个二元组，取第一个数就是`p.first`,取第二个数就是`p.second`  
-支持比较运算，以`first`为第一个关键字，以`second`为第二个关键字  
-构造一个pair的话用`make_pair()`函数：  
-`pair <int,int> p=make_pair(1,2);`  
-也可直接写为  
-`p={1,2};`  
-也可以用pair来存三个值：  
-`pair<int,pair<int,int> > p;`  
+
 
 ## string 
+
+string 是 C++ STL 中用于处理字符串的类.  
+
+string 的特点  
+
+特性	    说明  
+
+动态长度	自动扩容，不需要预估大小  
+
+支持赋值	s1 = s2 直接拷贝  
+
+支持比较	==、<、> 按字典序  
+
+支持拼接	s1 + s2、s1 += s2  
+
+随机访问	s[i] 访问单个字符，O(1)  
+
+内置函数	substr、find、replace 等  
+
+
+
+
 `s.size();`  
 `s.empty();`  
 `s.clear();`  
