@@ -243,13 +243,13 @@ ms.erase(3);    // 删除所有值为 3 的元素
 易错点：erase(value) 删除所有相同值，erase(iterator) 只删一个。  
 
 set 与 priority_queue 的区别  
-对比项	set	priority_queue  
-有序性	完全有序，可遍历	只保证堆顶最优  
-查找任意元素	O(log n)	不支持  
-删除任意元素	O(log n)	不支持  
-前驱后继	支持	不支持  
-去重	自动	不去重  
-常数	较大	较小  
+对比项	       set	             priority_queue  
+有序性	       完全有序，可遍历	 只保证堆顶最优  
+查找任意元素	O(log n)	     不支持  
+删除任意元素	O(log n)	     不支持  
+前驱后继	    支持	          不支持  
+去重	        自动	          不去重  
+常数	        较大	          较小  
 选择原则：只需要堆顶 → priority_queue；需要查找/删除/前驱后继 → set。  
 
 ## bitset
@@ -675,18 +675,14 @@ string 的特点
 
 内置函数	substr、find、replace 等  
 
-
-
-
-`s.size();`  
-`s.empty();`  
-`s.clear();`  
+`s.size();`  返回字符串长度  
+`s.empty();` 返回字符串是否为空  
+`s.clear();` 清除字符串  
 s可以加一个字符串：`s+="abf";`  
 也可以加一个字符：`s+='a';`  
 `substr( )`函数：  
 `string q=s.substr(k);`把从s的下标为k的字符开始一直到结尾  
-`s.substr(k,x)`返回的是起始位置下标为k，长度是x的字符串，当`x>s.size()`时，就输出到字符串结束为止。  
-`s.substr(i)`返回从下标为i开始到结尾的字符串。  
+`s.substr(k,x)`返回的是起始位置下标为k，长度是x的字符串，当`x>s.size()`时，就输出到字符串结束为止。    
 `string s=to_string(n)`：将数字常量n转换为字符串s;  
 `stoi`函数：  
 将字符串转化为10进制的数  
@@ -732,7 +728,7 @@ cout<<s1<<endl;
 ## memset
 
 对整数类型的数组一般取极大值为 `memset(a,0x3f,sizeof a)`  
-对浮点数类型的数组一般取最大值为 `memset(a,0x7f,sizeof a`  
+对浮点数类型的数组一般取最大值为 `memset(a,0x7f,sizeof a)`  
 
 ## memcpy
 
