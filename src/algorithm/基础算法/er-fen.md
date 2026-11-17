@@ -23,11 +23,17 @@ title: 二分
 cheek函数是用来检查是否符合要找的答案的性质  
 
 ```cpp
-while(l <= r){
-    int mid = (l + r) / 2;
-    if(cheek(mid)) l = mid + 1;
-    else r = mid - 1;
+int l = L, r = R, ans = 初始值;   // ans 初值视题目而定
+while (l <= r) {                   // 区间为空时停止
+    int mid = (l + r) / 2;         // 统一向下取整
+    if (check(mid)) {
+        ans = mid;                 // 记录可行答案
+        // 朝更优方向收缩（左半 or 右半）
+    } else {
+        // 朝反方向收缩
+    }
 }
+// ans 即为最终答案
 ```
 
 
